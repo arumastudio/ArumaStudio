@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="id">
 <head>
+  <!-- Storage edit fix v3: material name/category/unit and equipment name/category editing. -->
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
   <title>Suma Lōra — Botanical Management System</title>
@@ -1981,7 +1982,7 @@ D: Blend and pour [after C]"></textarea></div>
   <div id="categoryManagerModal" class="modal-overlay"><div class="modal-box" style="max-width:480px;"><div class="modal-header"><h3>Edit Material Categories</h3><button type="button" onclick="closeModal('categoryManagerModal')" class="close-btn">&times;</button></div><p style="font-size:11px;color:#78716c;line-height:1.5;">One category per line. This edits the category list; use each material's “Edit category” action to move a material into another category.</p><form id="categoryManagerForm"><textarea id="categoryListInput" class="input-control" rows="7" style="resize:vertical;"></textarea><button class="btn" type="submit" style="margin-top:10px;">Save Categories</button></form></div></div>
   <div id="materialCategoryEditModal" class="modal-overlay"><div class="modal-box" style="max-width:440px;"><div class="modal-header"><h3 style="font-family:serif;">Change Material Category</h3><button type="button" onclick="closeModal('materialCategoryEditModal')" class="close-btn">&times;</button></div><p id="materialCategoryEditHint" style="font-size:12px;color:#78716c;line-height:1.5;">Choose a category for this material.</p><form id="materialCategoryEditForm"><input id="categoryEditMaterialName" type="hidden"><label style="font-size:11px;color:#78716c;display:block;margin-bottom:5px;">Category</label><select id="categoryEditValue" class="input-control"></select><div class="inline-category-add"><input id="inlineNewCategory" class="input-control" placeholder="New category name"><button type="button" class="btn" style="width:auto;white-space:nowrap;" onclick="addCategoryFromMaterialEditor()">+ Add category</button></div><div style="display:flex;justify-content:flex-end;gap:8px;margin-top:14px;"><button type="button" class="btn" style="width:auto;background:#78716c;" onclick="closeModal('materialCategoryEditModal')">Cancel</button><button type="submit" class="btn" style="width:auto;">Save Category</button></div></form></div></div>
   <div id="newStorageItemModal" class="modal-overlay"><div class="modal-box" style="max-width:520px;"><div class="modal-header"><h3>Add Material / Equipment</h3><button type="button" onclick="closeModal('newStorageItemModal')" class="close-btn">&times;</button></div><p class="modal-description">Register physical assets used in production or content creation. This list is separate from Market pricing.</p><form id="newStorageItemForm" class="form-stack"><div><label>Item name</label><input id="newStorageName" class="input-control" required placeholder="e.g. Pink photography backdrop"></div><div class="grid-2"><div><label>Category</label><select id="newStorageCategory" class="input-control"><option>Equipment</option><option>Tools & Utensils</option><option>Photography & Lighting</option><option>Other</option></select><div class="inline-category-add"><input id="newStorageCategoryName" class="input-control" placeholder="New category name"><button type="button" class="btn" style="width:auto;white-space:nowrap;" onclick="addStorageCategory()">+ Add category</button></div></div><div><label>Unit</label><input id="newStorageUnit" class="input-control" required value="pcs" placeholder="pcs, set, unit"></div></div><div><label>Specifications / details</label><textarea id="newStorageSpecs" class="input-control" rows="2" placeholder="e.g. 5 L, stainless steel, 300 W, model / size / condition"></textarea></div><div class="grid-2"><div><label>Starting quantity</label><input id="newStorageQty" class="input-control" type="number" min="0" step="any" value="1" required></div><div><label>Purchase price per unit</label><input id="newStoragePrice" class="input-control" type="text" inputmode="numeric" value="Rp. 0" onfocus="unformatRupiahInput(this)" onblur="formatRupiahInput(this)" placeholder="Rp. 0"></div></div><button type="submit" class="btn">Save to Storage</button></form></div></div>
-  <div id="storageItemEditModal" class="modal-overlay"><div class="modal-box" style="max-width:500px;"><div class="modal-header"><h3 id="storageItemEditTitle">Update item</h3><button type="button" onclick="closeModal('storageItemEditModal')" class="close-btn">&times;</button></div><form id="storageItemEditForm" class="form-stack"><input type="hidden" id="storageEditName"><div id="storageEditFields"></div><button type="submit" class="btn">Save changes</button></form></div></div>
+  <div id="storageItemEditModal" class="modal-overlay"><div class="modal-box" style="max-width:500px;"><div class="modal-header"><h3 id="storageItemEditTitle">Edit item</h3><button type="button" onclick="closeModal('storageItemEditModal')" class="close-btn">&times;</button></div><form id="storageItemEditForm" class="form-stack"><input type="hidden" id="storageEditName"><div id="storageEditFields"></div><button type="submit" class="btn">Save changes</button></form></div></div>
   <div id="storageAdjustModal" class="modal-overlay"><div class="modal-box" style="max-width:520px;"><div class="modal-header"><h3 style="font-family:serif;">Adjust Warehouse Stock</h3><button type="button" onclick="closeModal('storageAdjustModal')" class="close-btn">&times;</button></div><form id="storageAdjustForm" style="display:flex;flex-direction:column;gap:10px;"><div><label style="font-size:11px;color:#78716c;">Material / Item</label><select id="storageItem" class="input-control" required></select></div><div class="grid-2" style="margin:0;gap:10px;"><div><label style="font-size:11px;color:#78716c;">Movement</label><select id="storageMovement" class="input-control"><option value="in">Stock in (+)</option><option value="out">Stock out (−)</option><option value="set">Set exact stock</option></select></div><div><label style="font-size:11px;color:#78716c;">Quantity</label><input id="storageQty" type="number" min="0" step="any" class="input-control" required></div></div><div><label style="font-size:11px;color:#78716c;">Note / Reference</label><input id="storageNote" class="input-control" placeholder="e.g. purchase, production use, stock count"></div><button type="submit" class="btn">Save Stock Movement</button></form></div></div>
   <div id="financeOptionsModal" class="modal-overlay"><div class="modal-box" style="max-width:520px;"><div class="modal-header"><h3 id="financeOptionsTitle" style="font-family:serif;">Finance Options</h3><button type="button" onclick="closeModal('financeOptionsModal')" class="close-btn">&times;</button></div><p id="financeOptionsHint" style="font-size:12px;color:#78716c;line-height:1.5;">Add, rename or remove options.</p><div id="financeOptionsList" style="display:flex;flex-direction:column;gap:8px;margin:12px 0;"></div><form id="financeOptionForm" style="display:flex;flex-direction:column;gap:8px;"><input id="financeOptionLabel" class="input-control" placeholder="New option name" required><div id="financeOptionFlowWrap"><label style="font-size:11px;color:#78716c;">Financial direction</label><select id="financeOptionFlow" class="input-control"><option value="expense">Money out / expense</option><option value="income">Money in / income</option></select></div><button type="submit" class="btn">+ Add Option</button></form></div></div>
   <div id="appToast" style="position:fixed;left:50%;bottom:24px;transform:translateX(-50%);z-index:99999;background:#24382c;color:white;padding:11px 16px;border-radius:12px;box-shadow:0 8px 24px #0002;font-size:13px;display:none;max-width:90vw;"></div>
@@ -2241,19 +2242,58 @@ D: Blend and pour [after C]"></textarea></div>
     }
     function replaceExactStrings(value,oldName,newName){if(typeof value==='string')return value===oldName?newName:value;if(Array.isArray(value))return value.map(v=>replaceExactStrings(v,oldName,newName));if(value&&typeof value==='object'){const out={};Object.entries(value).forEach(([k,v])=>{out[k===oldName?newName:k]=replaceExactStrings(v,oldName,newName)});return out;}return value;}
     function saveStorageItemEdit(e){
-      e.preventDefault();const oldName=document.getElementById('storageEditName').value,item=getStorageItems().find(i=>i.name===oldName);if(!item)return;
-      const newName=document.getElementById('storageEditNewName').value.trim(),group=document.getElementById('storageEditCategory').value,unit=document.getElementById('storageEditUnit').value.trim(),qty=Math.max(0,Number(document.getElementById('storageEditQty').value)||0),isAsset=item.storageType==='asset';
+      e.preventDefault();
+      const oldName=document.getElementById('storageEditName').value;
+      const item=getStorageItems().find(i=>i.name===oldName);
+      if(!item)return;
+      const newName=(document.getElementById('storageEditNewName')?.value||oldName).trim();
+      const group=document.getElementById('storageEditCategory')?.value||item.group;
+      const unit=(document.getElementById('storageEditUnit')?.value||item.unit).trim();
+      const qty=Math.max(0,Number(document.getElementById('storageEditQty')?.value)||0);
+      const isAsset=item.storageType==='asset';
       if(!newName||!unit)return showToast('Name and unit are required.');
       if(newName.toLowerCase()!==oldName.toLowerCase()&&getStorageItems().some(i=>i.name.toLowerCase()===newName.toLowerCase()))return showToast('An item with this name already exists.');
       const stock=getStorageData();
-      if(isAsset){const damaged=Math.max(0,Number(document.getElementById('storageEditDamaged').value)||0),price=Math.max(0,parseRupiahNumber(document.getElementById('storageEditPrice').value)||0);if(damaged>qty)return showToast('Damaged units cannot exceed quantity owned.');const current=stock[oldName]||{};delete stock[oldName];stock[newName]={...current,qty,damaged,purchasePrice:price,damageDate:document.getElementById('storageEditDamageDate')?.value||'',damageReason:(document.getElementById('storageEditDamageReason')?.value||'').trim(),unit,updatedAt:new Date().toISOString().slice(0,10)};const extras=getCustomStorageItems().map(x=>x.name===oldName?{...x,name:newName,group,unit,purchasePrice:price}:x);localStorage.setItem('suma_custom_storage_items',JSON.stringify(extras));}
-      else {const current=stock[oldName]||{};if(oldName!==newName){delete stock[oldName];stock[newName]={...current};}stock[newName]={...stock[newName],qty,unit,updatedAt:new Date().toISOString().slice(0,10)};
-        const customIdx=customConsumableItems.findIndex(x=>x.name===oldName);if(customIdx>=0)customConsumableItems=customConsumableItems.map(x=>x.name===oldName?{...x,name:newName,group,unit}:x);else materialNameOverrides[Object.keys(materialNameOverrides).find(k=>materialNameOverrides[k]===oldName)||oldName]=newName;
-        const units=safeStorageJSON('suma_material_unit_overrides',{});if(units[oldName]!==undefined){units[newName]=unit;delete units[oldName];}else units[oldName]=unit;localStorage.setItem('suma_material_unit_overrides',JSON.stringify(units));
-        if(oldName!==newName){if(materialCategoryOverrides[oldName]!==undefined){materialCategoryOverrides[oldName]=group;}Object.keys(localStorage).filter(k=>k.startsWith('suma_')&&!['suma_custom_materials','suma_material_name_overrides','suma_material_category_overrides','suma_material_unit_overrides','suma_warehouse_stock'].includes(k)).forEach(k=>{try{const raw=localStorage.getItem(k),parsed=JSON.parse(raw),updated=replaceExactStrings(parsed,oldName,newName);localStorage.setItem(k,JSON.stringify(updated));}catch(_){}});}
-        persistMaterialCatalog();localStorage.setItem('suma_material_name_overrides',JSON.stringify(materialNameOverrides));
+      if(isAsset){
+        const damaged=Math.max(0,Number(document.getElementById('storageEditDamaged')?.value)||0);
+        const price=Math.max(0,parseRupiahNumber(document.getElementById('storageEditPrice')?.value)||0);
+        if(damaged>qty)return showToast('Damaged units cannot exceed quantity owned.');
+        const current=stock[oldName]||{};
+        if(oldName!==newName)delete stock[oldName];
+        stock[newName]={...current,qty,damaged,purchasePrice:price,damageDate:document.getElementById('storageEditDamageDate')?.value||'',damageReason:(document.getElementById('storageEditDamageReason')?.value||'').trim(),unit,updatedAt:new Date().toISOString().slice(0,10)};
+        const extras=getCustomStorageItems().map(x=>x.name===oldName?{...x,name:newName,group,unit,purchasePrice:price}:x);
+        localStorage.setItem('suma_custom_storage_items',JSON.stringify(extras));
+      } else {
+        const current=stock[oldName]||{};
+        if(oldName!==newName)delete stock[oldName];
+        stock[newName]={...current,qty,unit,updatedAt:new Date().toISOString().slice(0,10)};
+        const customIdx=customConsumableItems.findIndex(x=>x.name===oldName);
+        if(customIdx>=0){
+          customConsumableItems=customConsumableItems.map(x=>x.name===oldName?{...x,name:newName,group,unit}:x);
+        } else {
+          // Base catalog overrides must use the original catalog key.
+          const originalKey=Object.keys(materialNameOverrides).find(k=>materialNameOverrides[k]===oldName)||oldName;
+          if(newName!==oldName)materialNameOverrides[originalKey]=newName;
+          materialCategoryOverrides[originalKey]=group;
+          const units=safeStorageJSON('suma_material_unit_overrides',{});
+          units[originalKey]=unit;
+          localStorage.setItem('suma_material_unit_overrides',JSON.stringify(units));
+        }
+        if(oldName!==newName){
+          Object.keys(localStorage).filter(k=>k.startsWith('suma_')&&!['suma_custom_materials','suma_material_name_overrides','suma_material_category_overrides','suma_material_unit_overrides','suma_warehouse_stock','suma_custom_storage_items'].includes(k)).forEach(k=>{
+            try{const raw=localStorage.getItem(k);if(raw===null)return;localStorage.setItem(k,JSON.stringify(replaceExactStrings(JSON.parse(raw),oldName,newName)));}catch(_){}
+          });
+        }
+        persistMaterialCatalog();
+        localStorage.setItem('suma_material_name_overrides',JSON.stringify(materialNameOverrides));
       }
-      saveStorageData(stock);closeModal('storageItemEditModal');renderStorage();renderMaterialDropdowns();if(typeof renderConsumablesTable==='function')renderConsumablesTable();if(typeof calculateSoapFormula==='function')calculateSoapFormula();showToast('Changes saved.');
+      saveStorageData(stock);
+      closeModal('storageItemEditModal');
+      renderStorage();
+      renderMaterialDropdowns();
+      if(typeof renderConsumablesTable==='function')renderConsumablesTable();
+      if(typeof calculateSoapFormula==='function')calculateSoapFormula();
+      showToast('Changes saved.');
     }
     function renderStorage(){
       const all=getStorageItems(),stock=getStorageData(),query=(document.getElementById('storageSearch')?.value||'').trim().toLowerCase(),group=document.getElementById('storageGroupFilter');
