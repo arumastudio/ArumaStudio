@@ -2175,9 +2175,10 @@ D: Blend and pour [after C]"></textarea></div>
       // Built-in oils retain their validated SAP/fatty-acid coefficients; new oils are selectable but need a verified profile.
       document.querySelectorAll('.oil-name-select').forEach(sel=>{
         const selected=sel.value;
-        const oilItems=items.filter(i=>!/packing|packaging/i.test(i.group));
+        const oilItems=sortMaterialsByCategoryName(items.filter(i=>!/packing|packaging/i.test(String(i.group||''))));
         const names=[...new Set([...Object.keys(OIL_COEFFICIENTS),...oilItems.map(i=>i.name)])];
-        sel.innerHTML=names.map(n=>`<option value="${escapeHtml(n)}" ${n===selected?'selected':''}>${escapeHtml(n)}${OIL_COEFFICIENTS[n]?'':' · SAP profile needed'}</option>`).join('');
+        if(selected && !names.includes(selected)) names.push(selected);
+        sel.innerHTML=names.map(n=>{const item=oilItems.find(i=>i.name===n);const category=item?` [${item.group}]`:'';return `<option value="${escapeHtml(n)}" ${n===selected?'selected':''}>${escapeHtml(n)}${escapeHtml(category)}${OIL_COEFFICIENTS[n]?'':' · SAP profile needed'}</option>`;}).join('');
         if(selected && !names.includes(selected)){const opt=document.createElement('option');opt.value=selected;opt.textContent=selected+' · SAP profile needed';opt.selected=true;sel.appendChild(opt);}
       });
       const cat = document.getElementById('newMatCategory');
@@ -2960,11 +2961,20 @@ D: Blend and pour [after C]"></textarea></div>
     }
 
     function createOilRowHtml(oilName, pctVal = 0) {
+      // Use the same shared Market/Storage catalog as the live dropdown refresh.
+      // Include every non-packaging material so custom oils with unusual names are not silently excluded.
+      const catalogOilItems = sortMaterialsByCategoryName(allConsumableItems().filter(i => !/packing|packaging/i.test(String(i.group || ''))));
+      const optionNames = [...new Set([...Object.keys(OIL_COEFFICIENTS), ...catalogOilItems.map(i => i.name)])];
+      if (oilName && !optionNames.includes(oilName)) optionNames.push(oilName);
+      const options = optionNames.map(name => {
+        const item = catalogOilItems.find(i => i.name === name);
+        const category = item ? ` [${item.group}]` : '';
+        const profileNote = OIL_COEFFICIENTS[name] ? '' : ' · SAP profile needed';
+        return `<option value="${escapeHtml(name)}" ${name === oilName ? 'selected' : ''}>${escapeHtml(name)}${escapeHtml(category)}${profileNote}</option>`;
+      }).join('');
       return `
         <div class="oil-row" style="display: grid; grid-template-columns: 2fr 1fr 1fr 24px; gap: 8px; align-items: center;">
-          <select onchange="calculateSoapFormula()" class="oil-name-select input-control">
-            ${[...new Set([...Object.keys(OIL_COEFFICIENTS),...allConsumableItems().filter(i=>/oil|butter|fat/i.test(i.name)).map(i=>i.name)])].map(o => `<option value="${escapeHtml(o)}" ${o === oilName ? 'selected':''}>${escapeHtml(o)}${OIL_COEFFICIENTS[o]?'':' · SAP profile needed'}</option>`).join("")}
-          </select>
+          <select onchange="calculateSoapFormula()" class="oil-name-select input-control">${options}</select>
           <div style="display:flex; align-items:center; gap:2px;">
             <input type="number" step="0.1" oninput="calculateSoapFormula()" class="oil-pct-input input-control" value="${pctVal}"><span>%</span>
           </div>
