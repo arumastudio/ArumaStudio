@@ -2174,15 +2174,22 @@ D: Blend and pour [after C]"></textarea></div>
       document.getElementById('materialHistoryBody').innerHTML=rows.map(h=>`<tr><td><input type="date" class="input-control" style="min-width:130px" id="mh-date-${h.id}" value="${escapeHtml(h.date||'')}"></td><td><div style="display:flex;gap:5px;min-width:155px"><input type="number" min="0.0001" step="any" class="input-control" style="width:85px" id="mh-qty-${h.id}" value="${Number(h.qty)||0}"><input type="text" class="input-control" style="width:65px" id="mh-unit-${h.id}" value="${escapeHtml(h.unit || (allConsumableItems().find(i=>i.name===activeHistoryMaterial)?.unit) || '')}"></div></td><td><input type="text" class="input-control currency-input" style="min-width:130px" id="mh-total-${h.id}" value="${formatRupiahInput(String(Number(h.totalPrice)||0))}" oninput="this.value=formatRupiahInput(this.value)"></td><td>Rp. ${Math.round(Number(h.unitPrice)||0).toLocaleString('id-ID')}</td><td style="white-space:nowrap"><button class="btn" style="width:auto;padding:6px 9px;font-size:10px;" onclick="saveMaterialHistoryEdit('${h.id}')">Save</button> <button class="btn" style="width:auto;padding:6px 9px;font-size:10px;background:#b91c1c" onclick="deleteMaterialHistory('${h.id}')">Delete</button></td></tr>`).join('') || '<tr><td colspan="5" style="color:#78716c;padding:14px;">No price updates yet. Add a material price update to start tracking.</td></tr>';
       openModal('materialHistoryModal');
       if(materialPriceChartInstance) { materialPriceChartInstance.destroy(); materialPriceChartInstance = null; }
-      requestAnimationFrame(() => {
+      // Wait until the modal is visibly laid out before asking Chart.js to measure its canvas.
+      window.setTimeout(() => {
         const canvas = document.getElementById('materialPriceChart');
-        if (typeof Chart === 'undefined' || !canvas) return;
-        materialPriceChartInstance = new Chart(canvas.getContext('2d'), {
-          type: 'line',
-          data: { labels: rows.map(h => h.date || 'No date'), datasets: [{ label: 'Unit price (Rp)', data: rows.map(h => Number(h.unitPrice) || 0), borderColor: '#2A3F2E', backgroundColor: 'rgba(42,63,46,.12)', fill: true, tension: .25 }] },
-          options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { display: false } }, scales: { y: { beginAtZero: true, ticks: { callback: v => 'Rp. ' + Number(v).toLocaleString('id-ID') } } } }
-        });
-      });
+        if (typeof Chart === 'undefined' || !canvas) { console.error('Material price chart unavailable: Chart.js or canvas missing.'); return; }
+        const parent = canvas.parentElement;
+        if (parent) { parent.style.display = 'block'; parent.style.position = 'relative'; }
+        try {
+          if (materialPriceChartInstance) { materialPriceChartInstance.destroy(); materialPriceChartInstance = null; }
+          materialPriceChartInstance = new Chart(canvas.getContext('2d'), {
+            type: 'line',
+            data: { labels: rows.map(h => h.date || 'No date'), datasets: [{ label: 'Unit price (Rp)', data: rows.map(h => Number(h.unitPrice) || 0), borderColor: '#2A3F2E', backgroundColor: 'rgba(42,63,46,.12)', fill: true, tension: .25, pointRadius: 4 }] },
+            options: { responsive: true, maintainAspectRatio: false, animation: false, plugins: { legend: { display: false } }, scales: { x: { display: true }, y: { beginAtZero: true, ticks: { callback: v => 'Rp. ' + Number(v).toLocaleString('id-ID') } } } }
+          });
+          requestAnimationFrame(() => materialPriceChartInstance && materialPriceChartInstance.resize());
+        } catch (err) { console.error('Material price chart render failed:', err); }
+      }, 120);
     }
     function saveMaterialHistoryEdit(id) {
       const h=consumableHistory.find(x=>String(x.id)===String(id)); if(!h) return;
@@ -2564,6 +2571,9 @@ D: Blend and pour [after C]"></textarea></div>
       document.querySelectorAll('.mobile-tab, .sidebar-link').forEach(el => el.classList.remove('active'));
       const targetTab = document.getElementById(`tab-${tabId}`);
       if (targetTab) { targetTab.classList.remove('active'); void targetTab.offsetWidth; targetTab.classList.add('active'); }
+      if (tabId === 'labs') {
+        window.setTimeout(() => { try { calculateSoapFormula(); if (radarChartInstance) radarChartInstance.resize(); } catch (err) { console.error('Could not refresh Soap Character Radar:', err); } }, 80);
+      }
       const mtab = document.getElementById(`mtab-${tabId}`); if (mtab) mtab.classList.add('active');
       const dtab = document.getElementById(`dtab-${tabId}`); if (dtab) dtab.classList.add('active');
       // Keep menu changes spatially predictable without yanking the user around on desktop.
@@ -2912,34 +2922,25 @@ D: Blend and pour [after C]"></textarea></div>
       container.innerHTML = `<div style="font-size:10px;color:#78716c;font-weight:700;text-transform:uppercase;margin-bottom:5px;">Tip ${soapQuickTipIndex + 1} of ${SOAP_QUICK_TIPS.length} · ${tip.title}</div><div style="font-size:13px;line-height:1.6;color:#292524;">${tip.text}</div>`;
     }
 
-    function renderSoapRadarChart(c, h, cond, s) { if (typeof Chart === 'undefined') return;
-      if (typeof Chart === 'undefined') return;
-      try {
-        const ctx = document.getElementById('soapRadarChart');
-        if (!ctx) return;
-        if (radarChartInstance) radarChartInstance.destroy();
-
-        radarChartInstance = new Chart(ctx.getContext('2d'), {
-          type: 'radar',
-          data: {
-            labels: ['Cleansing', 'Hardness', 'Conditioning', 'Slip'],
-            datasets: [{
-              label: 'Soap Trait Profile',
-              data: [c, h, cond, s],
-              backgroundColor: 'rgba(42, 63, 46, 0.2)',
-              borderColor: '#2A3F2E',
-              pointBackgroundColor: '#2A3F2E'
-            }]
-          },
-          options: {
-            responsive: true,
-            maintainAspectRatio: false,
-            scales: { r: { min: 0, max: 80, ticks: { stepSize: 10, backdropColor: 'transparent' }, pointLabels: { font: { size: 13, weight: '600' } }, grid: { circular: true } } },
-            elements: { line: { borderWidth: 3 }, point: { radius: 5, hoverRadius: 7 } },
-            plugins: { legend: { display: false } }
-          }
-        });
-      } catch(e) {}
+    function renderSoapRadarChart(c, h, cond, s) {
+      const draw = () => {
+        if (typeof Chart === 'undefined') { console.error('Soap radar chart unavailable: Chart.js did not load.'); return; }
+        const canvas = document.getElementById('soapRadarChart');
+        if (!canvas) { console.error('Soap radar chart canvas #soapRadarChart was not found.'); return; }
+        // The Botanical Studio tab is hidden on initial load; wait until it is visible.
+        const rect = canvas.getBoundingClientRect();
+        if (rect.width < 2 || rect.height < 2) return;
+        try {
+          if (radarChartInstance) { radarChartInstance.destroy(); radarChartInstance = null; }
+          radarChartInstance = new Chart(canvas.getContext('2d'), {
+            type: 'radar',
+            data: { labels: ['Cleansing', 'Hardness', 'Conditioning', 'Slip'], datasets: [{ label: 'Soap Trait Profile', data: [c, h, cond, s].map(v => Number(v) || 0), backgroundColor: 'rgba(42, 63, 46, 0.2)', borderColor: '#2A3F2E', pointBackgroundColor: '#2A3F2E' }] },
+            options: { responsive: true, maintainAspectRatio: false, animation: false, scales: { r: { min: 0, max: 80, ticks: { stepSize: 10, backdropColor: 'transparent' }, pointLabels: { font: { size: 13, weight: '600' } }, grid: { circular: true } } }, elements: { line: { borderWidth: 3 }, point: { radius: 5, hoverRadius: 7 } }, plugins: { legend: { display: false } } }
+          });
+          requestAnimationFrame(() => radarChartInstance && radarChartInstance.resize());
+        } catch (err) { console.error('Soap radar chart render failed:', err); }
+      };
+      requestAnimationFrame(() => requestAnimationFrame(draw));
     }
 
     function rupiah(value) { return 'Rp. ' + Math.round(Number(value)||0).toLocaleString('id-ID'); }
@@ -4127,6 +4128,29 @@ main #tab-labs #botanicalSoapPanel > div:first-child label,main #tab-labs .batch
 @media(max-width:700px){#tab-labs #labProfitBreakdown{grid-template-columns:repeat(2,minmax(0,1fr))!important}}
 </style>
 
+
+
+<style id="sl-export-only-in-key">
+  .tab-content:not(#tab-key) button[onclick*="exportCurrentMenuCSV"],
+  .tab-content:not(#tab-key) button[onclick*="exportAllToExcel"],
+  .tab-content:not(#tab-key) button[onclick*="exportFullLocalBackup"] { display:none!important; }
+</style>
+<script>
+(function enforceKeyOnlyExports(){
+  function cleanExportButtons(){
+    document.querySelectorAll('.tab-content:not(#tab-key) button').forEach(button=>{
+      const action=(button.getAttribute('onclick')||'').toLowerCase();
+      const label=(button.innerText||button.textContent||'').toLowerCase();
+      const isExportAction=/exportcurrentmenucsv|exportalltoexcel|exportfulllocalbackup/.test(action);
+      const isExportLabel=/export\s*(csv|all to excel)|download\s*(csv|excel)/.test(label);
+      if(isExportAction || isExportLabel) button.remove();
+    });
+  }
+  if(document.readyState==='loading') document.addEventListener('DOMContentLoaded',cleanExportButtons,{once:true}); else cleanExportButtons();
+  const observer=new MutationObserver(cleanExportButtons);
+  observer.observe(document.documentElement,{childList:true,subtree:true});
+})();
+</script>
 
 </body>
 </html>
