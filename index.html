@@ -1335,6 +1335,42 @@
   @media(max-width:520px){.shopee-fee-grid{grid-template-columns:1fr}.shopee-fee-grid label{min-height:0}}
 </style>
 
+<style id="market-sort-visibility-v12">
+  /* v12: Make Market sorting controls clearly visible, like Storage controls. */
+  #tab-consumables .market-table-header{
+    display:flex!important; flex-direction:column!important; align-items:stretch!important;
+    justify-content:flex-start!important; gap:12px!important; flex-wrap:nowrap!important;
+  }
+  #tab-consumables .market-heading{width:100%!important; flex:0 1 auto!important;}
+  #tab-consumables .market-filters{
+    display:flex!important; width:100%!important; flex:1 1 auto!important;
+    flex-direction:row!important; align-items:center!important; justify-content:flex-start!important;
+    flex-wrap:wrap!important; gap:8px!important; margin-top:2px!important;
+  }
+  #tab-consumables .market-filters > input#consumablesSearch{
+    flex:1 1 220px!important; width:220px!important; min-width:180px!important;
+  }
+  #tab-consumables .market-filters > select#consumablesGroupFilter{
+    flex:0 1 180px!important; width:180px!important; min-width:150px!important;
+  }
+  #tab-consumables .market-filters > label[for="marketSortBy"]{
+    display:flex!important; flex:0 1 auto!important; align-items:center!important;
+    gap:8px!important; white-space:nowrap!important; margin:0!important;
+    padding:0!important; color:#77717d!important; font-size:12px!important;
+  }
+  #tab-consumables .market-filters select#marketSortBy{
+    display:inline-block!important; flex:0 1 270px!important; width:270px!important;
+    min-width:230px!important; max-width:100%!important; visibility:visible!important;
+    opacity:1!important; position:relative!important;
+  }
+  @media(max-width:700px){
+    #tab-consumables .market-filters{align-items:stretch!important;}
+    #tab-consumables .market-filters > input#consumablesSearch,
+    #tab-consumables .market-filters > select#consumablesGroupFilter,
+    #tab-consumables .market-filters select#marketSortBy{flex:1 1 100%!important;width:100%!important;min-width:0!important;}
+    #tab-consumables .market-filters > label[for="marketSortBy"]{flex:1 1 100%!important;justify-content:space-between!important;}
+  }
+</style>
 </head>
 <body class="app-container">
   <div id="loginGate" class="login-gate">
