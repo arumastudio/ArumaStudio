@@ -1411,7 +1411,7 @@
     <section id="tab-home" class="tab-content active">
       <div class="dashboard-hero">
         <div class="dashboard-eyebrow">Executive dashboard <span class="eyebrow-rule"></span> Suma Lōra / 01</div>
-        <h2 class="dashboard-title">Financial Overview <span>&amp; Analytics</span></h2><button type="button" class="btn sl-export-btn" onclick="exportCurrentMenuCSV('home')" aria-label="Export home data to CSV">↓ Export CSV</button><button type="button" class="btn sl-export-btn" onclick="exportAllToExcel()" aria-label="Export all business data to Excel">↓ Export All to Excel</button>
+        <h2 class="dashboard-title">Financial Overview <span>&amp; Analytics</span></h2>
         <p class="dashboard-intro">A clear view of revenue, operating costs, and business performance.</p>
         <div class="dashboard-period">
           <span class="period-label">Reporting period</span>
@@ -1470,7 +1470,7 @@
       <div style="display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid #E7E5E4; padding-bottom: 16px; margin-bottom: 20px;">
         <div>
           <span style="font-size: 10px; text-transform: uppercase; letter-spacing: 0.14em; color: #8c719f; font-weight: 750;">Materials & Packaging Stock</span>
-          <h2 style="font-size: 22px; color: #1c1917; margin: 2px 0 0 0; font-family: serif;">Market</h2><button type="button" class="btn sl-export-btn" onclick="exportCurrentMenuCSV('consumables')" aria-label="Export consumables data to CSV">↓ Export CSV</button>
+          <h2 style="font-size: 22px; color: #1c1917; margin: 2px 0 0 0; font-family: serif;">Market</h2>
         </div>
         <div style="display:flex;gap:8px;flex-wrap:wrap;"><button onclick="openNewMaterialModal()" class="btn" style="width:auto;padding:9px 15px;font-size:12px;">+ Add New Material</button></div>
       </div>
@@ -1491,7 +1491,7 @@
       <div class="storage-page-header">
         <div class="storage-title-block">
           <span class="storage-eyebrow">Warehouse · Stock Control</span>
-          <h2>Storage</h2><button type="button" class="btn sl-export-btn" onclick="exportCurrentMenuCSV('storage')" aria-label="Export storage data to CSV">↓ Export CSV</button>
+          <h2>Storage</h2>
           <p class="storage-stats-caption">Track the quantity physically available in your warehouse. Market remains the place for material pricing.</p>
           
         </div>
@@ -1518,7 +1518,7 @@
     <section id="tab-labs" class="tab-content">
       <div style="border-bottom: 1px solid #E7E5E4; padding-bottom: 16px; margin-bottom: 20px;">
         <span style="font-size: 10px; text-transform: uppercase; letter-spacing: 0.1em; color: #78716c; font-weight: 600;">Recipe & Formulation Engine</span>
-        <h2 style="font-size: 22px; color: #1c1917; margin: 2px 0 0 0; font-family: serif;">Botanical Studio</h2><button type="button" class="btn sl-export-btn" onclick="exportCurrentMenuCSV('labs')" aria-label="Export labs data to CSV">↓ Export CSV</button>
+        <h2 style="font-size: 22px; color: #1c1917; margin: 2px 0 0 0; font-family: serif;">Botanical Studio</h2>
         <div class="subnav-pills segmented-switch botanical-subnav" role="tablist" aria-label="Botanical Studio sections"><button type="button" class="subnav-pill active" id="botanicalTabSoap" aria-selected="true" onclick="setBotanicalSection('soap')">Bar Soap</button><button type="button" class="subnav-pill" id="botanicalTabOils" aria-selected="false" onclick="setBotanicalSection('oils')">Body Oils</button></div>
       </div>
       <div id="botanicalSoapPanel" class="botanical-subpanel">
@@ -1684,7 +1684,7 @@
 
     <!-- PROCESS LIBRARY: SOPs, notes and flow charts -->
     <section id="tab-process" class="tab-content">
-      <div class="page-heading"><div><span class="section-kicker">STANDARD OPERATING PROCEDURES</span><h2>Process Library</h2><button type="button" class="btn sl-export-btn" onclick="exportCurrentMenuCSV('process')" aria-label="Export process data to CSV">↓ Export CSV</button><p>Document how each product is made, from preparation to curing, filling, packing, and quality checks.</p></div><button type="button" class="btn" style="width:auto;" onclick="newProcessRecord()">+ New Process</button></div>
+      <div class="page-heading"><div><span class="section-kicker">STANDARD OPERATING PROCEDURES</span><h2>Process Library</h2><p>Document how each product is made, from preparation to curing, filling, packing, and quality checks.</p></div><button type="button" class="btn" style="width:auto;" onclick="newProcessRecord()">+ New Process</button></div>
       <div class="process-layout"><aside class="card process-sidebar"><label for="processType">Product family</label><select id="processType" class="input-control" onchange="renderProcessLibrary()"><option>Bar Soap</option><option>Body Oil</option><option>Other</option></select><label for="processSearch">Find a process</label><input id="processSearch" class="input-control" placeholder="Search product or SOP…" oninput="renderProcessLibrary()"><div id="processList" class="process-list"></div></aside>
         <div class="card process-editor"><div id="processEmptyState" class="process-empty"><span class="section-kicker">YOUR WORKING KNOWLEDGE</span><h3>Build a repeatable process.</h3><p>Create a step-by-step SOP with practical notes and a simple flowchart. Process notes are stored in this browser.</p><button type="button" class="btn" style="width:auto;" onclick="newProcessRecord()">Create first process</button></div>
           <form id="processForm" onsubmit="saveProcessRecord(event)" hidden><input type="hidden" id="processId"><div class="process-form-head"><div><span class="section-kicker">PROCESS EDITOR</span><h3 id="processFormTitle">New process</h3></div><div class="process-actions"><button type="button" class="btn btn-secondary" style="width:auto;" onclick="deleteProcessRecord()">Delete</button><button type="submit" class="btn" style="width:auto;">Save process</button></div></div>
@@ -1706,7 +1706,7 @@ D: Blend and pour [after C]"></textarea></div>
       <div style="display: flex; justify-content: space-between; align-items: center; padding-bottom: 16px; margin-bottom: 20px;">
         <div>
           <span style="font-size: 10px; text-transform: uppercase; letter-spacing: 0.1em; color: #78716c; font-weight: 600;">Categorized Stock & Batches</span>
-          <h2 style="font-size: 22px; color: #1c1917; margin: 2px 0 0 0; font-family: serif;">Inventory Management</h2><button type="button" class="btn sl-export-btn" onclick="exportCurrentMenuCSV('inventory')" aria-label="Export inventory data to CSV">↓ Export CSV</button>
+          <h2 style="font-size: 22px; color: #1c1917; margin: 2px 0 0 0; font-family: serif;">Inventory Management</h2>
         </div>
         <button onclick="openBatchModalForCreate()" class="btn" style="width: auto; padding: 8px 14px; font-size: 12px;">+ Create New Batch</button>
       </div>
@@ -1718,7 +1718,7 @@ D: Blend and pour [after C]"></textarea></div>
       <div style="display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid #E7E5E4; padding-bottom: 16px; margin-bottom: 20px;">
         <div>
           <span style="font-size: 10px; text-transform: uppercase; letter-spacing: 0.1em; color: #78716c; font-weight: 600;">Transactions</span>
-          <h2 style="font-size: 22px; color: #1c1917; margin: 2px 0 0 0; font-family: serif;">Sales Orders & Receipts</h2><button type="button" class="btn sl-export-btn" onclick="exportCurrentMenuCSV('sales')" aria-label="Export sales data to CSV">↓ Export CSV</button>
+          <h2 style="font-size: 22px; color: #1c1917; margin: 2px 0 0 0; font-family: serif;">Sales Orders & Receipts</h2>
         </div>
         <button onclick="openSalesModalForCreate()" class="btn" style="width: auto; padding: 8px 12px; font-size: 12px;">+ Record Order</button>
       </div>
@@ -1747,7 +1747,7 @@ D: Blend and pour [after C]"></textarea></div>
     <section id="tab-buyers" class="tab-content">
       <div style="border-bottom: 1px solid #E7E5E4; padding-bottom: 16px; margin-bottom: 20px;">
         <span style="font-size: 10px; text-transform: uppercase; letter-spacing: 0.1em; color: #78716c; font-weight: 600;">Customer Analytics</span>
-        <h2 style="font-size: 22px; color: #1c1917; margin: 2px 0 0 0; font-family: serif;">Buyer Leaderboards</h2><button type="button" class="btn sl-export-btn" onclick="exportCurrentMenuCSV('buyers')" aria-label="Export buyers data to CSV">↓ Export CSV</button>
+        <h2 style="font-size: 22px; color: #1c1917; margin: 2px 0 0 0; font-family: serif;">Buyer Leaderboards</h2>
       </div>
 
       <div class="table-container">
@@ -1763,7 +1763,7 @@ D: Blend and pour [after C]"></textarea></div>
 
     <!-- TAB 7: FINANCE -->
     <section id="tab-finance" class="tab-content">
-      <div style="border-bottom:1px solid #E7E5E4;padding-bottom:16px;margin-bottom:18px;display:flex;justify-content:space-between;gap:12px;align-items:center;flex-wrap:wrap;"><div><span style="font-size:10px;text-transform:uppercase;letter-spacing:.1em;color:#78716c;font-weight:600;">Capital, Sales & Cashflow</span><h2 style="font-size:22px;color:#1c1917;margin:2px 0 0;font-family:serif;">Finance</h2><button type="button" class="btn sl-export-btn" onclick="exportCurrentMenuCSV('finance')" aria-label="Export finance data to CSV">↓ Export CSV</button></div></div>
+      <div style="border-bottom:1px solid #E7E5E4;padding-bottom:16px;margin-bottom:18px;display:flex;justify-content:space-between;gap:12px;align-items:center;flex-wrap:wrap;"><div><span style="font-size:10px;text-transform:uppercase;letter-spacing:.1em;color:#78716c;font-weight:600;">Capital, Sales & Cashflow</span><h2 style="font-size:22px;color:#1c1917;margin:2px 0 0;font-family:serif;">Finance</h2></div></div>
       <div class="finance-period-inline"><span class="period-label">Reporting period</span><div style="display:flex;gap:10px;flex-wrap:wrap;align-items:end;"><div><label style="font-size:11px;color:#78716c;">From</label><input id="finStartDate" type="date" class="input-control" onchange="renderFinance()"></div><div><label style="font-size:11px;color:#78716c;">To</label><input id="finEndDate" type="date" class="input-control" onchange="renderFinance()"></div><button type="button" class="btn" style="width:auto;" onclick="setFinanceThisMonth()">This Month</button><button type="button" class="btn" style="width:auto;background:#6B705C;" onclick="setFinanceAllTime()">All Time</button></div></div>
       <div class="grid-4" style="grid-template-columns:repeat(auto-fit,minmax(160px,1fr));">
         <div class="finance-stat"><div class="label">Gross sales</div><div class="value" id="finGrossSales">Rp. 0</div></div>
@@ -1988,6 +1988,7 @@ D: Blend and pour [after C]"></textarea></div>
   <div id="userManagerModal" class="modal-overlay"><div class="modal-box" style="max-width:560px;"><div class="modal-header"><h3>User Management</h3><button type="button" onclick="closeModal('userManagerModal')" class="close-btn">&times;</button></div><p style="font-size:11px;color:#78716c;line-height:1.5;">Cloud accounts are managed securely through Supabase Authentication. Use the button below to open the project user dashboard.</p><button type="button" class="btn" onclick="openUserManager()">Open Supabase User Management</button><p style="font-size:11px;color:#78716c;">Create users in Supabase → Authentication → Users. Every authenticated user currently shares access to this ERP workspace.</p><div style="overflow:auto;"><table><thead><tr><th>Account management</th></tr></thead><tbody id="userTableBody"><tr><td>Managed in Supabase Dashboard</td></tr></tbody></table></div></div></div>
 
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.7/dist/chart.umd.min.js"></script>
   <script>
     // SUPABASE CLOUD CONFIG — publishable key is designed for browser use; never put a secret key here.
     const SUPABASE_URL = "https://oviboanwsnqrkipuihnq.supabase.co";
@@ -2171,9 +2172,17 @@ D: Blend and pour [after C]"></textarea></div>
       activeHistoryMaterial=name; const rows=getActiveMaterialPriceHistory(name).sort((a,b)=>new Date(a.date)-new Date(b.date) || Number(a.id)-Number(b.id));
       document.getElementById('materialHistoryTitle').textContent=`Price History · ${name}`;
       document.getElementById('materialHistoryBody').innerHTML=rows.map(h=>`<tr><td><input type="date" class="input-control" style="min-width:130px" id="mh-date-${h.id}" value="${escapeHtml(h.date||'')}"></td><td><div style="display:flex;gap:5px;min-width:155px"><input type="number" min="0.0001" step="any" class="input-control" style="width:85px" id="mh-qty-${h.id}" value="${Number(h.qty)||0}"><input type="text" class="input-control" style="width:65px" id="mh-unit-${h.id}" value="${escapeHtml(h.unit || (allConsumableItems().find(i=>i.name===activeHistoryMaterial)?.unit) || '')}"></div></td><td><input type="text" class="input-control currency-input" style="min-width:130px" id="mh-total-${h.id}" value="${formatRupiahInput(String(Number(h.totalPrice)||0))}" oninput="this.value=formatRupiahInput(this.value)"></td><td>Rp. ${Math.round(Number(h.unitPrice)||0).toLocaleString('id-ID')}</td><td style="white-space:nowrap"><button class="btn" style="width:auto;padding:6px 9px;font-size:10px;" onclick="saveMaterialHistoryEdit('${h.id}')">Save</button> <button class="btn" style="width:auto;padding:6px 9px;font-size:10px;background:#b91c1c" onclick="deleteMaterialHistory('${h.id}')">Delete</button></td></tr>`).join('') || '<tr><td colspan="5" style="color:#78716c;padding:14px;">No price updates yet. Add a material price update to start tracking.</td></tr>';
-      if(materialPriceChartInstance) materialPriceChartInstance.destroy();
-      if(typeof Chart!=='undefined') { const ctx=document.getElementById('materialPriceChart'); materialPriceChartInstance=new Chart(ctx,{type:'line',data:{labels:rows.map(h=>h.date||'No date'),datasets:[{label:'Unit price (Rp)',data:rows.map(h=>Number(h.unitPrice)||0),borderColor:'#2A3F2E',backgroundColor:'rgba(42,63,46,.12)',fill:true,tension:.25}]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false}},scales:{y:{beginAtZero:true,ticks:{callback:v=>'Rp. '+Number(v).toLocaleString('id-ID')}}}}}); }
       openModal('materialHistoryModal');
+      if(materialPriceChartInstance) { materialPriceChartInstance.destroy(); materialPriceChartInstance = null; }
+      requestAnimationFrame(() => {
+        const canvas = document.getElementById('materialPriceChart');
+        if (typeof Chart === 'undefined' || !canvas) return;
+        materialPriceChartInstance = new Chart(canvas.getContext('2d'), {
+          type: 'line',
+          data: { labels: rows.map(h => h.date || 'No date'), datasets: [{ label: 'Unit price (Rp)', data: rows.map(h => Number(h.unitPrice) || 0), borderColor: '#2A3F2E', backgroundColor: 'rgba(42,63,46,.12)', fill: true, tension: .25 }] },
+          options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { display: false } }, scales: { y: { beginAtZero: true, ticks: { callback: v => 'Rp. ' + Number(v).toLocaleString('id-ID') } } } }
+        });
+      });
     }
     function saveMaterialHistoryEdit(id) {
       const h=consumableHistory.find(x=>String(x.id)===String(id)); if(!h) return;
