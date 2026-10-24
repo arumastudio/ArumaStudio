@@ -4,12 +4,9 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
   <title>Suma Lōra — Botanical Management System</title>
-  <!-- Chart.js for Soap Character Visualisation -->
-  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
   <style>
-    @import url('https://api.fontshare.com/v2/css?f[]=satoshi@400,500,600,700&display=swap');
 
-    /* RESET & BASE STYLES */
+/* RESET & BASE STYLES */
     * { box-sizing: border-box; }
     body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; background-color: #FAF9F6; color: #2D3748; margin: 0; padding: 0; }
     input, select, button { font-family: inherit; }
@@ -1317,6 +1314,26 @@
   }
 </style>
 
+
+<style id="sl-local-only-and-export">
+  .sl-export-btn{position:static!important;display:inline-flex!important;width:auto!important;min-height:34px!important;padding:8px 11px!important;font-size:11px!important;white-space:nowrap!important;margin:8px 0 12px!important}
+  .sl-local-backup-panel{display:flex;justify-content:space-between;align-items:center;gap:16px;flex-wrap:wrap;padding:18px 20px;margin:10px 0 20px;background:#f8f7f2;border:1px solid #dedbe0;border-radius:12px}
+  .sl-local-backup-panel strong{font-size:14px;color:#252521}
+  .sl-local-backup-panel p{margin:5px 0 0;font-size:12px;color:#77717d}
+  .sl-local-backup-actions{display:flex;gap:8px;flex-wrap:wrap}
+  .sl-local-backup-actions .btn{width:auto!important;min-height:34px!important;padding:8px 11px!important;font-size:11px!important}
+  .sl-restore-label{display:inline-flex;align-items:center;justify-content:center;cursor:pointer}
+  #syncStatus,#syncTextMobile{cursor:default!important}
+  @media(max-width:767px){.sl-export-btn{position:static!important;margin:8px 0 12px!important;width:auto!important}.sl-local-backup-actions{width:100%}.sl-local-backup-actions .btn{flex:1}}
+</style>
+
+<style id="sl-shopee-fee-layout">
+  .shopee-fee-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px}
+  .shopee-fee-grid>div{min-width:0}
+  .shopee-fee-grid label{display:block;min-height:25px;line-height:1.35}
+  @media(max-width:520px){.shopee-fee-grid{grid-template-columns:1fr}.shopee-fee-grid label{min-height:0}}
+</style>
+
 </head>
 <body class="app-container">
   <div id="loginGate" class="login-gate">
@@ -1380,7 +1397,7 @@
       </nav>
     </div>
     <div style="border-top: 1px solid #E7E5E4; padding-top: 12px;">
-      <div id="syncStatus" onclick="syncFromGoogleSheets()" title="Click to retry Google Sheets connection" style="font-size: 11px; color: #78716c; display: flex; align-items: center; gap: 8px; cursor:pointer;">
+      <div id="syncStatus"  title="Data is saved in this browser" style="font-size: 11px; color: #78716c; display: flex; align-items: center; gap: 8px; cursor:pointer;">
         <span style="width: 8px; height: 8px; border-radius: 50%; background: #10B981; display: inline-block;"></span> Local Storage Active
       </div>
       <p style="font-size: 10px; color: #a8a29e; margin: 4px 0 8px 0;">Suma Lōra v8.0</p>
@@ -1394,7 +1411,7 @@
     <section id="tab-home" class="tab-content active">
       <div class="dashboard-hero">
         <div class="dashboard-eyebrow">Executive dashboard <span class="eyebrow-rule"></span> Suma Lōra / 01</div>
-        <h2 class="dashboard-title">Financial Overview <span>&amp; Analytics</span></h2>
+        <h2 class="dashboard-title">Financial Overview <span>&amp; Analytics</span></h2><button type="button" class="btn sl-export-btn" onclick="exportCurrentMenuCSV('home')" aria-label="Export home data to CSV">↓ Export CSV</button><button type="button" class="btn sl-export-btn" onclick="exportAllToExcel()" aria-label="Export all business data to Excel">↓ Export All to Excel</button>
         <p class="dashboard-intro">A clear view of revenue, operating costs, and business performance.</p>
         <div class="dashboard-period">
           <span class="period-label">Reporting period</span>
@@ -1453,7 +1470,7 @@
       <div style="display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid #E7E5E4; padding-bottom: 16px; margin-bottom: 20px;">
         <div>
           <span style="font-size: 10px; text-transform: uppercase; letter-spacing: 0.14em; color: #8c719f; font-weight: 750;">Materials & Packaging Stock</span>
-          <h2 style="font-size: 22px; color: #1c1917; margin: 2px 0 0 0; font-family: serif;">Market</h2>
+          <h2 style="font-size: 22px; color: #1c1917; margin: 2px 0 0 0; font-family: serif;">Market</h2><button type="button" class="btn sl-export-btn" onclick="exportCurrentMenuCSV('consumables')" aria-label="Export consumables data to CSV">↓ Export CSV</button>
         </div>
         <div style="display:flex;gap:8px;flex-wrap:wrap;"><button onclick="openNewMaterialModal()" class="btn" style="width:auto;padding:9px 15px;font-size:12px;">+ Add New Material</button></div>
       </div>
@@ -1474,7 +1491,7 @@
       <div class="storage-page-header">
         <div class="storage-title-block">
           <span class="storage-eyebrow">Warehouse · Stock Control</span>
-          <h2>Storage</h2>
+          <h2>Storage</h2><button type="button" class="btn sl-export-btn" onclick="exportCurrentMenuCSV('storage')" aria-label="Export storage data to CSV">↓ Export CSV</button>
           <p class="storage-stats-caption">Track the quantity physically available in your warehouse. Market remains the place for material pricing.</p>
           
         </div>
@@ -1501,7 +1518,7 @@
     <section id="tab-labs" class="tab-content">
       <div style="border-bottom: 1px solid #E7E5E4; padding-bottom: 16px; margin-bottom: 20px;">
         <span style="font-size: 10px; text-transform: uppercase; letter-spacing: 0.1em; color: #78716c; font-weight: 600;">Recipe & Formulation Engine</span>
-        <h2 style="font-size: 22px; color: #1c1917; margin: 2px 0 0 0; font-family: serif;">Botanical Studio</h2>
+        <h2 style="font-size: 22px; color: #1c1917; margin: 2px 0 0 0; font-family: serif;">Botanical Studio</h2><button type="button" class="btn sl-export-btn" onclick="exportCurrentMenuCSV('labs')" aria-label="Export labs data to CSV">↓ Export CSV</button>
         <div class="subnav-pills segmented-switch botanical-subnav" role="tablist" aria-label="Botanical Studio sections"><button type="button" class="subnav-pill active" id="botanicalTabSoap" aria-selected="true" onclick="setBotanicalSection('soap')">Bar Soap</button><button type="button" class="subnav-pill" id="botanicalTabOils" aria-selected="false" onclick="setBotanicalSection('oils')">Body Oils</button></div>
       </div>
       <div id="botanicalSoapPanel" class="botanical-subpanel">
@@ -1667,7 +1684,7 @@
 
     <!-- PROCESS LIBRARY: SOPs, notes and flow charts -->
     <section id="tab-process" class="tab-content">
-      <div class="page-heading"><div><span class="section-kicker">STANDARD OPERATING PROCEDURES</span><h2>Process Library</h2><p>Document how each product is made, from preparation to curing, filling, packing, and quality checks.</p></div><button type="button" class="btn" style="width:auto;" onclick="newProcessRecord()">+ New Process</button></div>
+      <div class="page-heading"><div><span class="section-kicker">STANDARD OPERATING PROCEDURES</span><h2>Process Library</h2><button type="button" class="btn sl-export-btn" onclick="exportCurrentMenuCSV('process')" aria-label="Export process data to CSV">↓ Export CSV</button><p>Document how each product is made, from preparation to curing, filling, packing, and quality checks.</p></div><button type="button" class="btn" style="width:auto;" onclick="newProcessRecord()">+ New Process</button></div>
       <div class="process-layout"><aside class="card process-sidebar"><label for="processType">Product family</label><select id="processType" class="input-control" onchange="renderProcessLibrary()"><option>Bar Soap</option><option>Body Oil</option><option>Other</option></select><label for="processSearch">Find a process</label><input id="processSearch" class="input-control" placeholder="Search product or SOP…" oninput="renderProcessLibrary()"><div id="processList" class="process-list"></div></aside>
         <div class="card process-editor"><div id="processEmptyState" class="process-empty"><span class="section-kicker">YOUR WORKING KNOWLEDGE</span><h3>Build a repeatable process.</h3><p>Create a step-by-step SOP with practical notes and a simple flowchart. Process notes are stored in this browser.</p><button type="button" class="btn" style="width:auto;" onclick="newProcessRecord()">Create first process</button></div>
           <form id="processForm" onsubmit="saveProcessRecord(event)" hidden><input type="hidden" id="processId"><div class="process-form-head"><div><span class="section-kicker">PROCESS EDITOR</span><h3 id="processFormTitle">New process</h3></div><div class="process-actions"><button type="button" class="btn btn-secondary" style="width:auto;" onclick="deleteProcessRecord()">Delete</button><button type="submit" class="btn" style="width:auto;">Save process</button></div></div>
@@ -1689,7 +1706,7 @@ D: Blend and pour [after C]"></textarea></div>
       <div style="display: flex; justify-content: space-between; align-items: center; padding-bottom: 16px; margin-bottom: 20px;">
         <div>
           <span style="font-size: 10px; text-transform: uppercase; letter-spacing: 0.1em; color: #78716c; font-weight: 600;">Categorized Stock & Batches</span>
-          <h2 style="font-size: 22px; color: #1c1917; margin: 2px 0 0 0; font-family: serif;">Inventory Management</h2>
+          <h2 style="font-size: 22px; color: #1c1917; margin: 2px 0 0 0; font-family: serif;">Inventory Management</h2><button type="button" class="btn sl-export-btn" onclick="exportCurrentMenuCSV('inventory')" aria-label="Export inventory data to CSV">↓ Export CSV</button>
         </div>
         <button onclick="openBatchModalForCreate()" class="btn" style="width: auto; padding: 8px 14px; font-size: 12px;">+ Create New Batch</button>
       </div>
@@ -1701,7 +1718,7 @@ D: Blend and pour [after C]"></textarea></div>
       <div style="display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid #E7E5E4; padding-bottom: 16px; margin-bottom: 20px;">
         <div>
           <span style="font-size: 10px; text-transform: uppercase; letter-spacing: 0.1em; color: #78716c; font-weight: 600;">Transactions</span>
-          <h2 style="font-size: 22px; color: #1c1917; margin: 2px 0 0 0; font-family: serif;">Sales Orders & Receipts</h2>
+          <h2 style="font-size: 22px; color: #1c1917; margin: 2px 0 0 0; font-family: serif;">Sales Orders & Receipts</h2><button type="button" class="btn sl-export-btn" onclick="exportCurrentMenuCSV('sales')" aria-label="Export sales data to CSV">↓ Export CSV</button>
         </div>
         <button onclick="openSalesModalForCreate()" class="btn" style="width: auto; padding: 8px 12px; font-size: 12px;">+ Record Order</button>
       </div>
@@ -1730,7 +1747,7 @@ D: Blend and pour [after C]"></textarea></div>
     <section id="tab-buyers" class="tab-content">
       <div style="border-bottom: 1px solid #E7E5E4; padding-bottom: 16px; margin-bottom: 20px;">
         <span style="font-size: 10px; text-transform: uppercase; letter-spacing: 0.1em; color: #78716c; font-weight: 600;">Customer Analytics</span>
-        <h2 style="font-size: 22px; color: #1c1917; margin: 2px 0 0 0; font-family: serif;">Buyer Leaderboards</h2>
+        <h2 style="font-size: 22px; color: #1c1917; margin: 2px 0 0 0; font-family: serif;">Buyer Leaderboards</h2><button type="button" class="btn sl-export-btn" onclick="exportCurrentMenuCSV('buyers')" aria-label="Export buyers data to CSV">↓ Export CSV</button>
       </div>
 
       <div class="table-container">
@@ -1746,7 +1763,7 @@ D: Blend and pour [after C]"></textarea></div>
 
     <!-- TAB 7: FINANCE -->
     <section id="tab-finance" class="tab-content">
-      <div style="border-bottom:1px solid #E7E5E4;padding-bottom:16px;margin-bottom:18px;display:flex;justify-content:space-between;gap:12px;align-items:center;flex-wrap:wrap;"><div><span style="font-size:10px;text-transform:uppercase;letter-spacing:.1em;color:#78716c;font-weight:600;">Capital, Sales & Cashflow</span><h2 style="font-size:22px;color:#1c1917;margin:2px 0 0;font-family:serif;">Finance</h2></div></div>
+      <div style="border-bottom:1px solid #E7E5E4;padding-bottom:16px;margin-bottom:18px;display:flex;justify-content:space-between;gap:12px;align-items:center;flex-wrap:wrap;"><div><span style="font-size:10px;text-transform:uppercase;letter-spacing:.1em;color:#78716c;font-weight:600;">Capital, Sales & Cashflow</span><h2 style="font-size:22px;color:#1c1917;margin:2px 0 0;font-family:serif;">Finance</h2><button type="button" class="btn sl-export-btn" onclick="exportCurrentMenuCSV('finance')" aria-label="Export finance data to CSV">↓ Export CSV</button></div></div>
       <div class="finance-period-inline"><span class="period-label">Reporting period</span><div style="display:flex;gap:10px;flex-wrap:wrap;align-items:end;"><div><label style="font-size:11px;color:#78716c;">From</label><input id="finStartDate" type="date" class="input-control" onchange="renderFinance()"></div><div><label style="font-size:11px;color:#78716c;">To</label><input id="finEndDate" type="date" class="input-control" onchange="renderFinance()"></div><button type="button" class="btn" style="width:auto;" onclick="setFinanceThisMonth()">This Month</button><button type="button" class="btn" style="width:auto;background:#6B705C;" onclick="setFinanceAllTime()">All Time</button></div></div>
       <div class="grid-4" style="grid-template-columns:repeat(auto-fit,minmax(160px,1fr));">
         <div class="finance-stat"><div class="label">Gross sales</div><div class="value" id="finGrossSales">Rp. 0</div></div>
@@ -1787,7 +1804,16 @@ D: Blend and pour [after C]"></textarea></div>
     <section id="tab-key" class="tab-content">
       <div style="padding-bottom:16px;margin-bottom:20px;">
         <span style="font-size:10px;text-transform:uppercase;letter-spacing:.1em;color:#78716c;font-weight:600;">Access & Account</span>
-        <h2 style="font-size:22px;color:#1c1917;margin:2px 0 0;font-family:serif;">Key</h2>
+        <h2 style="font-size:22px;color:#1c1917;margin:2px 0 0;font-family:serif;">Key</h2><button type="button" class="btn sl-export-btn" onclick="exportCurrentMenuCSV('key')" aria-label="Export key data to CSV">↓ Export CSV</button>
+      <div class="sl-local-backup-panel">
+        <div><strong>Local Data Backup</strong><p>All Suma Lōra records and settings saved in this browser.</p></div>
+        <div class="sl-local-backup-actions">
+          <button type="button" class="btn" onclick="exportAllToExcel()">Export All to Excel</button>
+          <button type="button" class="btn" onclick="exportFullLocalBackup()">Download Full Backup</button>
+          <label class="btn sl-restore-label">Restore Backup<input type="file" accept="application/json,.json" onchange="restoreFullLocalBackup(this)" hidden></label>
+        </div>
+      </div>
+
       </div>
       <div class="card" style="max-width:640px;display:flex;flex-direction:column;gap:12px;">
         <h3 style="font-family:serif;font-size:16px;margin:0;">Account & Security</h3>
@@ -1924,12 +1950,10 @@ D: Blend and pour [after C]"></textarea></div>
 
         <div id="shopeeFeesContainer" style="background: #FFF7ED; border: 1px solid #FFEDD5; padding: 10px; border-radius: 10px;">
           <span style="font-size: 10px; font-weight: 600; color: #9A3412; display: block; margin-bottom: 6px;">Shopee Fee Breakdown</span>
-          <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 6px;">
-            <div><label style="font-size: 9px; color: #9A3412;">Ongkir</label><input type="text" id="feeOngkir" value="Rp. 0" class="input-control currency-input"></div>
-            <div><label style="font-size: 9px; color: #9A3412;">Admin</label><input type="text" id="feeAdmin" value="Rp. 0" class="input-control currency-input"></div>
-            <div><label style="font-size: 9px; color: #9A3412;">Gratis Ongkir</label><input type="text" id="feeGratisOngkir" value="Rp. 0" class="input-control currency-input"></div>
-            <div><label style="font-size: 9px; color: #9A3412;">Pajak</label><input type="text" id="feeTax" value="Rp. 0" class="input-control currency-input"></div>
-            <div style="grid-column: span 2;"><label style="font-size: 9px; color: #9A3412;">Lainnya</label><input type="text" id="feeOther" value="Rp. 0" class="input-control currency-input"></div>
+          <div class="shopee-fee-grid">
+            <div><label style="font-size: 9px; color: #9A3412;">Biaya Platform</label><input type="text" id="feeAdmin" value="Rp. 0" class="input-control currency-input"></div>
+            <div><label style="font-size: 9px; color: #9A3412;">Biaya Gratis Ongkir Extra</label><input type="text" id="feeGratisOngkir" value="Rp. 0" class="input-control currency-input"></div>
+            <div><label style="font-size: 9px; color: #9A3412;">Biaya Layanan</label><input type="text" id="feeOther" value="Rp. 0" class="input-control currency-input"></div>
           </div>
         </div>
 
@@ -1961,7 +1985,7 @@ D: Blend and pour [after C]"></textarea></div>
   <div id="storageAdjustModal" class="modal-overlay"><div class="modal-box" style="max-width:520px;"><div class="modal-header"><h3 style="font-family:serif;">Adjust Warehouse Stock</h3><button type="button" onclick="closeModal('storageAdjustModal')" class="close-btn">&times;</button></div><form id="storageAdjustForm" style="display:flex;flex-direction:column;gap:10px;"><div><label style="font-size:11px;color:#78716c;">Material / Item</label><select id="storageItem" class="input-control" required></select></div><div class="grid-2" style="margin:0;gap:10px;"><div><label style="font-size:11px;color:#78716c;">Movement</label><select id="storageMovement" class="input-control"><option value="in">Stock in (+)</option><option value="out">Stock out (−)</option><option value="set">Set exact stock</option></select></div><div><label style="font-size:11px;color:#78716c;">Quantity</label><input id="storageQty" type="number" min="0" step="any" class="input-control" required></div></div><div><label style="font-size:11px;color:#78716c;">Note / Reference</label><input id="storageNote" class="input-control" placeholder="e.g. purchase, production use, stock count"></div><button type="submit" class="btn">Save Stock Movement</button></form></div></div>
   <div id="financeOptionsModal" class="modal-overlay"><div class="modal-box" style="max-width:520px;"><div class="modal-header"><h3 id="financeOptionsTitle" style="font-family:serif;">Finance Options</h3><button type="button" onclick="closeModal('financeOptionsModal')" class="close-btn">&times;</button></div><p id="financeOptionsHint" style="font-size:12px;color:#78716c;line-height:1.5;">Add, rename or remove options.</p><div id="financeOptionsList" style="display:flex;flex-direction:column;gap:8px;margin:12px 0;"></div><form id="financeOptionForm" style="display:flex;flex-direction:column;gap:8px;"><input id="financeOptionLabel" class="input-control" placeholder="New option name" required><div id="financeOptionFlowWrap"><label style="font-size:11px;color:#78716c;">Financial direction</label><select id="financeOptionFlow" class="input-control"><option value="expense">Money out / expense</option><option value="income">Money in / income</option></select></div><button type="submit" class="btn">+ Add Option</button></form></div></div>
   <div id="appToast" style="position:fixed;left:50%;bottom:24px;transform:translateX(-50%);z-index:99999;background:#24382c;color:white;padding:11px 16px;border-radius:12px;box-shadow:0 8px 24px #0002;font-size:13px;display:none;max-width:90vw;"></div>
-  <div id="userManagerModal" class="modal-overlay"><div class="modal-box" style="max-width:560px;"><div class="modal-header"><h3>User Management</h3><button type="button" onclick="closeModal('userManagerModal')" class="close-btn">&times;</button></div><p style="font-size:11px;color:#78716c;line-height:1.5;">Manage accounts for this browser profile. This is a convenience lock for the standalone HTML, not strong security; accounts are not synced to Google Sheets and anyone with access to the file/browser storage may bypass it.</p><form id="addUserForm" style="display:flex;gap:8px;flex-wrap:wrap;margin-bottom:16px;"><input id="newUsername" class="input-control" required placeholder="New username" style="flex:1;min-width:120px;"><input id="newUserPassword" type="password" class="input-control" required minlength="6" placeholder="Password (min. 6 chars)" style="flex:1;min-width:150px;"><button class="btn" style="width:auto;" type="submit">Add User</button></form><div style="overflow:auto;"><table><thead><tr><th>Username</th><th>Role</th><th>Action</th></tr></thead><tbody id="userTableBody"></tbody></table></div></div></div>
+  <div id="userManagerModal" class="modal-overlay"><div class="modal-box" style="max-width:560px;"><div class="modal-header"><h3>User Management</h3><button type="button" onclick="closeModal('userManagerModal')" class="close-btn">&times;</button></div><p style="font-size:11px;color:#78716c;line-height:1.5;">Manage accounts saved in this browser. This is a local convenience lock, not server-grade security; anyone with access to this browser profile or the HTML source may be able to bypass it.</p><form id="addUserForm" style="display:flex;gap:8px;flex-wrap:wrap;margin-bottom:16px;"><input id="newUsername" class="input-control" required placeholder="New username" style="flex:1;min-width:120px;"><input id="newUserPassword" type="password" class="input-control" required minlength="6" placeholder="Password (min. 6 chars)" style="flex:1;min-width:150px;"><button class="btn" style="width:auto;" type="submit">Add User</button></form><div style="overflow:auto;"><table><thead><tr><th>Username</th><th>Role</th><th>Action</th></tr></thead><tbody id="userTableBody"></tbody></table></div></div></div>
 
   <script>
     // MASTER CATALOG
@@ -2044,16 +2068,16 @@ D: Blend and pour [after C]"></textarea></div>
       "Castor Oil": { sap: 0.128, lauric: 0, myristic: 0, palmitic: 2, stearic: 1, oleic: 4, linoleic: 4, linolenic: 0, ricinoleic: 89 }
     };
 
-    // Add the deployed Apps Script Web App URL here to enable Google Sheets sync.
+    // Add the deployed remote endpoint here to enable local storage sync.
     // The source file provided for this edit did not contain the previously working endpoint.
-    const APPS_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbzm1CxB1Ud2OyEXvuH48T4xlqaUBTSg5fptwVDmbGHxgtxKS577kFPOparLm0dGDIDowA/exec";
+    const APPS_SCRIPT_URL = "";
     let syncInFlight = false;
     function describeSyncError(err) {
       const msg = String((err && err.message) || err || '');
       if (navigator.onLine === false) return 'Offline · saved on this device';
-      if (/failed to fetch|networkerror|load failed/i.test(msg)) return 'Sheets unreachable · click to retry';
-      if (/timed out|did not finish/i.test(msg)) return 'Sheets timed out · click to retry';
-      return `Sheets error: ${msg || 'check deployment'} · click to retry`;
+      if (/failed to fetch|networkerror|load failed/i.test(msg)) return 'local only · click to retry';
+      if (/timed out|did not finish/i.test(msg)) return 'local only · click to retry';
+      return `Local status: ${msg || 'check deployment'} · click to retry`;
     }
     function safeStorageJSON(key, fallback) {
       try {
@@ -2103,10 +2127,10 @@ D: Blend and pour [after C]"></textarea></div>
       if (cat) cat.innerHTML = getMaterialCategories().map(c=>`<option value="${escapeHtml(c)}">${escapeHtml(c)}</option>`).join('');
     }
     function persistMaterialCatalog() { localStorage.setItem('suma_custom_materials',JSON.stringify(customConsumableItems)); localStorage.setItem('suma_material_categories',JSON.stringify(customMaterialCategories)); localStorage.setItem('suma_material_category_overrides',JSON.stringify(materialCategoryOverrides)); }
-    function saveAppSetting(configType,configKey,value) { const record={id:Date.now(),recordType:'appSetting',configType,configKey,configValue:JSON.stringify(value),date:new Date().toISOString().slice(0,10)}; consumableHistory.push(record); saveDataToStorage(); postToGoogleSheets({action:'addConsumableHistory',record}); }
+    function saveAppSetting(configType,configKey,value) { const record={id:Date.now(),recordType:'appSetting',configType,configKey,configValue:JSON.stringify(value),date:new Date().toISOString().slice(0,10)}; consumableHistory.push(record); saveDataToStorage(); noteLocalSave({action:'addConsumableHistory',record}); }
     function editMaterialCategory(name) { const item=allConsumableItems().find(i=>i.name===name); if(!item)return; document.getElementById('categoryEditMaterialName').value=name; const inlineCat=document.getElementById('inlineNewCategory'); if(inlineCat)inlineCat.value=''; document.getElementById('materialCategoryEditHint').textContent=`Choose the category that best describes ${name}. Add a new category below if needed.`; document.getElementById('categoryEditValue').innerHTML=getMaterialCategories().map(c=>`<option value="${escapeHtml(c)}" ${c===item.group?'selected':''}>${escapeHtml(c)}</option>`).join(''); openModal('materialCategoryEditModal'); }
     function addCategoryFromMaterialEditor(){ const input=document.getElementById('inlineNewCategory'), name=(input?.value||'').trim(); if(!name)return showToast('Enter a category name first.'); const cats=getMaterialCategories(); if(cats.some(c=>c.toLowerCase()===name.toLowerCase()))return showToast('That category already exists.'); customMaterialCategories=[...customMaterialCategories,name]; persistMaterialCatalog(); renderMaterialDropdowns(); const sel=document.getElementById('categoryEditValue'); sel.innerHTML=getMaterialCategories().map(c=>`<option value="${escapeHtml(c)}">${escapeHtml(c)}</option>`).join(''); sel.value=name; if(input)input.value=''; saveAppSetting('categories','materialCategories',getMaterialCategories()); showToast(`Category “${name}” added.`); }
-    function saveMaterialCategoryEdit(e) { e.preventDefault(); const name=document.getElementById('categoryEditMaterialName').value, group=document.getElementById('categoryEditValue').value; if(!name||!group)return; materialCategoryOverrides[name]=group; persistMaterialCatalog(); renderMaterialDropdowns();renderConsumablesTable();calculateSoapFormula(); const record={id:Date.now(),recordType:'categoryOverride',name,group,date:new Date().toISOString().slice(0,10)}; consumableHistory.push(record); saveDataToStorage(); postToGoogleSheets({action:'addConsumableHistory',record}); closeModal('materialCategoryEditModal'); showToast(`Category updated to ${group}`); }
+    function saveMaterialCategoryEdit(e) { e.preventDefault(); const name=document.getElementById('categoryEditMaterialName').value, group=document.getElementById('categoryEditValue').value; if(!name||!group)return; materialCategoryOverrides[name]=group; persistMaterialCatalog(); renderMaterialDropdowns();renderConsumablesTable();calculateSoapFormula(); const record={id:Date.now(),recordType:'categoryOverride',name,group,date:new Date().toISOString().slice(0,10)}; consumableHistory.push(record); saveDataToStorage(); noteLocalSave({action:'addConsumableHistory',record}); closeModal('materialCategoryEditModal'); showToast(`Category updated to ${group}`); }
 
     function addCategoryForNewMaterial(){const input=document.getElementById('newMatCategoryName'),name=(input?.value||'').trim();if(!name)return showToast('Enter a category name first.');const cats=getMaterialCategories();if(cats.some(c=>c.toLowerCase()===name.toLowerCase()))return showToast('That category already exists.');customMaterialCategories=[...customMaterialCategories,name];persistMaterialCatalog();renderMaterialDropdowns();const sel=document.getElementById('newMatCategory');if(sel)sel.value=name;if(input)input.value='';saveAppSetting('categories','materialCategories',getMaterialCategories());showToast('Category added.');}
     function openNewMaterialModal() { renderMaterialDropdowns(); document.getElementById('newMatName').value=''; document.getElementById('newMatUnit').value='gr'; document.getElementById('newMatUnitPrice').value='Rp. 0'; if(document.getElementById('newMatCategoryName'))document.getElementById('newMatCategoryName').value=''; openModal('newMaterialModal'); }
@@ -2117,7 +2141,7 @@ D: Blend and pour [after C]"></textarea></div>
       if(allConsumableItems().some(i=>i.name.toLowerCase()===name.toLowerCase())) return alert('A material with this name already exists.');
       const item={name,group,unit,defaultPrice,custom:true}; customConsumableItems.push(item); persistMaterialCatalog(); renderMaterialDropdowns(); renderConsumablesTable();
       const catalogRecord={id:Date.now(),recordType:'catalog',name,group,unit,defaultPrice,date:new Date().toISOString().slice(0,10)};
-      consumableHistory.push(catalogRecord); saveDataToStorage(); postToGoogleSheets({action:'addConsumableHistory',record:catalogRecord});
+      consumableHistory.push(catalogRecord); saveDataToStorage(); noteLocalSave({action:'addConsumableHistory',record:catalogRecord});
       closeModal('newMaterialModal'); calculateSoapFormula();
     }
     function manageMaterialCategories() {
@@ -2151,7 +2175,7 @@ D: Blend and pour [after C]"></textarea></div>
       consumableHistory.push(revision);
       saveDataToStorage(); renderConsumablesTable(); calculateSoapFormula();
       // Store corrections as a revision record using the existing add action; the UI hides superseded versions.
-      postToGoogleSheets({action:'addConsumableHistory',record:revision});
+      noteLocalSave({action:'addConsumableHistory',record:revision});
       showMaterialHistory(activeHistoryMaterial);
     }
 
@@ -2160,7 +2184,7 @@ D: Blend and pour [after C]"></textarea></div>
       const h=consumableHistory.find(x=>String(x.id)===String(id)); if(!h)return;
       if(!confirm(`Delete this price history record dated ${h.date||'unknown date'}?`))return;
       const tombstone={id:Date.now(),recordType:'priceDeleted',targetId:h.id,name:activeHistoryMaterial,date:new Date().toISOString().slice(0,10)};
-      consumableHistory.push(tombstone); saveDataToStorage(); postToGoogleSheets({action:'addConsumableHistory',record:tombstone});
+      consumableHistory.push(tombstone); saveDataToStorage(); noteLocalSave({action:'addConsumableHistory',record:tombstone});
       renderConsumablesTable(); calculateSoapFormula(); showMaterialHistory(activeHistoryMaterial);
     }
 
@@ -2348,95 +2372,30 @@ D: Blend and pour [after C]"></textarea></div>
         ...record,
         name: materialNameAliases[record.name] || record.name
       }));
-      setSyncStatus(APPS_SCRIPT_URL ? "Connecting to Google Sheets…" : "Local only — Sheets URL needed", "#F59E0B");
+      setSyncStatus('Local data loaded on this device');
       renderAll();
-      if (APPS_SCRIPT_URL) syncFromGoogleSheets();
     }
 
-    function setSyncStatus(message, color = "#10B981") {
-      const html = `<span style="width:8px;height:8px;border-radius:50%;background:${color};display:inline-block;"></span> ${escapeHtml(message)}`;
-      ["syncStatus", "syncTextMobile"].forEach(id => { const el = document.getElementById(id); if (el) el.innerHTML = html; });
+    function setSyncStatus(message = 'Saved locally on this device', color = '#71866f') {
+      const markup = `<span style="width:8px;height:8px;border-radius:50%;background:${color};display:inline-block;"></span> ${escapeHtml(message)}`;
+      ["syncStatus", "syncTextMobile"].forEach(id => {
+        const el = document.getElementById(id);
+        if (el) { el.innerHTML = markup; el.removeAttribute('onclick'); el.removeAttribute('title'); el.style.cursor = 'default'; }
+      });
     }
-
-    async function syncFromGoogleSheets() {
-      if (!APPS_SCRIPT_URL || syncInFlight) return;
-      syncInFlight = true;
-      try {
-        setSyncStatus("Syncing with Google Sheets…", "#F59E0B");
-        const response = await Promise.race([fetch(APPS_SCRIPT_URL, { method: "GET", cache: "no-store", redirect: "follow" }), new Promise((_,reject)=>setTimeout(()=>reject(new Error("Connection timed out after 15 seconds")),15000))]);
-        if (!response.ok) throw new Error(`HTTP ${response.status}`);
-        const data = await Promise.race([response.json(), new Promise((_,reject)=>setTimeout(()=>reject(new Error("Google Sheets response did not finish within 15 seconds")),15000))]);
-        if (data.status === "error") throw new Error(data.message || "Apps Script returned an error");
-        // Safe first-sync merge: never discard records that exist only in this browser.
-        const mergeById = (localRows, remoteRows) => {
-          const remote = Array.isArray(remoteRows) ? remoteRows : [];
-          const remoteIds = new Set(remote.map(x => String(x.id)));
-          const localOnly = (Array.isArray(localRows) ? localRows : []).filter(x => !remoteIds.has(String(x.id)));
-          return { merged: [...remote, ...localOnly], localOnly };
-        };
-        const batchMerge = mergeById(batches, data.batches);
-        const salesMerge = mergeById(sales, data.sales);
-        const consumableMerge = mergeById(consumableHistory, data.consumableHistory);
-        batches = batchMerge.merged;
-        sales = salesMerge.merged;
-        consumableHistory = consumableMerge.merged;
-        const catalogRows=consumableHistory.filter(r=>r.recordType==='catalog' && r.name && r.group && r.unit);
-        catalogRows.forEach(r=>{ if(!customConsumableItems.some(i=>i.name===r.name) && !CONSUMABLE_ITEMS.some(i=>i.name===r.name)) customConsumableItems.push({name:r.name,group:r.group,unit:r.unit,defaultPrice:Number(r.defaultPrice)||0,custom:true}); });
-        consumableHistory.filter(r=>r.recordType==='categoryOverride' && r.name && r.group).sort((a,b)=>new Date(a.date)-new Date(b.date)||Number(a.id)-Number(b.id)).forEach(r=>{materialCategoryOverrides[r.name]=r.group; if(!customMaterialCategories.includes(r.group)&&!CONSUMABLE_ITEMS.some(i=>i.group===r.group))customMaterialCategories.push(r.group);});
-        const settings=consumableHistory.filter(r=>r.recordType==='appSetting' && r.configType && r.configKey).sort((a,b)=>Number(a.id)-Number(b.id));
-        settings.forEach(r=>{try{const value=JSON.parse(r.configValue); if(r.configType==='recipe')customRecipes[r.configKey]=value; if(r.configType==='recipeDeleted')delete customRecipes[r.configKey]; if(r.configType==='yield')yieldDefaults[r.configKey]=value; if(r.configType==='packing')packingDefaults[r.configKey]=value; if(r.configType==='categories' && Array.isArray(value)) customMaterialCategories=value.filter(c=>!CONSUMABLE_ITEMS.some(i=>i.group===c));}catch(e){}});
-        localStorage.setItem('suma_custom_recipes',JSON.stringify(customRecipes)); localStorage.setItem('suma_yield_defaults',JSON.stringify(yieldDefaults)); localStorage.setItem('suma_packing_defaults',JSON.stringify(packingDefaults));
-        refreshRecipeOptions(document.getElementById('labRecipeSelect')?.value || 'Bare Unscented');
-        persistMaterialCatalog(); renderMaterialDropdowns();
-        localStorage.setItem('suma_batches', JSON.stringify(batches));
-        localStorage.setItem('suma_sales', JSON.stringify(sales));
-        localStorage.setItem('suma_consumables', JSON.stringify(consumableHistory));
-        renderAll();
-        // Upload browser-only records to Sheets after the merge; existing remote records are not duplicated.
-        for (const batch of batchMerge.localOnly) await postToGoogleSheets({ action: "addBatch", batch });
-        for (const sale of salesMerge.localOnly) await postToGoogleSheets({ action: "addSale", sale });
-        for (const record of consumableMerge.localOnly) await postToGoogleSheets({ action: "addConsumableHistory", record });
-        setSyncStatus("Google Sheets connected", "#10B981");
-      } catch (err) {
-        console.warn("Google Sheets sync failed (app keeps working with local data):", err);
-        setSyncStatus(describeSyncError(err), "#DC2626");
-      } finally {
-        syncInFlight = false;
-      }
-    }
-    window.addEventListener('online', () => { syncFromGoogleSheets(); });
-
-    async function postToGoogleSheets(payload) {
-      if (!APPS_SCRIPT_URL) {
-        setSyncStatus("Local only — Sheets URL needed", "#F59E0B");
-        return false;
-      }
-      try {
-        setSyncStatus("Saving to Google Sheets…", "#F59E0B");
-        const response = await Promise.race([fetch(APPS_SCRIPT_URL, {
-          method: "POST",
-          // Leave Content-Type unspecified (text/plain) to avoid a browser preflight; Apps Script reads e.postData.contents.
-          body: JSON.stringify(payload)
-        }), new Promise((_,reject)=>setTimeout(()=>reject(new Error("Save timed out after 15 seconds")),15000))]);
-        if (!response.ok) throw new Error(`HTTP ${response.status}`);
-        const result = await response.json();
-        if (result.status !== "success") throw new Error(result.message || "Apps Script rejected the update");
-        setSyncStatus("Google Sheets synced", "#10B981");
-        return true;
-      } catch (err) {
-        console.warn("Google Sheets save failed (saved locally):", err);
-        setSyncStatus(navigator.onLine === false ? 'Offline · saved on this device' : 'Saved locally · Sheets unreachable', "#DC2626");
-        return false;
-      }
-    }
+    async function setLocalOnlyStatus() { setSyncStatus('Local-only mode'); return false; }
+    async function noteLocalSave(payload) { setSyncStatus('Saved locally on this device'); return true; }
 
     function saveDataToStorage() {
       try {
         localStorage.setItem('suma_batches', JSON.stringify(batches));
         localStorage.setItem('suma_sales', JSON.stringify(sales));
         localStorage.setItem('suma_consumables', JSON.stringify(consumableHistory));
+        setSyncStatus('Saved locally on this device', '#71866f');
       } catch (err) {
         console.error("Storage error:", err);
+        setSyncStatus('Storage full or unavailable · export a backup', '#bd5549');
+        showToast('Local storage could not save. Export a backup and check browser storage.');
       }
     }
 
@@ -2467,7 +2426,7 @@ D: Blend and pour [after C]"></textarea></div>
     function setFinanceRecords(rows) { return safeStorageSet('suma_finance_records', JSON.stringify(rows)); }
     function appendFinanceHistorySnapshot(record, deleted=false) {
       const snapshot={...(record||{}),id:Date.now()+Math.floor(Math.random()*10000),financeId:String(record?.financeId||record?.id),recordType:deleted?'financeDeleted':'finance',updatedAt:new Date().toISOString(),date:record?.date||new Date().toISOString().slice(0,10)};
-      consumableHistory.push(snapshot); saveDataToStorage(); postToGoogleSheets({action:'addConsumableHistory',record:snapshot});
+      consumableHistory.push(snapshot); saveDataToStorage(); noteLocalSave({action:'addConsumableHistory',record:snapshot});
     }
     function showToast(message) { const el=document.getElementById('appToast'); if(!el)return; el.textContent=message; el.style.display='block'; clearTimeout(showToast._timer); showToast._timer=setTimeout(()=>{el.style.display='none';},2800); }
     function rupiah(value) { return 'Rp. '+Math.round(Number(value)||0).toLocaleString('id-ID'); }
@@ -2491,8 +2450,8 @@ D: Blend and pour [after C]"></textarea></div>
     }
     function saveFinanceOption(e) {
       e.preventDefault(); const label=document.getElementById('financeOptionLabel').value.trim(); if(!label)return;
-      if(financeOptionMode==='types') { if(financeTypes.some(t=>t.label.toLowerCase()===label.toLowerCase())) return showToast('That record type already exists.'); const key='custom_'+Date.now(); financeTypes.push({key,label,flow:document.getElementById('financeOptionFlow').value,locked:false}); }
-      else { if(financePayers.some(v=>v.toLowerCase()===label.toLowerCase())) return showToast('That paid-by option already exists.'); financePayers.push(label); }
+      if(financeOptionMode==='types') { if(financeTypes.some(t=>t.label.toLowerCase()===label.toLowerCase())) return showToast('That record type already exists.'); const key='custom_'+Date.now(); financeTypes.push({key,label,flow:document.getElementById('financeOptionFlow').value,locked:false}); localStorage.setItem('suma_finance_types',JSON.stringify(financeTypes)); }
+      else { if(financePayers.some(v=>v.toLowerCase()===label.toLowerCase())) return showToast('That paid-by option already exists.'); financePayers.push(label); localStorage.setItem('suma_finance_payers',JSON.stringify(financePayers)); }
       renderFinanceOptionSelects(); renderFinanceOptionsList(); document.getElementById('financeOptionLabel').value=''; showToast('Option added.');
     }
     function renameFinanceOption(index) {
@@ -2642,7 +2601,7 @@ D: Blend and pour [after C]"></textarea></div>
       renderConsumablesTable();
       calculateSoapFormula();
       saveDataToStorage();
-      postToGoogleSheets({ action: "addConsumableHistory", record });
+      noteLocalSave({ action: "addConsumableHistory", record });
     }
 
     // LABS RECIPES WITH FULL ADDITIVES ENGINE
@@ -2935,7 +2894,7 @@ D: Blend and pour [after C]"></textarea></div>
       container.innerHTML = `<div style="font-size:10px;color:#78716c;font-weight:700;text-transform:uppercase;margin-bottom:5px;">Tip ${soapQuickTipIndex + 1} of ${SOAP_QUICK_TIPS.length} · ${tip.title}</div><div style="font-size:13px;line-height:1.6;color:#292524;">${tip.text}</div>`;
     }
 
-    function renderSoapRadarChart(c, h, cond, s) {
+    function renderSoapRadarChart(c, h, cond, s) { if (typeof Chart === 'undefined') return;
       if (typeof Chart === 'undefined') return;
       try {
         const ctx = document.getElementById('soapRadarChart');
@@ -3273,7 +3232,7 @@ D: Blend and pour [after C]"></textarea></div>
         batches.push({ id: Date.now(), product, code, date, yieldQty, remainingQty, curingDays, rack });
       }
       saveDataToStorage();
-      postToGoogleSheets({ action: id ? "editBatch" : "addBatch", batch: batches.find(x => String(x.id) === String(id || batches[batches.length-1]?.id)) });
+      noteLocalSave({ action: id ? "editBatch" : "addBatch", batch: batches.find(x => String(x.id) === String(id || batches[batches.length-1]?.id)) });
       renderAll(); closeModal("batchModal"); document.getElementById("formBatch").reset(); document.getElementById("editBatchId").value="";
     }
     function deleteBatch(id) {
@@ -3328,7 +3287,7 @@ D: Blend and pour [after C]"></textarea></div>
       const rows = [...document.querySelectorAll("#orderItemsContainer .order-item-row")];
       const gross = rows.reduce((sum, r) => sum + Math.max(0, Number(r.querySelector(".order-qty").value) || 0) * Math.max(0, Number(r.querySelector(".order-price").value) || 0), 0);
       const platform = document.getElementById("salesPlatformSelect")?.value;
-      const feeIds = ["feeOngkir","feeAdmin","feeGratisOngkir","feeTax","feeOther"];
+      const feeIds = ["feeAdmin","feeGratisOngkir","feeOther"];
       const fees = platform === "Shopee" ? feeIds.reduce((sum,id) => sum + parseRupiahNumber(document.getElementById(id).value), 0) : 0;
       document.getElementById("grossTotalDisplay").textContent = `Rp. ${gross.toLocaleString("id-ID")}`;
       document.getElementById("feesTotalDisplay").textContent = `- Rp. ${fees.toLocaleString("id-ID")}`;
@@ -3339,7 +3298,7 @@ D: Blend and pour [after C]"></textarea></div>
       document.getElementById("editSaleId").value = "";
       document.getElementById("salesModalTitle").textContent = "Record Sales Order";
       document.getElementById("salesDateInput").value = new Date().toISOString().slice(0,10);
-      ["feeOngkir","feeAdmin","feeGratisOngkir","feeTax","feeOther"].forEach(id => document.getElementById(id).value = "Rp. 0");
+      ["feeAdmin","feeGratisOngkir","feeOther"].forEach(id => document.getElementById(id).value = "Rp. 0");
       document.getElementById("orderItemsContainer").innerHTML = "";
       addOrderItemRow(); toggleShopeeFeeFields(); openModal("salesModal");
     }
@@ -3353,7 +3312,7 @@ D: Blend and pour [after C]"></textarea></div>
       document.getElementById("salesPlatformSelect").value = sale.platform;
       document.getElementById("salesDateInput").value = sale.date;
       const f = sale.fees || {};
-      [["feeOngkir","ongkir"],["feeAdmin","admin"],["feeGratisOngkir","gratisOngkir"],["feeTax","tax"],["feeOther","other"]].forEach(([id,key]) => document.getElementById(id).value = `Rp. ${Number(f[key]||0).toLocaleString("id-ID")}`);
+      [["feeAdmin","admin"],["feeGratisOngkir","gratisOngkir"],["feeOther","other"]].forEach(([id,key]) => document.getElementById(id).value = `Rp. ${Number(f[key]||0).toLocaleString("id-ID")}`);
       document.getElementById("orderItemsContainer").innerHTML = "";
       (sale.items || []).forEach(item => addOrderItemRow(item));
       toggleShopeeFeeFields(); openModal("salesModal");
@@ -3382,12 +3341,10 @@ D: Blend and pour [after C]"></textarea></div>
       items.forEach(i => { const b = batches.find(b => b.code === i.batchCode); b.remainingQty = Number(b.remainingQty) - i.qty; });
       const grossTotal = items.reduce((sum,i) => sum + i.qty*i.price, 0);
       const fees = platform === "Shopee" ? {
-        ongkir:parseRupiahNumber(document.getElementById("feeOngkir").value),
-        admin:parseRupiahNumber(document.getElementById("feeAdmin").value),
-        gratisOngkir:parseRupiahNumber(document.getElementById("feeGratisOngkir").value),
-        tax:parseRupiahNumber(document.getElementById("feeTax").value),
-        other:parseRupiahNumber(document.getElementById("feeOther").value)
-      } : {ongkir:0,admin:0,gratisOngkir:0,tax:0,other:0};
+        admin:parseRupiahNumber(document.getElementById("feeAdmin").value), // Biaya Platform
+        gratisOngkir:parseRupiahNumber(document.getElementById("feeGratisOngkir").value), // Biaya Gratis Ongkir Extra
+        other:parseRupiahNumber(document.getElementById("feeOther").value) // Biaya Layanan
+      } : {admin:0,gratisOngkir:0,other:0};
       const record = { id:old ? old.id : Date.now(), buyer:document.getElementById("salesBuyerInput").value.trim(), platform,
         date:document.getElementById("salesDateInput").value, items, grossTotal, fees,
         netTotal:Math.max(0,grossTotal-Object.values(fees).reduce((a,b)=>a+b,0)) };
@@ -3442,7 +3399,7 @@ D: Blend and pour [after C]"></textarea></div>
         if (heading) heading.textContent = 'Welcome back';
         if (hint) hint.textContent = 'Sign in to continue.';
         if (submit) submit.textContent = 'Sign In';
-        setLoginMessage('Sign in using an account saved in this browser.');
+        setLoginMessage('Your username and password are saved in this browser only. Sign in to continue.');
       }
     }
     function finishLogin(user) {
@@ -3501,10 +3458,12 @@ D: Blend and pour [after C]"></textarea></div>
       financeUsers.splice(index, 1); saveLoginUsers(); renderUserManager();
     }
     function restoreLoginSession() {
+      // Always require credentials whenever the page is opened or refreshed.
+      // Accounts remain saved locally; only the signed-in session is cleared.
       try { financeUsers = safeStorageJSON('suma_login_users', []); } catch (_) { financeUsers = []; }
-      const sessionName = localStorage.getItem('suma_login_session');
-      const user = Array.isArray(financeUsers) ? financeUsers.find(u => u.username === sessionName) : null;
-      if (user) finishLogin(user); else showLoginGate();
+      try { localStorage.removeItem('suma_login_session'); } catch (_) {}
+      financeUser = null;
+      showLoginGate();
     }
 
     // Close a modal when clicking its backdrop; keep clicks inside the dialog intact.
@@ -3531,7 +3490,217 @@ D: Blend and pour [after C]"></textarea></div>
       showNextSoapTip();
       window.setInterval(showNextSoapTip, 12000);
     });
-  </script>
+  
+    // LOCAL EXPORT / BACKUP UTILITIES
+    function csvCell(value) {
+      let s = String(value == null ? '' : value).replace(/\u00a0/g, ' ').trim();
+      if (/^[=+\-@]/.test(s)) s = "'" + s;
+      return '"' + s.replace(/"/g, '""') + '"';
+    }
+    function downloadTextFile(filename, content, mime = 'text/csv;charset=utf-8;') {
+      const blob = new Blob(['\uFEFF', content], {type:mime});
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url; a.download = filename;
+      document.body.appendChild(a); a.click(); a.remove();
+      setTimeout(() => URL.revokeObjectURL(url), 1200);
+    }
+    function localDatasetForTab(tabId) {
+      const getArray = key => { const v=safeStorageJSON(key,[]); return Array.isArray(v)?v:[]; };
+      const getObjectRows = key => {
+        const v=safeStorageJSON(key,{});
+        return v && typeof v==='object' ? Object.entries(v).map(([name,record])=>({name,...(record&&typeof record==='object'?record:{value:record})})) : [];
+      };
+      const map = {
+        home: [['Production Batches',getArray('suma_batches')],['Sales Orders',getArray('suma_sales')]],
+        consumables: [['Material Catalog',typeof allConsumableItems==='function'?allConsumableItems():getArray('suma_custom_materials')],['Material Price History',getArray('suma_consumables').filter(r=>!['finance','financeDeleted'].includes(r.recordType))]],
+        storage: [['Warehouse Stock',getArray('suma_warehouse_stock')],['Custom Storage Items',getArray('suma_custom_storage_items')],['Storage Categories',getArray('suma_storage_categories')]],
+        labs: [['Custom Soap Recipes',getObjectRows('suma_custom_recipes')],['Yield Defaults',[safeStorageJSON('suma_yield_defaults',{})]],['Packing Defaults',[safeStorageJSON('suma_packing_defaults',{})]],['Body Oil Recipe Defaults',[safeStorageJSON('suma_body_oil_defaults',{})]]],
+        botanical: [['Custom Soap Recipes',getObjectRows('suma_custom_recipes')]],
+        process: [['Process Library',typeof getProcessRecords==='function'?getProcessRecords():getArray('suma_process_library_v1')]],
+        inventory: [['Production Batches',getArray('suma_batches')],['Warehouse Stock',getArray('suma_warehouse_stock')]],
+        sales: [['Sales Orders',getArray('suma_sales')]],
+        buyers: [['Sales / Buyer source records',getArray('suma_sales')]],
+        finance: [['Finance Records',typeof getFinanceRecords==='function'?getFinanceRecords():getArray('suma_finance_records')],['Finance Options',[{types:getArray('suma_finance_types'),payers:getArray('suma_finance_payers')}]]],
+        key: [['Local Users',getArray('suma_login_users')]]
+      };
+      return map[tabId] || [];
+    }
+    function exportCurrentMenuCSV(tabId) {
+      const panel=document.getElementById('tab-'+tabId);
+      if(!panel){showToast('Menu export is not available.');return;}
+      const sections=[];
+      [...panel.querySelectorAll('table')].forEach((table,index)=>{
+        const rows=[...table.querySelectorAll('tr')].map(tr=>[...tr.querySelectorAll('th,td')].map(c=>csvCell(c.innerText||c.textContent||''))).filter(r=>r.length);
+        if(rows.length) sections.push({name:table.closest('.table-container')?.querySelector('h3')?.innerText||`Table ${index+1}`,rows});
+      });
+      localDatasetForTab(tabId).forEach(([name,records])=>{
+        if(!Array.isArray(records)||!records.length)return;
+        const keys=[...new Set(records.flatMap(row=>row&&typeof row==='object'?Object.keys(row):['value']))];
+        const rows=[[csvCell(name)],keys.map(csvCell),...records.map(row=>keys.map(k=>{
+          let value=row&&typeof row==='object'?row[k]:row;
+          if(value&&typeof value==='object')value=JSON.stringify(value);
+          return csvCell(value==null?'':value);
+        }))];
+        sections.push({name,rows});
+      });
+      if(!sections.length){
+        const rows=[...panel.querySelectorAll('h2,h3,p')].map(el=>[csvCell(el.innerText||el.textContent||'')]);
+        sections.push({name:tabId,rows:rows.length?rows:[[csvCell('No structured data available in this menu')]]});
+      }
+      const output=[];
+      sections.forEach((section,i)=>{if(i)output.push([]);output.push([csvCell(section.name)]);output.push(...section.rows);});
+      downloadTextFile(`suma-lora-${tabId}-${new Date().toISOString().slice(0,10)}.csv`,output.map(r=>r.join(',')).join('\r\n'));
+      showToast(`CSV exported for ${tabId}.`);
+    }
+    function exportFullLocalBackup() {
+      const storage={};
+      for(let i=0;i<localStorage.length;i++){
+        const key=localStorage.key(i);
+        if(key&&(key.startsWith('suma_')||key.startsWith('sl_'))){
+          const value=localStorage.getItem(key);
+          try{storage[key]=JSON.parse(value);}catch(e){storage[key]=value;}
+        }
+      }
+      const backup={format:'SumaLoraLocalBackup',version:1,exportedAt:new Date().toISOString(),storage};
+      downloadTextFile(`suma-lora-backup-${new Date().toISOString().slice(0,10)}.json`,JSON.stringify(backup,null,2),'application/json;charset=utf-8;');
+      showToast('Full local backup downloaded.');
+    }
+    function restoreFullLocalBackup(input) {
+      const file=input?.files?.[0];if(!file)return;
+      const reader=new FileReader();
+      reader.onload=()=>{
+        try{
+          const backup=JSON.parse(String(reader.result||''));
+          if(backup.format!=='SumaLoraLocalBackup'||!backup.storage||typeof backup.storage!=='object')throw new Error('Invalid Suma Lōra backup file.');
+          if(!confirm('Restore this backup? Existing Suma Lōra local data will be replaced. Download a backup first if you want to keep current data.'))return;
+          Object.entries(backup.storage).forEach(([key,value])=>{if(key.startsWith('suma_')||key.startsWith('sl_'))localStorage.setItem(key,typeof value==='string'?value:JSON.stringify(value));});
+          alert('Backup restored. The app will reload to apply the restored data.');location.reload();
+        }catch(err){alert('Could not restore backup: '+err.message);}
+        finally{input.value='';}
+      };
+      reader.readAsText(file);
+    }
+
+
+    window.addEventListener('pagehide', () => {
+      try {
+        if (typeof batches !== 'undefined') localStorage.setItem('suma_batches', JSON.stringify(batches));
+        if (typeof sales !== 'undefined') localStorage.setItem('suma_sales', JSON.stringify(sales));
+        if (typeof consumableHistory !== 'undefined') localStorage.setItem('suma_consumables', JSON.stringify(consumableHistory));
+        if (typeof customConsumableItems !== 'undefined') localStorage.setItem('suma_custom_materials', JSON.stringify(customConsumableItems));
+        if (typeof customMaterialCategories !== 'undefined') localStorage.setItem('suma_material_categories', JSON.stringify(customMaterialCategories));
+        if (typeof materialCategoryOverrides !== 'undefined') localStorage.setItem('suma_material_category_overrides', JSON.stringify(materialCategoryOverrides));
+        if (typeof customRecipes !== 'undefined') localStorage.setItem('suma_custom_recipes', JSON.stringify(customRecipes));
+        if (typeof yieldDefaults !== 'undefined') localStorage.setItem('suma_yield_defaults', JSON.stringify(yieldDefaults));
+        if (typeof packingDefaults !== 'undefined') localStorage.setItem('suma_packing_defaults', JSON.stringify(packingDefaults));
+        if (typeof financeTypes !== 'undefined') localStorage.setItem('suma_finance_types', JSON.stringify(financeTypes));
+        if (typeof financePayers !== 'undefined') localStorage.setItem('suma_finance_payers', JSON.stringify(financePayers));
+      } catch (e) { console.warn('Final local snapshot could not be saved', e); }
+    });
+
+
+    // EXPORT THE COMPLETE BUSINESS RECAP AS A MULTI-SHEET EXCEL WORKBOOK.
+    // SpreadsheetML 2003 is supported by Microsoft Excel and does not need a CDN/library.
+    function excelXmlEscape(value) {
+      return String(value == null ? '' : value)
+        .replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;')
+        .replace(/"/g, '&quot;').replace(/'/g, '&apos;');
+    }
+    function excelValue(value) {
+      if (value === null || value === undefined) return '';
+      if (typeof value === 'object') return JSON.stringify(value);
+      return String(value);
+    }
+    function normalizeExcelRows(records) {
+      const rows = Array.isArray(records) ? records : (
+        records && typeof records === 'object'
+          ? Object.entries(records).map(([name, value]) => ({name, ...(value && typeof value === 'object' && !Array.isArray(value) ? value : {value})}))
+          : []
+      );
+      if (!rows.length) return [['No records']];
+      if (rows.every(v => v === null || typeof v !== 'object' || Array.isArray(v))) {
+        return [['Value'], ...rows.map(v => [excelValue(v)])];
+      }
+      const columns = [...new Set(rows.flatMap(row => row && typeof row === 'object' && !Array.isArray(row) ? Object.keys(row) : ['value']))];
+      return [columns, ...rows.map(row => columns.map(key => {
+        const v = row && typeof row === 'object' && !Array.isArray(row) ? row[key] : row;
+        return excelValue(v);
+      }))];
+    }
+    function exportAllToExcel() {
+      try {
+        const get = (key, fallback=[]) => safeStorageJSON(key, fallback);
+        const arr = (key) => { const v=get(key, []); return Array.isArray(v) ? v : []; };
+        const obj = (key) => { const v=get(key, {}); return v && typeof v==='object' && !Array.isArray(v) ? v : {}; };
+        const recipes = obj('suma_custom_recipes');
+        const materials = typeof allConsumableItems === 'function' ? allConsumableItems() : arr('suma_custom_materials');
+        const priceHistory = arr('suma_consumables').filter(r => r && !['finance','financeDeleted'].includes(r.recordType));
+        const financeRows = typeof getFinanceRecords === 'function' ? getFinanceRecords() : arr('suma_finance_records');
+        const processRows = typeof getProcessRecords === 'function' ? getProcessRecords() : arr('suma_process_library_v1');
+        const stockObj = obj('suma_warehouse_stock');
+        const stockRows = Object.entries(stockObj).map(([name, details]) => ({item:name, ...(details && typeof details==='object' ? details : {quantity:details})}));
+        const equipmentRows = arr('suma_custom_storage_items');
+        const batchesRows = typeof batches !== 'undefined' && Array.isArray(batches) ? batches : arr('suma_batches');
+        const salesRows = typeof sales !== 'undefined' && Array.isArray(sales) ? sales : arr('suma_sales');
+        const users = arr('suma_login_users');
+        const buyerRows = salesRows.map(s => ({
+          buyer: s.buyer || s.customer || s.customerName || s.name || '',
+          platform: s.platform || '',
+          orderDate: s.date || s.orderDate || '',
+          orderId: s.orderId || s.id || '',
+          total: s.total || s.amount || s.totalPrice || '',
+          status: s.status || ''
+        })).filter(r => r.buyer);
+        const materialCategories = get('suma_material_categories', []);
+        const unitOverrides = obj('suma_material_unit_overrides');
+        const categoryOverrides = obj('suma_material_category_overrides');
+
+        const sheets = [
+          ['Sales Orders', salesRows],
+          ['Finance', financeRows],
+          ['Inventory Batches', batchesRows],
+          ['Warehouse Stock', stockRows],
+          ['Equipment & Tools', equipmentRows],
+          ['Materials Catalog', materials],
+          ['Material Price History', priceHistory],
+          ['Soap Recipes', Object.entries(recipes).map(([name, recipe]) => ({recipeName:name, ...(recipe && typeof recipe==='object' ? recipe : {value:recipe})}))],
+          ['Process Library', processRows],
+          ['Buyers Recap', buyerRows],
+          ['Material Categories', Array.isArray(materialCategories) ? materialCategories.map(category=>({category})) : (materialCategories && typeof materialCategories==='object' ? Object.entries(materialCategories).map(([key,value])=>({key,value})) : [])],
+          ['Material Unit Overrides', Object.entries(unitOverrides).map(([material,unit])=>({material,unit}))],
+          ['Category Overrides', Object.entries(categoryOverrides).map(([material,category])=>({material,category}))],
+          ['Business Settings', [
+            {setting:'Finance types', value:JSON.stringify(get('suma_finance_types', []))},
+            {setting:'Finance payers', value:JSON.stringify(get('suma_finance_payers', []))},
+            {setting:'Yield defaults', value:JSON.stringify(get('suma_yield_defaults', {}))},
+            {setting:'Packing defaults', value:JSON.stringify(get('suma_packing_defaults', {}))},
+            {setting:'Body oil recipe defaults', value:JSON.stringify(get('suma_body_oil_defaults', {}))},
+            {setting:'Storage categories', value:JSON.stringify(get('suma_storage_categories', []))}
+          ]]
+        ];
+
+        // Never export usernames/passwords into a workbook. The Key menu has its own local backup workflow.
+        const sheetXml = sheets.map(([name, records]) => {
+          const safeName = String(name).slice(0,31);
+          const rows = normalizeExcelRows(records);
+          const rowXml = rows.map(row => '<Row>' + row.map(value => {
+            const v = excelValue(value);
+            const numeric = v !== '' && /^-?\d+(?:\.\d+)?$/.test(v) && !/^0\d+/.test(v);
+            return `<Cell><Data ss:Type="${numeric ? 'Number' : 'String'}">${excelXmlEscape(v)}</Data></Cell>`;
+          }).join('') + '</Row>').join('');
+          return `<Worksheet ss:Name="${excelXmlEscape(safeName)}"><Table>${rowXml}</Table></Worksheet>`;
+        }).join('');
+        const workbook = `<?xml version="1.0" encoding="UTF-8"?><?mso-application progid="Excel.Sheet"?><Workbook xmlns="urn:schemas-microsoft-com:office:spreadsheet" xmlns:o="urn:schemas-microsoft-com:office:office" xmlns:x="urn:schemas-microsoft-com:office:excel" xmlns:ss="urn:schemas-microsoft-com:office:spreadsheet" xmlns:html="http://www.w3.org/TR/REC-html40">${sheetXml}</Workbook>`;
+        downloadTextFile(`suma-lora-business-recap-${new Date().toISOString().slice(0,10)}.xls`, workbook, 'application/vnd.ms-excel;charset=utf-8;');
+        showToast('Excel recap downloaded with separate sheets for sales, finance, inventory, materials and more.');
+      } catch (err) {
+        console.error('Excel export failed:', err);
+        showToast('Excel export failed. Please download a full backup and check the console.');
+      }
+    }
+
+</script>
 
 
 <style id="sl-v9-0-header-and-calculator-refinement">
