@@ -1896,7 +1896,7 @@ D: Blend and pour [after C]"></textarea></div>
   </div>
 
   <!-- MODAL: NEW MATERIAL -->
-  <div id="newMaterialModal" class="modal-overlay"><div class="modal-box"><div class="modal-header"><h3>Add New Material</h3><button onclick="closeModal('newMaterialModal')" class="close-btn">&times;</button></div><form id="formNewMaterial" style="display:flex;flex-direction:column;gap:10px;"><div><label style="font-size:11px;color:#78716c;">Material Name</label><input id="newMatName" required class="input-control" placeholder="e.g. Botanical extract"></div><div class="grid-2" style="margin:0;gap:8px;"><div><label style="font-size:11px;color:#78716c;">Category</label><select id="newMatCategory" required class="input-control"></select><div class="inline-category-add"><input id="newMatCategoryName" class="input-control" placeholder="New category name"><button type="button" class="btn" style="width:auto;white-space:nowrap;" onclick="addCategoryForNewMaterial()">+ Add category</button></div></div><div><label style="font-size:11px;color:#78716c;">Unit</label><select id="newMatUnit" required class="input-control" onchange="updateNewMaterialUnitPrice()"><option value="gr">gr</option><option value="kg">kg</option><option value="ml">ml</option><option value="L">L</option><option value="pcs">pcs</option><option value="bottle">bottle</option><option value="pack">pack</option><option value="roll">roll</option><option value="sheet">sheet</option><option value="m">m</option><option value="cm">cm</option><option value="set">set</option></select></div></div><div><label style="font-size:11px;color:#78716c;">Specifications / details (optional)</label><textarea id="newMatSpecs" class="input-control" rows="2" placeholder="Grade, supplier, material details, etc."></textarea></div><div class="grid-2" style="margin:0;gap:8px;"><div><label style="font-size:11px;color:#78716c;">Input quantity (<span id="newMatQtyUnitLabel">gr</span>)</label><input type="number" min="0.0001" step="any" id="newMatInputQty" class="input-control" value="1" oninput="updateNewMaterialUnitPrice()" required></div><div><label style="font-size:11px;color:#78716c;">Input total price (Rp)</label><input type="text" id="newMatTotalPrice" class="input-control currency-input" value="Rp. 0" inputmode="numeric" oninput="updateNewMaterialUnitPrice()"></div></div><div><label style="font-size:11px;color:#78716c;">Calculated unit price (Rp / <span id="newMatUnitPriceUnitLabel">gr</span>)</label><input type="text" id="newMatUnitPrice" class="input-control" value="Rp. 0" readonly></div><button type="submit" class="btn">Save Material</button></form></div></div>
+  <div id="newMaterialModal" class="modal-overlay"><div class="modal-box"><div class="modal-header"><h3>Add New Material</h3><button onclick="closeModal('newMaterialModal')" class="close-btn">&times;</button></div><form id="formNewMaterial" style="display:flex;flex-direction:column;gap:10px;"><div><label style="font-size:11px;color:#78716c;">Material Name</label><input id="newMatName" required class="input-control" placeholder="e.g. Botanical extract"></div><div class="grid-2" style="margin:0;gap:8px;"><div><label style="font-size:11px;color:#78716c;">Category</label><select id="newMatCategory" required class="input-control"></select><div class="inline-category-add"><input id="newMatCategoryName" class="input-control" placeholder="New category name"><button type="button" class="btn" style="width:auto;white-space:nowrap;" onclick="addCategoryForNewMaterial()">+ Add category</button></div></div><div><label style="font-size:11px;color:#78716c;">Unit</label><select id="newMatUnit" required class="input-control" onchange="updateNewMaterialUnitPrice()"><option value="gr">gr</option><option value="kg">kg</option><option value="ml">ml</option><option value="L">L</option><option value="pcs">pcs</option><option value="bottle">bottle</option><option value="pack">pack</option><option value="roll">roll</option><option value="sheet">sheet</option><option value="m">m</option><option value="cm">cm</option><option value="set">set</option></select></div></div><div><label style="font-size:11px;color:#78716c;">Specifications / details (optional)</label><textarea id="newMatSpecs" class="input-control" rows="2" placeholder="Grade, supplier, material details, etc."></textarea></div><div class="grid-2" style="margin:0;gap:8px;"><div><label style="font-size:11px;color:#78716c;">Input quantity / jumlah (<span id="newMatQtyUnitLabel">gr</span>)</label><input type="number" min="0.0001" step="any" id="newMatInputQty" class="input-control" value="1" oninput="updateNewMaterialUnitPrice()" required></div><div><label style="font-size:11px;color:#78716c;">Input total price / harga total (Rp)</label><input type="text" id="newMatTotalPrice" class="input-control currency-input" value="Rp. 0" inputmode="numeric" oninput="updateNewMaterialUnitPrice()"></div></div><div><label style="font-size:11px;color:#78716c;">Calculated unit price / harga per unit (Rp / <span id="newMatUnitPriceUnitLabel">gr</span>)</label><input type="text" id="newMatUnitPrice" class="input-control" value="Rp. 0" readonly></div><button type="submit" class="btn">Save Material</button></form></div></div>
 
   <!-- MODAL: MATERIAL PRICE HISTORY -->
   <div id="materialHistoryModal" class="modal-overlay"><div class="modal-box" style="max-width:850px;width:96%;"><div class="modal-header"><h3 id="materialHistoryTitle">Material Price History</h3><button onclick="closeModal('materialHistoryModal')" class="close-btn">&times;</button></div><div style="display:flex;justify-content:flex-end;margin-bottom:10px;"><button type="button" class="btn" style="width:auto;" onclick="openMaterialPriceForActive()">+ Add Material Price</button></div><div style="height:250px;margin-bottom:14px;"><canvas id="materialPriceChart"></canvas></div><div style="overflow:auto;"><table><thead><tr><th>Date</th><th>Quantity / Unit</th><th>Total Paid (Rp)</th><th>Unit Price (Rp)</th><th>Actions</th></tr></thead><tbody id="materialHistoryBody"></tbody></table></div><p style="font-size:10px;color:#78716c;margin:10px 0 0;">Edit a record to correct its date, quantity, or total purchase price. The latest valid record becomes the HPP price.</p></div></div>
@@ -1968,12 +1968,12 @@ D: Blend and pour [after C]"></textarea></div>
           </div>
           <div>
             <label style="font-size: 11px; color: #78716c;">Sales Platform</label>
-            <select id="salesPlatformSelect" onchange="toggleShopeeFeeFields()" required class="input-control">
-              <option value="Shopee">Shopee</option>
-              <option value="Offline">Offline Studio</option>
-              <option value="Instagram">Instagram DM</option>
-              <option value="Threads">Threads</option>
-            </select>
+            <div style="display:flex;gap:6px;align-items:center;">
+              <select id="salesPlatformSelect" onchange="toggleShopeeFeeFields()" required class="input-control" style="flex:1;min-width:0;">
+                <option value="Shopee">Shopee</option><option value="Offline">Offline Studio</option><option value="Instagram">Instagram DM</option><option value="Threads">Threads</option>
+              </select>
+              <button type="button" class="btn btn-secondary" style="width:auto;white-space:nowrap;padding:8px 10px;font-size:11px;" onclick="openSalesPlatformManager()">Manage</button>
+            </div>
           </div>
         </div>
 
@@ -2015,9 +2015,11 @@ D: Blend and pour [after C]"></textarea></div>
     </div>
   </div>
 
+  <div id="salesPlatformManagerModal" class="modal-overlay"><div class="modal-box" style="max-width:560px;"><div class="modal-header"><h3 style="font-family:serif;">Manage Sales Platforms</h3><button type="button" onclick="closeModal('salesPlatformManagerModal')" class="close-btn">&times;</button></div><p style="font-size:11px;color:#78716c;line-height:1.5;">Add new platforms, rename their display labels, or deactivate platforms you no longer use. Existing orders are retained. Shopee is protected so its dedicated fee breakdown stays connected.</p><div id="salesPlatformManagerList" style="display:flex;flex-direction:column;gap:8px;margin:12px 0;"></div><form id="salesPlatformManagerForm" style="display:flex;flex-direction:column;gap:8px;"><input type="hidden" id="salesPlatformEditingId"><label for="salesPlatformNameInput" style="font-size:11px;color:#78716c;">Platform name</label><input id="salesPlatformNameInput" class="input-control" placeholder="e.g. Tokopedia or TikTok Shop" required><div style="display:flex;gap:8px;flex-wrap:wrap;"><button id="salesPlatformSubmitBtn" type="submit" class="btn" style="flex:1;">+ Add Platform</button><button id="salesPlatformCancelEditBtn" type="button" class="btn btn-secondary" style="width:auto;display:none;" onclick="cancelSalesPlatformEdit()">Cancel edit</button></div></form></div></div>
+
   <div id="categoryManagerModal" class="modal-overlay"><div class="modal-box" style="max-width:480px;"><div class="modal-header"><h3>Edit Material Categories</h3><button type="button" onclick="closeModal('categoryManagerModal')" class="close-btn">&times;</button></div><p style="font-size:11px;color:#78716c;line-height:1.5;">One category per line. This edits the category list; use each material's “Edit category” action to move a material into another category.</p><form id="categoryManagerForm"><textarea id="categoryListInput" class="input-control" rows="7" style="resize:vertical;"></textarea><button class="btn" type="submit" style="margin-top:10px;">Save Categories</button></form></div></div>
   <div id="materialCategoryEditModal" class="modal-overlay"><div class="modal-box" style="max-width:440px;"><div class="modal-header"><h3 style="font-family:serif;">Change Material Category</h3><button type="button" onclick="closeModal('materialCategoryEditModal')" class="close-btn">&times;</button></div><p id="materialCategoryEditHint" style="font-size:12px;color:#78716c;line-height:1.5;">Choose a category for this material.</p><form id="materialCategoryEditForm"><input id="categoryEditMaterialName" type="hidden"><label style="font-size:11px;color:#78716c;display:block;margin-bottom:5px;">Category</label><select id="categoryEditValue" class="input-control"></select><div class="inline-category-add"><input id="inlineNewCategory" class="input-control" placeholder="New category name"><button type="button" class="btn" style="width:auto;white-space:nowrap;" onclick="addCategoryFromMaterialEditor()">+ Add category</button></div><div style="display:flex;justify-content:flex-end;gap:8px;margin-top:14px;"><button type="button" class="btn" style="width:auto;background:#78716c;" onclick="closeModal('materialCategoryEditModal')">Cancel</button><button type="submit" class="btn" style="width:auto;">Save Category</button></div></form></div></div>
-  <div id="newStorageItemModal" class="modal-overlay"><div class="modal-box" style="max-width:520px;"><div class="modal-header"><h3>Add Material / Equipment</h3><button type="button" onclick="closeModal('newStorageItemModal')" class="close-btn">&times;</button></div><p class="modal-description">Register physical assets used in production or content creation. This list is separate from Market pricing.</p><form id="newStorageItemForm" class="form-stack"><div><label>Item name</label><input id="newStorageName" class="input-control" required placeholder="e.g. Pink photography backdrop"></div><div class="grid-2"><div><label>Category</label><select id="newStorageCategory" class="input-control"><option>Equipment</option><option>Tools & Utensils</option><option>Photography & Lighting</option><option>Other</option></select><div class="inline-category-add"><input id="newStorageCategoryName" class="input-control" placeholder="New category name"><button type="button" class="btn" style="width:auto;white-space:nowrap;" onclick="addStorageCategory()">+ Add category</button></div></div><div><label>Unit</label><input id="newStorageUnit" class="input-control" required value="pcs" placeholder="pcs, set, unit"></div></div><div><label>Specifications / details</label><textarea id="newStorageSpecs" class="input-control" rows="2" placeholder="e.g. 5 L, stainless steel, 300 W, model / size / condition"></textarea></div><div class="grid-2"><div><label>Starting quantity</label><input id="newStorageQty" class="input-control" type="number" min="0" step="any" value="1" required></div><div><label>Purchase price per unit</label><input id="newStoragePrice" class="input-control" type="text" inputmode="numeric" value="Rp. 0" onfocus="unformatRupiahInput(this)" onblur="formatRupiahInput(this)" placeholder="Rp. 0"></div></div><button type="submit" class="btn">Save to Storage</button></form></div></div>
+  <div id="newStorageItemModal" class="modal-overlay"><div class="modal-box" style="max-width:520px;"><div class="modal-header"><h3>Add Material / Equipment</h3><button type="button" onclick="closeModal('newStorageItemModal')" class="close-btn">&times;</button></div><p class="modal-description">Register physical assets used in production or content creation. This list is separate from Market pricing.</p><form id="newStorageItemForm" class="form-stack"><div><label>Item name</label><input id="newStorageName" class="input-control" required placeholder="e.g. Pink photography backdrop"></div><div class="grid-2"><div><label>Category</label><select id="newStorageCategory" class="input-control"><option>Equipment</option><option>Tools & Utensils</option><option>Photography & Lighting</option><option>Other</option></select><div class="inline-category-add"><input id="newStorageCategoryName" class="input-control" placeholder="New category name"><button type="button" class="btn" style="width:auto;white-space:nowrap;" onclick="addStorageCategory()">+ Add category</button></div></div><div><label>Unit</label><select id="newStorageUnit" class="input-control" required><option value="gr">gr</option><option value="g">g</option><option value="kg">kg</option><option value="mg">mg</option><option value="ml">ml</option><option value="L">L</option><option value="pcs">pcs</option><option value="bottle">bottle</option><option value="pack">pack</option><option value="roll">roll</option><option value="sheet">sheet</option><option value="m">m</option><option value="cm">cm</option><option value="set">set</option><option value="unit">unit</option><option value="pair">pair</option><option value="jar">jar</option><option value="tube">tube</option></select></div></div><div><label>Specifications / details</label><textarea id="newStorageSpecs" class="input-control" rows="2" placeholder="e.g. 5 L, stainless steel, 300 W, model / size / condition"></textarea></div><div class="grid-2"><div><label>Starting quantity</label><input id="newStorageQty" class="input-control" type="number" min="0" step="any" value="1" required></div><div><label>Purchase price per unit</label><input id="newStoragePrice" class="input-control" type="text" inputmode="numeric" value="Rp. 0" onfocus="unformatRupiahInput(this)" onblur="formatRupiahInput(this)" placeholder="Rp. 0"></div></div><button type="submit" class="btn">Save to Storage</button></form></div></div>
   <div id="storageItemEditModal" class="modal-overlay"><div class="modal-box" style="max-width:500px;"><div class="modal-header"><h3 id="storageItemEditTitle">Edit item</h3><button type="button" onclick="closeModal('storageItemEditModal')" class="close-btn">&times;</button></div><form id="storageItemEditForm" class="form-stack"><input type="hidden" id="storageEditName"><div id="storageEditFields"></div><div style="display:flex;gap:8px;flex-wrap:wrap;"><button type="submit" class="btn" style="flex:1;">Save changes</button><button type="button" class="btn btn-secondary" style="width:auto;color:#b42318;border-color:#efb4b4;" onclick="deleteStorageItem(document.getElementById('storageEditName').value)">Delete</button></div></form></div></div>
   <div id="storageAdjustModal" class="modal-overlay"><div class="modal-box" style="max-width:520px;"><div class="modal-header"><h3 style="font-family:serif;">Adjust Warehouse Stock</h3><button type="button" onclick="closeModal('storageAdjustModal')" class="close-btn">&times;</button></div><form id="storageAdjustForm" style="display:flex;flex-direction:column;gap:10px;"><div><label style="font-size:11px;color:#78716c;">Material / Item</label><select id="storageItem" class="input-control" required></select></div><div class="grid-2" style="margin:0;gap:10px;"><div><label style="font-size:11px;color:#78716c;">Movement</label><select id="storageMovement" class="input-control"><option value="in">Stock in (+)</option><option value="out">Stock out (−)</option><option value="set">Set exact stock</option></select></div><div><label style="font-size:11px;color:#78716c;">Quantity</label><input id="storageQty" type="number" min="0" step="any" class="input-control" required></div></div><div><label style="font-size:11px;color:#78716c;">Note / Reference</label><input id="storageNote" class="input-control" placeholder="e.g. purchase, production use, stock count"></div><button type="submit" class="btn">Save Stock Movement</button></form></div></div>
   <div id="financeOptionsModal" class="modal-overlay"><div class="modal-box" style="max-width:520px;"><div class="modal-header"><h3 id="financeOptionsTitle" style="font-family:serif;">Finance Options</h3><button type="button" onclick="closeModal('financeOptionsModal')" class="close-btn">&times;</button></div><p id="financeOptionsHint" style="font-size:12px;color:#78716c;line-height:1.5;">Add, rename or remove options.</p><div id="financeOptionsList" style="display:flex;flex-direction:column;gap:8px;margin:12px 0;"></div><form id="financeOptionForm" style="display:flex;flex-direction:column;gap:8px;"><input id="financeOptionLabel" class="input-control" placeholder="New option name" required><div id="financeOptionFlowWrap"><label style="font-size:11px;color:#78716c;">Financial direction</label><select id="financeOptionFlow" class="input-control"><option value="expense">Money out / expense</option><option value="income">Money in / income</option></select></div><button type="submit" class="btn">+ Add Option</button></form></div></div>
@@ -2070,7 +2072,7 @@ D: Blend and pour [after C]"></textarea></div>
     const CONSUMABLE_ITEMS = [
       { name: "Coconut oil – Food Grade", group: "Raw Material", unit: "gr", defaultPrice: 60 },
       { name: "Olive oil – Food Grade", group: "Raw Material", unit: "gr", defaultPrice: 120 },
-      { name: "Infused olive oil – Food Grade", group: "Infused Materials", unit: "gr", defaultPrice: 120 },
+      { name: "Infused olive oil – Food Grade", group: "Raw Material", unit: "gr", defaultPrice: 120 },
       { name: "Palm oil – Food Grade", group: "Raw Material", unit: "gr", defaultPrice: 25 },
       { name: "Shea butter – Cosmetic Grade", group: "Raw Material", unit: "gr", defaultPrice: 200 },
       { name: "Cocoa butter – Cosmetic Grade", group: "Raw Material", unit: "gr", defaultPrice: 220 },
@@ -2159,31 +2161,118 @@ D: Blend and pour [after C]"></textarea></div>
     let financeTypes = safeStorageJSON('suma_finance_types', [{key:'expense',label:'Material / Operating Purchase',flow:'expense',locked:true},{key:'equipment',label:'Equipment / Capital Asset',flow:'expense',locked:true},{key:'income',label:'Other Income',flow:'income',locked:true},{key:'ads',label:'Shopee Ads Fee',flow:'expense',locked:true}]);
     let financePayers = safeStorageJSON('suma_finance_payers', ['Suma Lōra','Personal','LU','MA','Other']);
 
-    function allConsumableItems() { const units=safeStorageJSON('suma_material_unit_overrides', {}),specs=safeStorageJSON('suma_material_specs_overrides', {}),deleted=new Set(safeStorageJSON('suma_deleted_materials', [])); return [...CONSUMABLE_ITEMS, ...customConsumableItems].filter(i=>!deleted.has(i.name)).map(i=>({...i,name:materialNameOverrides[i.name]||i.name,unit:units[i.name]||i.unit,group:materialCategoryOverrides[i.name]||i.group,specs:specs[i.name]??i.specs??''})); }
+    const MATERIAL_UNIT_OPTIONS = ['gr','g','kg','mg','ml','L','pcs','bottle','pack','roll','sheet','m','cm','set','unit','pair','jar','tube'];
+    function unitOptionsHtml(selected='') { const value=String(selected||''); const choices=[...MATERIAL_UNIT_OPTIONS]; if(value && !choices.includes(value)) choices.unshift(value); return choices.map(u=>`<option value="${escapeHtml(u)}" ${u===value?'selected':''}>${escapeHtml(u)}</option>`).join(''); }
+    function setUnitSelectOptions(select, selected='') { if(!select)return; select.innerHTML=unitOptionsHtml(selected); if(selected)select.value=selected; }
+
+    const SALES_PLATFORM_STORAGE_KEY = 'suma_sales_platforms_v1';
+    const DEFAULT_SALES_PLATFORMS = [
+      {value:'Shopee',label:'Shopee',feeMode:'shopee',active:true,protectedDelete:true},
+      {value:'Offline',label:'Offline Studio',feeMode:'none',active:true},
+      {value:'Instagram',label:'Instagram DM',feeMode:'none',active:true},
+      {value:'Threads',label:'Threads',feeMode:'none',active:true}
+    ];
+    function getSalesPlatforms() {
+      let rows=safeStorageJSON(SALES_PLATFORM_STORAGE_KEY,null);
+      if(!Array.isArray(rows) || !rows.length) { rows=DEFAULT_SALES_PLATFORMS.map(p=>({...p})); safeStorageSet(SALES_PLATFORM_STORAGE_KEY,JSON.stringify(rows)); }
+      return rows.filter(p=>p&&p.value&&p.label).map(p=>({...p,active:p.active!==false,feeMode:p.feeMode||'none'}));
+    }
+    function saveSalesPlatforms(rows) { safeStorageSet(SALES_PLATFORM_STORAGE_KEY,JSON.stringify(rows)); }
+    function getSalesPlatformLabel(value) { const found=getSalesPlatforms().find(p=>p.value===String(value)); if(found)return found.label; const legacy=DEFAULT_SALES_PLATFORMS.find(p=>p.value===String(value)); return legacy?.label||String(value||''); }
+    function isShopeePlatform(value) { return value==='Shopee' || getSalesPlatforms().some(p=>p.value===String(value)&&p.feeMode==='shopee'); }
+    function renderSalesPlatformOptions(selectedValue=null, includeInactiveSelected=false) {
+      const sel=document.getElementById('salesPlatformSelect'); if(!sel)return; const prior=selectedValue??sel.value??'Shopee';
+      const all=getSalesPlatforms(); let opts=all.filter(p=>p.active);
+      if(includeInactiveSelected && prior && !opts.some(p=>p.value===prior)) { const old=all.find(p=>p.value===prior); if(old)opts.push(old); else opts.push({value:prior,label:prior,active:false,feeMode:'none'}); }
+      sel.innerHTML=opts.map(p=>`<option value="${escapeHtml(p.value)}" ${p.value===prior?'selected':''}>${escapeHtml(p.label)}${p.active?'':' (inactive · historical)'}</option>`).join('');
+      if(!opts.some(p=>p.value===prior) && opts.length)sel.value=opts[0].value;
+    }
+    function renderSalesPlatformManager() {
+      const target=document.getElementById('salesPlatformManagerList'); if(!target)return;
+      const rows=getSalesPlatforms().filter(p=>p.active).sort((a,b)=>a.label.localeCompare(b.label,undefined,{sensitivity:'base'}));
+      target.innerHTML=rows.map(p=>`<div style="display:flex;gap:8px;align-items:center;padding:8px;border:1px solid #e7e5e4;border-radius:9px;"><div style="flex:1;min-width:0"><strong style="font-size:12px;">${escapeHtml(p.label)}</strong><div style="font-size:10px;color:#78716c;">${p.feeMode==='shopee'?'Shopee fee breakdown enabled':'Sales platform'}${p.feeMode==='shopee'?' · delete protected':''}</div></div><button type="button" class="btn btn-secondary" style="width:auto;padding:6px 9px;font-size:11px;" onclick="editSalesPlatform('${escapeHtml(p.value)}')">Edit</button><button type="button" class="btn" style="width:auto;padding:6px 9px;font-size:11px;background:#a33;" ${p.protectedDelete?'disabled title="Shopee is protected to preserve fee calculation"':''} onclick="deleteSalesPlatform('${escapeHtml(p.value)}')">Delete</button></div>`).join('') || '<p style="font-size:12px;color:#78716c;">No active platforms.</p>';
+    }
+    function openSalesPlatformManager() { cancelSalesPlatformEdit(); renderSalesPlatformManager(); openModal('salesPlatformManagerModal'); }
+    function editSalesPlatform(value) { const p=getSalesPlatforms().find(x=>x.value===value&&x.active); if(!p)return; document.getElementById('salesPlatformEditingId').value=p.value; document.getElementById('salesPlatformNameInput').value=p.label; document.getElementById('salesPlatformSubmitBtn').textContent='Save Platform Name'; document.getElementById('salesPlatformCancelEditBtn').style.display='inline-flex'; document.getElementById('salesPlatformNameInput').focus(); }
+    function cancelSalesPlatformEdit() { const id=document.getElementById('salesPlatformEditingId'); if(id)id.value=''; const name=document.getElementById('salesPlatformNameInput'); if(name)name.value=''; const submit=document.getElementById('salesPlatformSubmitBtn'); if(submit)submit.textContent='+ Add Platform'; const cancel=document.getElementById('salesPlatformCancelEditBtn'); if(cancel)cancel.style.display='none'; }
+    function saveSalesPlatformOption(e) {
+      e.preventDefault(); const label=(document.getElementById('salesPlatformNameInput')?.value||'').trim(); const editing=(document.getElementById('salesPlatformEditingId')?.value||'').trim(); if(!label)return;
+      const rows=getSalesPlatforms(); if(rows.some(p=>p.active && p.value!==editing && p.label.toLowerCase()===label.toLowerCase()))return showToast('A platform with that name already exists.');
+      if(editing) { const p=rows.find(x=>x.value===editing); if(!p)return showToast('Platform not found.'); p.label=label; }
+      else { rows.push({value:'platform_'+Date.now(),label,feeMode:'none',active:true}); }
+      saveSalesPlatforms(rows); const current=document.getElementById('salesPlatformSelect')?.value||'Shopee'; renderSalesPlatformOptions(current,true); renderSalesPlatformManager(); initSalesFilters(); renderSales(); renderBuyerLeaderboard(); renderFinance(); cancelSalesPlatformEdit(); showToast(editing?'Sales platform updated.':'Sales platform added.');
+    }
+    function deleteSalesPlatform(value) {
+      const rows=getSalesPlatforms(),p=rows.find(x=>x.value===value&&x.active); if(!p)return; if(p.protectedDelete||p.feeMode==='shopee')return showToast('Shopee cannot be deleted because its dedicated fee breakdown depends on it.');
+      const uses=sales.some(s=>String(s.platform)===String(value)); const message=uses?`Deactivate "${p.label}"? Existing orders and reports will be retained, but this platform will no longer be available for new orders.`:`Delete "${p.label}" from the active platform list?`; if(!confirm(message))return; p.active=false; saveSalesPlatforms(rows); renderSalesPlatformOptions(); renderSalesPlatformManager(); initSalesFilters(); renderSales(); renderBuyerLeaderboard(); renderFinance(); showToast('Platform removed from new orders; historical records retained.');
+    }
+
+    function isRawMaterialItem(item) { return /^raw\s*materials?$/i.test(String(item?.group||'').trim()); }
+    function sortMaterialsByName(items) { return [...items].sort((a,b)=>String(a.name||'').localeCompare(String(b.name||''),undefined,{sensitivity:'base'})); }
+    function getRawMaterialItems() { return sortMaterialsByName(allConsumableItems().filter(isRawMaterialItem)); }
+    function resolveRawOilName(preferred, items=getRawMaterialItems()) {
+      if(!items.length) return '';
+      const value=String(preferred||'').trim();
+      if(!value) return '';
+      const exact=items.find(i=>String(i.name).toLowerCase()===value.toLowerCase());
+      if(exact) return exact.name;
+      const n=value.toLowerCase();
+      const matchers=[
+        [/infused.*olive|olive.*infused/i,/infused.*olive|olive.*infused/i],
+        [/coconut/i,/coconut/i], [/shea/i,/shea/i], [/palm/i,/palm/i],
+        [/cocoa/i,/cocoa/i], [/avocado/i,/avocado/i], [/castor/i,/castor/i], [/olive/i,/olive/i]
+      ];
+      for(const [wanted, candidate] of matchers){
+        if(wanted.test(n)){
+          const found=items.find(i=>candidate.test(i.name));
+          return found ? found.name : '';
+        }
+      }
+      // Do not silently replace a missing/non-raw ingredient with the first unrelated raw material.
+      return '';
+    }
+    function getOilCoefficientKey(name) {
+      const value=String(name||''); if(OIL_COEFFICIENTS[value])return value; const n=value.toLowerCase();
+      if(n.includes('infused')&&n.includes('olive'))return 'Infused Olive Oil';
+      if(n.includes('coconut'))return 'Coconut Oil'; if(n.includes('shea'))return 'Shea Butter'; if(n.includes('palm'))return 'Palm Oil'; if(n.includes('cocoa'))return 'Cocoa Butter'; if(n.includes('castor'))return 'Castor Oil'; if(n.includes('avocado'))return 'Avocado Oil'; if(n.includes('olive'))return 'Olive Oil'; return '';
+    }
+    function getOilCoefficient(name) { const key=getOilCoefficientKey(name); return key ? (OIL_COEFFICIENTS[key]||null) : null; }
+
+    function allConsumableItems() {
+      const units=safeStorageJSON('suma_material_unit_overrides', {}), specs=safeStorageJSON('suma_material_specs_overrides', {}), deleted=new Set(safeStorageJSON('suma_deleted_materials', []));
+      return [...CONSUMABLE_ITEMS, ...customConsumableItems].filter(i=>!deleted.has(i.name)).map(i=>{
+        const originalName=i.name, isCustom=Boolean(i.custom)||customConsumableItems.some(c=>c.name===originalName), displayName=materialNameOverrides[originalName]||originalName;
+        return {...i,name:displayName,unit:(isCustom?(i.unit||units[originalName]||units[displayName]):(units[originalName]||units[displayName]||i.unit)),group:(isCustom?(i.group||materialCategoryOverrides[originalName]||i.group):(materialCategoryOverrides[originalName]||materialCategoryOverrides[displayName]||i.group)),specs:(isCustom?(i.specs??specs[originalName]??specs[displayName]??''):(specs[originalName]??specs[displayName]??i.specs??''))};
+      });
+    }
     function getMaterialCategories() { return [...new Set([...allConsumableItems().map(i=>i.group), ...customMaterialCategories])]; }
     function renderMaterialDropdowns() {
       const items = allConsumableItems();
       const matSelect = document.getElementById('matSelectName');
-      if (matSelect) { const cats=[...new Set(items.map(i=>i.group))]; matSelect.innerHTML = cats.map(g=>`<optgroup label="${escapeHtml(g)}">${items.filter(i=>i.group===g).map(i=>`<option value="${escapeHtml(i.name)}">${escapeHtml(i.name)} (${escapeHtml(i.unit)})</option>`).join('')}</optgroup>`).join(''); }
-      const groupFilter=document.getElementById('consumablesGroupFilter'); if(groupFilter){const old=groupFilter.value||'all';groupFilter.innerHTML='<option value="all">All categories</option>'+[...new Set(items.map(i=>i.group))].sort().map(g=>`<option value="${escapeHtml(g)}">${escapeHtml(g)}</option>`).join('');groupFilter.value=[...groupFilter.options].some(o=>o.value===old)?old:'all';}
-      document.querySelectorAll('.additive-name-select,.packing-name-select').forEach(sel => {
-        const selected = sel.value;
-        const filter = sel.classList.contains('packing-name-select') ? items.filter(i=>/Packing|pack/i.test(i.group)) : items.filter(i=>/raw\s*materials?/i.test(String(i.group||'')));
-        if(selected && !filter.some(i=>i.name===selected)) { const previous=items.find(i=>i.name===selected); if(previous && /raw\s*materials?/i.test(String(previous.group||''))) filter.push(previous); }
-        sel.innerHTML = filter.map(i=>`<option value="${escapeHtml(i.name)}" ${i.name===selected?'selected':''}>${escapeHtml(i.name)}</option>`).join('');
-      });
-      // Oil breakdown choices are linked to the shared Market/Storage material catalog.
-      // Built-in oils retain their validated SAP/fatty-acid coefficients; new oils are selectable but need a verified profile.
-      document.querySelectorAll('.oil-name-select').forEach(sel=>{
+      if (matSelect) {
+        const cats=[...new Set(items.map(i=>i.group))].sort((a,b)=>a.localeCompare(b,undefined,{sensitivity:'base'}));
+        const selected=matSelect.value;
+        matSelect.innerHTML=cats.map(g=>`<optgroup label="${escapeHtml(g)}">${sortMaterialsByName(items.filter(i=>i.group===g)).map(i=>`<option value="${escapeHtml(i.name)}">${escapeHtml(i.name)} (${escapeHtml(i.unit)})</option>`).join('')}</optgroup>`).join('');
+        if([...matSelect.options].some(o=>o.value===selected))matSelect.value=selected;
+      }
+      const groupFilter=document.getElementById('consumablesGroupFilter');
+      if(groupFilter){const old=groupFilter.value||'all';groupFilter.innerHTML='<option value="all">All categories</option>'+[...new Set(items.map(i=>i.group))].sort((a,b)=>a.localeCompare(b,undefined,{sensitivity:'base'})).map(g=>`<option value="${escapeHtml(g)}">${escapeHtml(g)}</option>`).join('');groupFilter.value=[...groupFilter.options].some(o=>o.value===old)?old:'all';}
+      const rawItems=sortMaterialsByName(items.filter(isRawMaterialItem));
+      document.querySelectorAll('.additive-name-select,.packing-name-select').forEach(sel=>{
         const selected=sel.value;
-        const oilItems=sortMaterialsByCategoryName(items.filter(i=>/raw\s*materials?/i.test(String(i.group||''))));
-        const names=[...new Set([...Object.keys(OIL_COEFFICIENTS),...oilItems.map(i=>i.name)])];
-        if(selected && !names.includes(selected)) names.push(selected);
-        sel.innerHTML=names.map(n=>{const item=oilItems.find(i=>i.name===n);const category=item?` [${item.group}]`:'';return `<option value="${escapeHtml(n)}" ${n===selected?'selected':''}>${escapeHtml(n)}${escapeHtml(category)}${OIL_COEFFICIENTS[n]?'':' · SAP profile needed'}</option>`;}).join('');
-        if(selected && !names.includes(selected)){const opt=document.createElement('option');opt.value=selected;opt.textContent=selected+' · SAP profile needed';opt.selected=true;sel.appendChild(opt);}
+        const isPacking=sel.classList.contains('packing-name-select');
+        const list=isPacking?sortMaterialsByName(items.filter(i=>/packing|pack/i.test(String(i.group||'')))):rawItems;
+        const placeholder=isPacking?'Choose packing material…':'Choose raw material…';
+        sel.innerHTML=`<option value="">${placeholder}</option>`+list.map(i=>`<option value="${escapeHtml(i.name)}">${escapeHtml(i.name)}</option>`).join('');
+        sel.value=list.some(i=>i.name===selected)?selected:'';
       });
-      const cat = document.getElementById('newMatCategory');
-      if (cat) cat.innerHTML = getMaterialCategories().map(c=>`<option value="${escapeHtml(c)}">${escapeHtml(c)}</option>`).join('');
+      document.querySelectorAll('.oil-name-select').forEach(sel=>{
+        const selected=sel.value, resolved=resolveRawOilName(selected,rawItems);
+        sel.innerHTML='<option value="">Choose raw oil / butter…</option>'+rawItems.map(i=>{const key=getOilCoefficientKey(i.name);const note=key?'':' · SAP profile needed';return `<option value="${escapeHtml(i.name)}">${escapeHtml(i.name)}${note}</option>`;}).join('');
+        sel.value=resolved;
+      });
+      const cat=document.getElementById('newMatCategory');
+      if(cat){const chosen=cat.value;cat.innerHTML=getMaterialCategories().sort((a,b)=>a.localeCompare(b,undefined,{sensitivity:'base'})).map(c=>`<option value="${escapeHtml(c)}">${escapeHtml(c)}</option>`).join('');if([...cat.options].some(o=>o.value===chosen))cat.value=chosen;}
     }
     function persistMaterialCatalog() { localStorage.setItem('suma_custom_materials',JSON.stringify(customConsumableItems)); localStorage.setItem('suma_material_categories',JSON.stringify(customMaterialCategories)); localStorage.setItem('suma_material_category_overrides',JSON.stringify(materialCategoryOverrides)); }
     function saveAppSetting(configType,configKey,value) { const record={id:Date.now(),recordType:'appSetting',configType,configKey,configValue:JSON.stringify(value),date:new Date().toISOString().slice(0,10)}; consumableHistory.push(record); saveDataToStorage(); noteLocalSave({action:'addConsumableHistory',record}); }
@@ -2192,18 +2281,24 @@ D: Blend and pour [after C]"></textarea></div>
     function saveMaterialCategoryEdit(e) { e.preventDefault(); const name=document.getElementById('categoryEditMaterialName').value, group=document.getElementById('categoryEditValue').value; if(!name||!group)return; materialCategoryOverrides[name]=group; persistMaterialCatalog(); renderMaterialDropdowns();renderConsumablesTable();calculateSoapFormula(); const record={id:Date.now(),recordType:'categoryOverride',name,group,date:new Date().toISOString().slice(0,10)}; consumableHistory.push(record); saveDataToStorage(); noteLocalSave({action:'addConsumableHistory',record}); closeModal('materialCategoryEditModal'); showToast(`Category updated to ${group}`); }
 
     function addCategoryForNewMaterial(){const input=document.getElementById('newMatCategoryName'),name=(input?.value||'').trim();if(!name)return showToast('Enter a category name first.');const cats=getMaterialCategories();if(cats.some(c=>c.toLowerCase()===name.toLowerCase()))return showToast('That category already exists.');customMaterialCategories=[...customMaterialCategories,name];persistMaterialCatalog();renderMaterialDropdowns();const sel=document.getElementById('newMatCategory');if(sel)sel.value=name;if(input)input.value='';saveAppSetting('categories','materialCategories',getMaterialCategories());showToast('Category added.');}
-    function openNewMaterialModal() { renderMaterialDropdowns(); document.getElementById('newMatName').value=''; document.getElementById('newMatUnit').value='gr'; document.getElementById('newMatInputQty').value='1'; document.getElementById('newMatTotalPrice').value='Rp. 0'; updateNewMaterialUnitPrice(); if(document.getElementById('newMatSpecs'))document.getElementById('newMatSpecs').value=''; if(document.getElementById('newMatCategoryName'))document.getElementById('newMatCategoryName').value=''; openModal('newMaterialModal'); }
+    function openNewMaterialModal() { renderMaterialDropdowns(); const unitSel=document.getElementById('newMatUnit'); if(unitSel){setUnitSelectOptions(unitSel,'gr');unitSel.value='gr';} document.getElementById('newMatName').value=''; document.getElementById('newMatInputQty').value='1'; document.getElementById('newMatTotalPrice').value='Rp. 0'; updateNewMaterialUnitPrice(); if(document.getElementById('newMatSpecs'))document.getElementById('newMatSpecs').value=''; if(document.getElementById('newMatCategoryName'))document.getElementById('newMatCategoryName').value=''; openModal('newMaterialModal'); }
     function updateNewMaterialUnitPrice(){const unit=document.getElementById('newMatUnit')?.value||'gr',qty=Number(document.getElementById('newMatInputQty')?.value)||0,total=parseRupiahNumber(document.getElementById('newMatTotalPrice')?.value||'0'),unitPrice=qty>0?total/qty:0;const a=document.getElementById('newMatQtyUnitLabel'),b=document.getElementById('newMatUnitPriceUnitLabel'),price=document.getElementById('newMatUnitPrice');if(a)a.textContent=unit;if(b)b.textContent=unit;if(price)price.value='Rp. '+Math.round(unitPrice).toLocaleString('id-ID');}
     function handleCreateMaterial(e) {
       e.preventDefault();
       const name=document.getElementById('newMatName').value.trim(), group=document.getElementById('newMatCategory').value, unit=document.getElementById('newMatUnit').value, inputQty=Number(document.getElementById('newMatInputQty').value), totalPrice=parseRupiahNumber(document.getElementById('newMatTotalPrice').value), defaultPrice=inputQty>0?totalPrice/inputQty:0, specs=(document.getElementById('newMatSpecs')?.value||'').trim();
-      if(!name||!unit||!Number.isFinite(inputQty)||inputQty<=0||totalPrice<0) return alert('Please enter material name, unit, a quantity greater than zero, and a valid total price.');
+      if(!name||!unit||!Number.isFinite(inputQty)||inputQty<=0||!Number.isFinite(totalPrice)||totalPrice<0) return alert('Please enter a material name, unit, quantity greater than zero, and a valid total price.');
       if(allConsumableItems().some(i=>i.name.toLowerCase()===name.toLowerCase())) return alert('A material with this name already exists.');
-      const item={name,group,unit,defaultPrice,specs,custom:true}; customConsumableItems.push(item); persistMaterialCatalog(); if(specs){const allSpecs=safeStorageJSON('suma_material_specs_overrides',{});allSpecs[name]=specs;localStorage.setItem('suma_material_specs_overrides',JSON.stringify(allSpecs));} renderMaterialDropdowns(); renderConsumablesTable(); renderStorage();
-      const today=new Date().toISOString().slice(0,10);const catalogRecord={id:Date.now(),recordType:'catalog',name,group,unit,specs,defaultPrice,date:today};
-      consumableHistory.push(catalogRecord); if(totalPrice>0){consumableHistory.push({id:Date.now()+1,recordType:'price',name,date:today,qty:inputQty,unit,totalPrice,unitPrice:defaultPrice});} saveDataToStorage(); noteLocalSave({action:'addConsumableHistory',record:catalogRecord}); if(totalPrice>0)noteLocalSave({action:'addConsumableHistory',record:consumableHistory[consumableHistory.length-1]});
-      const stock=getStorageData();if(!stock[name])stock[name]={qty:inputQty,unit,threshold:0,updatedAt:today};else stock[name]={...stock[name],qty:(Number(stock[name].qty)||0)+inputQty,unit,updatedAt:today};saveStorageData(stock);
-      closeModal('newMaterialModal'); renderStorage(); calculateSoapFormula();
+      // A custom item's own unit is canonical; clear any stale override left by an older record with the same name.
+      const units=safeStorageJSON('suma_material_unit_overrides',{}); delete units[name]; safeStorageSet('suma_material_unit_overrides',JSON.stringify(units));
+      const needsUpdate=new Set(safeStorageJSON('suma_material_price_needs_update',[])); needsUpdate.delete(name); safeStorageSet('suma_material_price_needs_update',JSON.stringify([...needsUpdate]));
+      const item={name,group,unit,defaultPrice,specs,custom:true}; customConsumableItems.push(item); persistMaterialCatalog();
+      const allSpecs=safeStorageJSON('suma_material_specs_overrides',{}); allSpecs[name]=specs; safeStorageSet('suma_material_specs_overrides',JSON.stringify(allSpecs));
+      const today=new Date().toISOString().slice(0,10); const stock=getStorageData(); stock[name]={...(stock[name]||{}),qty:inputQty,unit,threshold:Number(stock[name]?.threshold)||0,updatedAt:today}; saveStorageData(stock);
+      const catalogRecord={id:Date.now(),recordType:'catalog',name,group,unit,specs,defaultPrice,date:today}; consumableHistory.push(catalogRecord);
+      if(totalPrice>0)consumableHistory.push({id:Date.now()+1,recordType:'price',name,date:today,qty:inputQty,unit,totalPrice,unitPrice:defaultPrice});
+      saveDataToStorage(); noteLocalSave({action:'addConsumableHistory',record:catalogRecord}); if(totalPrice>0)noteLocalSave({action:'addConsumableHistory',record:consumableHistory[consumableHistory.length-1]});
+      renderMaterialDropdowns(); renderConsumablesTable(); renderStorage(); calculateSoapFormula(); closeModal('newMaterialModal');
+      showToast(`Material added: ${inputQty} ${unit} · ${rupiah(totalPrice)} total · ${rupiah(defaultPrice)} / ${unit}.`);
     }
     function manageMaterialCategories() {
       document.getElementById('categoryListInput').value=getMaterialCategories().join('\n');
@@ -2222,7 +2317,7 @@ D: Blend and pour [after C]"></textarea></div>
     function showMaterialHistory(name) {
       activeHistoryMaterial=name; const rows=getActiveMaterialPriceHistory(name).sort((a,b)=>new Date(a.date)-new Date(b.date) || Number(a.id)-Number(b.id));
       document.getElementById('materialHistoryTitle').textContent=`Price History · ${name}`;
-      document.getElementById('materialHistoryBody').innerHTML=rows.map(h=>`<tr><td><input type="date" class="input-control" style="min-width:130px" id="mh-date-${h.id}" value="${escapeHtml(h.date||'')}"></td><td><div style="display:flex;gap:5px;min-width:155px"><input type="number" min="0.0001" step="any" class="input-control" style="width:85px" id="mh-qty-${h.id}" value="${Number(h.qty)||0}"><input type="text" class="input-control" style="width:65px" id="mh-unit-${h.id}" value="${escapeHtml(h.unit || (allConsumableItems().find(i=>i.name===activeHistoryMaterial)?.unit) || '')}"></div></td><td><input type="text" class="input-control currency-input" style="min-width:130px" id="mh-total-${h.id}" value="${formatRupiahInput(String(Number(h.totalPrice)||0))}" oninput="this.value=formatRupiahInput(this.value)"></td><td>Rp. ${Math.round(Number(h.unitPrice)||0).toLocaleString('id-ID')}</td><td style="white-space:nowrap"><button class="btn" style="width:auto;padding:6px 9px;font-size:10px;" onclick="saveMaterialHistoryEdit('${h.id}')">Save</button> <button class="btn" style="width:auto;padding:6px 9px;font-size:10px;background:#b91c1c" onclick="deleteMaterialHistory('${h.id}')">Delete</button></td></tr>`).join('') || '<tr><td colspan="5" style="color:#78716c;padding:14px;">No price updates yet. Add a material price update to start tracking.</td></tr>';
+      document.getElementById('materialHistoryBody').innerHTML=rows.map(h=>`<tr><td><input type="date" class="input-control" style="min-width:130px" id="mh-date-${h.id}" value="${escapeHtml(h.date||'')}"></td><td><div style="display:flex;gap:5px;min-width:155px"><input type="number" min="0.0001" step="any" class="input-control" style="width:85px" id="mh-qty-${h.id}" value="${Number(h.qty)||0}"><select class="input-control" style="width:78px;padding:6px 3px" id="mh-unit-${h.id}">${unitOptionsHtml(h.unit || (allConsumableItems().find(i=>i.name===activeHistoryMaterial)?.unit) || '')}</select></div></td><td><input type="text" class="input-control currency-input" style="min-width:130px" id="mh-total-${h.id}" value="${formatRupiahInput(String(Number(h.totalPrice)||0))}" oninput="this.value=formatRupiahInput(this.value)"></td><td>Rp. ${Math.round(Number(h.unitPrice)||0).toLocaleString('id-ID')}</td><td style="white-space:nowrap"><button class="btn" style="width:auto;padding:6px 9px;font-size:10px;" onclick="saveMaterialHistoryEdit('${h.id}')">Save</button> <button class="btn" style="width:auto;padding:6px 9px;font-size:10px;background:#b91c1c" onclick="deleteMaterialHistory('${h.id}')">Delete</button></td></tr>`).join('') || '<tr><td colspan="5" style="color:#78716c;padding:14px;">No price updates yet. Add a material price update to start tracking.</td></tr>';
       openModal('materialHistoryModal');
       if(materialPriceChartInstance) { materialPriceChartInstance.destroy(); materialPriceChartInstance = null; }
       // Wait until the modal is visibly laid out before asking Chart.js to measure its canvas.
@@ -2246,11 +2341,19 @@ D: Blend and pour [after C]"></textarea></div>
       const h=consumableHistory.find(x=>String(x.id)===String(id)); if(!h) return;
       const date=document.getElementById(`mh-date-${id}`).value, qty=Number(document.getElementById(`mh-qty-${id}`).value), totalPrice=parseRupiahNumber(document.getElementById(`mh-total-${id}`).value), unit=document.getElementById(`mh-unit-${id}`).value.trim();
       if(!date||qty<=0||totalPrice<0||!unit) return alert('Check date, quantity, unit and total price.');
-      const item=allConsumableItems().find(i=>i.name===activeHistoryMaterial); if(item){ if(customConsumableItems.some(i=>i.name===activeHistoryMaterial)){customConsumableItems=customConsumableItems.map(i=>i.name===activeHistoryMaterial?{...i,unit}:i);localStorage.setItem('suma_custom_materials',JSON.stringify(customConsumableItems));} else { const units=safeStorageJSON('suma_material_unit_overrides', {}); units[activeHistoryMaterial]=unit; localStorage.setItem('suma_material_unit_overrides',JSON.stringify(units)); } }
+      const item=allConsumableItems().find(i=>i.name===activeHistoryMaterial); if(item){
+        if(customConsumableItems.some(i=>i.name===activeHistoryMaterial)){
+          customConsumableItems=customConsumableItems.map(i=>i.name===activeHistoryMaterial?{...i,unit,defaultPrice:0}:i);persistMaterialCatalog();
+        } else {
+          const originalKey=Object.keys(materialNameOverrides).find(k=>materialNameOverrides[k]===activeHistoryMaterial)||activeHistoryMaterial;
+          const units=safeStorageJSON('suma_material_unit_overrides',{}); units[originalKey]=unit; units[activeHistoryMaterial]=unit; safeStorageSet('suma_material_unit_overrides',JSON.stringify(units));
+        }
+      }
       const stock=getStorageData();if(stock[activeHistoryMaterial]){stock[activeHistoryMaterial]={...stock[activeHistoryMaterial],unit,updatedAt:new Date().toISOString().slice(0,10)};saveStorageData(stock);}
       const revision={...h,id:Date.now(),supersedesId:h.id,date,qty,unit,totalPrice,unitPrice:totalPrice/qty,editedAt:new Date().toISOString(),recordType:'price'};
       consumableHistory.push(revision);
-      saveDataToStorage(); renderConsumablesTable(); calculateSoapFormula();
+      const pending=new Set(safeStorageJSON('suma_material_price_needs_update',[]));pending.delete(activeHistoryMaterial);safeStorageSet('suma_material_price_needs_update',JSON.stringify([...pending]));
+      saveDataToStorage(); renderMaterialDropdowns(); renderConsumablesTable(); renderStorage(); calculateSoapFormula();
       // Store corrections as a revision record using the existing add action; the UI hides superseded versions.
       noteLocalSave({action:'addConsumableHistory',record:revision});
       showMaterialHistory(activeHistoryMaterial);
@@ -2273,11 +2376,11 @@ D: Blend and pour [after C]"></textarea></div>
     function getStorageCategories(){return safeStorageJSON('suma_storage_categories',['Equipment','Tools & Utensils','Photography & Lighting','Other']);}
     function addStorageCategory(){const input=document.getElementById('newStorageCategoryName'),name=(input?.value||'').trim();if(!name)return showToast('Enter a category name first.');if(storageViewMode==='materials'){const cats=getMaterialCategories();if(cats.some(c=>c.toLowerCase()===name.toLowerCase()))return showToast('That category already exists.');customMaterialCategories=[...customMaterialCategories,name];persistMaterialCatalog();renderMaterialDropdowns();}else{const cats=getStorageCategories();if(cats.some(c=>c.toLowerCase()===name.toLowerCase()))return showToast('That category already exists.');cats.push(name);localStorage.setItem('suma_storage_categories',JSON.stringify(cats));}renderStorageCategoryOptions();if(input)input.value='';document.getElementById('newStorageCategory').value=name;showToast((storageViewMode==='materials'?'Material':'Equipment')+' category added.');}
     function renderStorageCategoryOptions(){const sel=document.getElementById('newStorageCategory');if(!sel)return;const chosen=sel.value;const cats=storageViewMode==='equipment'?getStorageCategories():getMaterialCategories();sel.innerHTML=cats.map(c=>`<option value="${escapeHtml(c)}">${escapeHtml(c)}</option>`).join('');if([...sel.options].some(o=>o.value===chosen))sel.value=chosen;}
-    function openNewStorageItemModal(){ document.getElementById('newStorageName').value='';document.getElementById('newStorageUnit').value=storageViewMode==='equipment'?'pcs':'gr';document.getElementById('newStorageQty').value='1';document.getElementById('newStoragePrice').value='Rp. 0';if(document.getElementById('newStorageSpecs'))document.getElementById('newStorageSpecs').value='';const title=document.querySelector('#newStorageItemModal .modal-header h3');if(title)title.textContent=storageViewMode==='equipment'?'Add Equipment':'Add Material';const desc=document.querySelector('#newStorageItemModal .modal-description');if(desc)desc.textContent=storageViewMode==='equipment'?'Register physical assets used in production or content creation.':'Add a material to the shared catalog; it will appear in Market and Botanical Studio too.';const catAdd=document.querySelector('#newStorageItemModal .inline-category-add button');if(catAdd)catAdd.textContent=storageViewMode==='equipment'?'+ Add category':'+ Add category';renderStorageCategoryOptions();if(storageViewMode==='equipment')document.getElementById('newStorageCategory').value='Equipment';openModal('newStorageItemModal'); }
+    function openNewStorageItemModal(){ document.getElementById('newStorageName').value='';setUnitSelectOptions(document.getElementById('newStorageUnit'),storageViewMode==='equipment'?'pcs':'gr');document.getElementById('newStorageUnit').value=storageViewMode==='equipment'?'pcs':'gr';document.getElementById('newStorageQty').value='1';document.getElementById('newStoragePrice').value='Rp. 0';if(document.getElementById('newStorageSpecs'))document.getElementById('newStorageSpecs').value='';const title=document.querySelector('#newStorageItemModal .modal-header h3');if(title)title.textContent=storageViewMode==='equipment'?'Add Equipment':'Add Material';const desc=document.querySelector('#newStorageItemModal .modal-description');if(desc)desc.textContent=storageViewMode==='equipment'?'Register physical assets used in production or content creation.':'Add a material to the shared catalog; it will appear in Market and Botanical Studio too.';const catAdd=document.querySelector('#newStorageItemModal .inline-category-add button');if(catAdd)catAdd.textContent=storageViewMode==='equipment'?'+ Add category':'+ Add category';renderStorageCategoryOptions();if(storageViewMode==='equipment')document.getElementById('newStorageCategory').value='Equipment';openModal('newStorageItemModal'); }
     function getStorageHistory(){ return safeStorageJSON('suma_warehouse_history', []); }
     function saveStorageData(data){ try{localStorage.setItem('suma_warehouse_stock',JSON.stringify(data));return true;}catch(e){console.error(e);return false;} }
     function openStorageAdjustModal(){const items=sortMaterialsByCategoryName(getStorageItems().filter(i=>storageViewMode==='equipment'?i.storageType==='asset':i.storageType==='material'));const select=document.getElementById('storageItem');select.innerHTML=items.map(i=>`<option value="${escapeHtml(i.name)}">${escapeHtml(i.group)} · ${escapeHtml(i.name)}</option>`).join('');document.getElementById('storageQty').value='';document.getElementById('storageNote').value='';openModal('storageAdjustModal');}
-    function handleCreateStorageItem(e){e.preventDefault();const name=document.getElementById('newStorageName').value.trim(),group=document.getElementById('newStorageCategory').value,unit=document.getElementById('newStorageUnit').value.trim(),specs=(document.getElementById('newStorageSpecs')?.value||'').trim(),qty=Number(document.getElementById('newStorageQty').value),price=Math.max(0,parseRupiahNumber(document.getElementById('newStoragePrice').value)||0);if(!name||!unit||!Number.isFinite(qty)||qty<0)return showToast('Check item name, unit and quantity.');if(getStorageItems().some(i=>i.name.toLowerCase()===name.toLowerCase()))return showToast('An item with this name already exists.');const stock=getStorageData();if(storageViewMode==='materials'){const item={name,group,unit,specs,defaultPrice:price,custom:true};customConsumableItems.push(item);persistMaterialCatalog();if(specs){const allSpecs=safeStorageJSON('suma_material_specs_overrides',{});allSpecs[name]=specs;localStorage.setItem('suma_material_specs_overrides',JSON.stringify(allSpecs));}stock[name]={...(stock[name]||{}),qty,unit,threshold:0,updatedAt:new Date().toISOString().slice(0,10)};saveStorageData(stock);const record={id:Date.now(),recordType:'catalog',name,group,unit,specs,defaultPrice:price,date:new Date().toISOString().slice(0,10)};consumableHistory.push(record);saveDataToStorage();noteLocalSave({action:'addConsumableHistory',record});renderMaterialDropdowns();renderConsumablesTable();renderStorage();calculateSoapFormula();closeModal('newStorageItemModal');showToast('Material added to Storage, Market and material selectors.');return;}const item={name,group,unit,specs,purchasePrice:price,custom:true,storageType:'asset'};const list=getCustomStorageItems();list.push(item);localStorage.setItem('suma_custom_storage_items',JSON.stringify(list));stock[name]={qty,unit,threshold:0,damaged:0,purchasePrice:price,updatedAt:new Date().toISOString().slice(0,10)};saveStorageData(stock);closeModal('newStorageItemModal');renderStorage();showToast('Equipment added to Storage.');}
+    function handleCreateStorageItem(e){e.preventDefault();const name=document.getElementById('newStorageName').value.trim(),group=document.getElementById('newStorageCategory').value,unit=document.getElementById('newStorageUnit').value.trim(),specs=(document.getElementById('newStorageSpecs')?.value||'').trim(),qty=Number(document.getElementById('newStorageQty').value),price=Math.max(0,parseRupiahNumber(document.getElementById('newStoragePrice').value)||0);if(!name||!unit||!Number.isFinite(qty)||qty<0)return showToast('Check item name, unit and quantity.');if(getStorageItems().some(i=>i.name.toLowerCase()===name.toLowerCase()))return showToast('An item with this name already exists.');const stock=getStorageData();if(storageViewMode==='materials'){const item={name,group,unit,specs,defaultPrice:price,custom:true};const unitOverrides=safeStorageJSON('suma_material_unit_overrides',{});delete unitOverrides[name];safeStorageSet('suma_material_unit_overrides',JSON.stringify(unitOverrides));customConsumableItems.push(item);persistMaterialCatalog();const allSpecs=safeStorageJSON('suma_material_specs_overrides',{});allSpecs[name]=specs;safeStorageSet('suma_material_specs_overrides',JSON.stringify(allSpecs));stock[name]={...(stock[name]||{}),qty,unit,threshold:0,updatedAt:new Date().toISOString().slice(0,10)};saveStorageData(stock);const record={id:Date.now(),recordType:'catalog',name,group,unit,specs,defaultPrice:price,date:new Date().toISOString().slice(0,10)};consumableHistory.push(record);saveDataToStorage();noteLocalSave({action:'addConsumableHistory',record});renderMaterialDropdowns();renderConsumablesTable();renderStorage();calculateSoapFormula();closeModal('newStorageItemModal');showToast('Material added to Storage, Market and material selectors.');return;}const item={name,group,unit,specs,purchasePrice:price,custom:true,storageType:'asset'};const list=getCustomStorageItems();list.push(item);localStorage.setItem('suma_custom_storage_items',JSON.stringify(list));stock[name]={qty,unit,threshold:0,damaged:0,purchasePrice:price,updatedAt:new Date().toISOString().slice(0,10)};saveStorageData(stock);closeModal('newStorageItemModal');renderStorage();showToast('Equipment added to Storage.');}
     function saveStorageMovement(e){e.preventDefault();const name=document.getElementById('storageItem').value,movement=document.getElementById('storageMovement').value,qty=Number(document.getElementById('storageQty').value),note=document.getElementById('storageNote').value.trim();if(!name||!Number.isFinite(qty)||qty<0||(movement!=='set'&&qty<=0)){showToast('Enter a valid quantity.');return;}const item=getStorageItems().find(i=>i.name===name);if(!item)return;const stock=getStorageData(),current=Number(stock[name]?.qty)||0;let next=movement==='in'?current+qty:movement==='out'?current-qty:qty;if(next<0){showToast('Quantity cannot be negative. Current quantity: '+current+' '+item.unit);return;}stock[name]={...stock[name],qty:next,unit:item.unit,updatedAt:new Date().toISOString().slice(0,10)};saveStorageData(stock);closeModal('storageAdjustModal');renderStorage();showToast('Quantity updated.');}
     function unformatRupiahInput(el){if(!el)return;el.value=String(el.value||'').replace(/[^0-9,.-]/g,'').replace(/\./g,'').replace(',', '.');}
     function formatRupiahInput(el){if(!el)return;const n=Math.max(0,parseRupiahNumber(el.value)||0);el.value='Rp. '+Math.round(n).toLocaleString('id-ID');}
@@ -2287,7 +2390,7 @@ D: Blend and pour [after C]"></textarea></div>
       document.getElementById('storageEditName').value=name;
       document.getElementById('storageItemEditTitle').textContent=`Edit ${name}`;
       const categoryOptions=(isAsset?getStorageCategories():getMaterialCategories()).map(c=>`<option value="${escapeHtml(c)}" ${c===item.group?'selected':''}>${escapeHtml(c)}</option>`).join('');
-      document.getElementById('storageEditFields').innerHTML=`<div><label>Name</label><input class="input-control" id="storageEditNewName" value="${escapeHtml(item.name)}" required></div><div><label>Category</label><select class="input-control" id="storageEditCategory" required>${categoryOptions}</select></div><div><label>Unit</label><input class="input-control" id="storageEditUnit" value="${escapeHtml(item.unit)}" required></div><div><label>Specifications / details</label><textarea class="input-control" id="storageEditSpecs" rows="3" placeholder="Ingredients/material details, grade, size, supplier notes, model, condition, etc.">${escapeHtml(item.specs||'')}</textarea></div>`+(isAsset?`<div class="grid-2"><div><label>Quantity owned</label><input class="input-control" id="storageEditQty" type="number" min="0" step="any" value="${Number(current.qty)||0}" required></div><div><label>Damaged units</label><input class="input-control" id="storageEditDamaged" type="number" min="0" step="any" value="${Number(current.damaged)||0}" required></div></div><div><label>Purchase price per unit</label><input class="input-control" id="storageEditPrice" type="text" inputmode="numeric" value="Rp. ${(Number(current.purchasePrice??item.purchasePrice)||0).toLocaleString('id-ID')}" onfocus="unformatRupiahInput(this)" onblur="formatRupiahInput(this)" placeholder="Rp. 0"></div><div class="grid-2"><div><label>Damage date</label><input class="input-control" id="storageEditDamageDate" type="date" value="${escapeHtml(current.damageDate||'')}"></div><div><label>Reason for damage</label><input class="input-control" id="storageEditDamageReason" type="text" value="${escapeHtml(current.damageReason||'')}" placeholder="e.g. motor overheated"></div></div><p class="modal-description">Damaged units are included in total quantity owned but excluded from usable equipment.</p>`:`<div><label>Current quantity (${escapeHtml(item.unit)})</label><input class="input-control" id="storageEditQty" type="number" min="0" step="any" value="${Number(current.qty)||0}" required></div>`);
+      document.getElementById('storageEditFields').innerHTML=`<div><label>Name</label><input class="input-control" id="storageEditNewName" value="${escapeHtml(item.name)}" required></div><div><label>Category</label><select class="input-control" id="storageEditCategory" required>${categoryOptions}</select></div><div><label>Unit</label><select class="input-control" id="storageEditUnit" required>${unitOptionsHtml(item.unit)}</select></div><div><label>Specifications / details</label><textarea class="input-control" id="storageEditSpecs" rows="3" placeholder="Ingredients/material details, grade, size, supplier notes, model, condition, etc.">${escapeHtml(item.specs||'')}</textarea></div>`+(isAsset?`<div class="grid-2"><div><label>Quantity owned</label><input class="input-control" id="storageEditQty" type="number" min="0" step="any" value="${Number(current.qty)||0}" required></div><div><label>Damaged units</label><input class="input-control" id="storageEditDamaged" type="number" min="0" step="any" value="${Number(current.damaged)||0}" required></div></div><div><label>Purchase price per unit</label><input class="input-control" id="storageEditPrice" type="text" inputmode="numeric" value="Rp. ${(Number(current.purchasePrice??item.purchasePrice)||0).toLocaleString('id-ID')}" onfocus="unformatRupiahInput(this)" onblur="formatRupiahInput(this)" placeholder="Rp. 0"></div><div class="grid-2"><div><label>Damage date</label><input class="input-control" id="storageEditDamageDate" type="date" value="${escapeHtml(current.damageDate||'')}"></div><div><label>Reason for damage</label><input class="input-control" id="storageEditDamageReason" type="text" value="${escapeHtml(current.damageReason||'')}" placeholder="e.g. motor overheated"></div></div><p class="modal-description">Damaged units are included in total quantity owned but excluded from usable equipment.</p>`:`<div><label>Current quantity (${escapeHtml(item.unit)})</label><input class="input-control" id="storageEditQty" type="number" min="0" step="any" value="${Number(current.qty)||0}" required></div>`);
       openModal('storageItemEditModal');
     }
     function replaceExactStrings(value,oldName,newName){if(typeof value==='string')return value===oldName?newName:value;if(Array.isArray(value))return value.map(v=>replaceExactStrings(v,oldName,newName));if(value&&typeof value==='object'){const out={};Object.entries(value).forEach(([k,v])=>{out[k===oldName?newName:k]=replaceExactStrings(v,oldName,newName)});return out;}return value;}
@@ -2304,6 +2407,7 @@ D: Blend and pour [after C]"></textarea></div>
       if(!newName||!unit)return showToast('Name and unit are required.');
       if(newName.toLowerCase()!==oldName.toLowerCase()&&getStorageItems().some(i=>i.name.toLowerCase()===newName.toLowerCase()))return showToast('An item with this name already exists.');
       const stock=getStorageData();
+      const unitChanged = String(item.unit||'') !== String(unit);
       if(isAsset){
         const damaged=Math.max(0,Number(document.getElementById('storageEditDamaged')?.value)||0);
         const price=Math.max(0,parseRupiahNumber(document.getElementById('storageEditPrice')?.value)||0);
@@ -2322,6 +2426,8 @@ D: Blend and pour [after C]"></textarea></div>
         const customIdx=customConsumableItems.findIndex(x=>x.name===oldName);
         if(customIdx>=0){
           customConsumableItems=customConsumableItems.map(x=>x.name===oldName?{...x,name:newName,group,unit,specs}:x);
+          const unitOverrides=safeStorageJSON('suma_material_unit_overrides',{}); delete unitOverrides[oldName]; delete unitOverrides[newName]; safeStorageSet('suma_material_unit_overrides',JSON.stringify(unitOverrides));
+          const specOverrides=safeStorageJSON('suma_material_specs_overrides',{}); delete specOverrides[oldName]; delete specOverrides[newName]; safeStorageSet('suma_material_specs_overrides',JSON.stringify(specOverrides));
         } else {
           // Base catalog overrides must use the original catalog key.
           const originalKey=Object.keys(materialNameOverrides).find(k=>materialNameOverrides[k]===oldName)||oldName;
@@ -2339,6 +2445,7 @@ D: Blend and pour [after C]"></textarea></div>
         }
         persistMaterialCatalog();
         localStorage.setItem('suma_material_name_overrides',JSON.stringify(materialNameOverrides));
+        if(unitChanged) { const pending=new Set(safeStorageJSON('suma_material_price_needs_update',[])); if(oldName!==newName)pending.delete(oldName); pending.add(newName); safeStorageSet('suma_material_price_needs_update',JSON.stringify([...pending])); if(customIdx>=0)customConsumableItems=customConsumableItems.map(x=>x.name===newName?{...x,defaultPrice:0}:x); persistMaterialCatalog(); }
       }
       saveStorageData(stock);
       closeModal('storageItemEditModal');
@@ -2473,6 +2580,7 @@ D: Blend and pour [after C]"></textarea></div>
 
       try { bindEvents(); } catch (err) { console.error('Some event bindings failed:', err); }
       try { loadDataFromStorage(); } catch (err) { console.error('Data loading failed:', err); setSyncStatus('Local data load error — data was not deleted; check console', '#DC2626'); }
+      try { renderSalesPlatformOptions(); initSalesFilters(); } catch (err) { console.error('Sales platform options failed:', err); }
       try { renderMaterialDropdowns(); } catch (err) { console.error('Material dropdown rendering failed:', err); }
       try { renderConsumablesTable(); } catch (err) { console.error('Consumables rendering failed:', err); }
       try { renderCategorizedInventory(); } catch (err) { console.error('Inventory rendering failed:', err); }
@@ -2519,6 +2627,7 @@ D: Blend and pour [after C]"></textarea></div>
       bind('categoryManagerForm', 'submit', saveMaterialCategories);
       bind('materialCategoryEditForm', 'submit', saveMaterialCategoryEdit);
       bind('financeOptionForm', 'submit', saveFinanceOption);
+      bind('salesPlatformManagerForm', 'submit', saveSalesPlatformOption);
       bind('finAmount', 'input', e => e.target.value = formatRupiahInput(e.target.value));
       bind('addUserForm', 'submit', addManagedUser);
       document.querySelectorAll('.currency-input').forEach(input => {
@@ -2708,7 +2817,7 @@ D: Blend and pour [after C]"></textarea></div>
       const monthly=[...monthSet].sort().map(month=>{const ss=salesRows.filter(s=>(s.date||'').slice(0,7)===month), rr=periodRows.filter(r=>(r.date||'').slice(0,7)===month);const g=ss.reduce((n,s)=>n+(Number(s.grossTotal)||Number(s.netTotal)||0),0), net=ss.reduce((n,s)=>n+(Number(s.netTotal)||0),0), a=rr.filter(r=>r.type==='ads').reduce((n,r)=>n+(Number(r.amount)||0),0), t=net*.25;return `<tr><td>${escapeHtml(month)}</td><td>${rupiah(g)}</td><td>${rupiah(net)}</td><td>${rupiah(a)}</td><td>${rupiah(t)}</td><td>${rupiah(net-t-a)}</td></tr>`;}).join('');
       const monthlyBody=document.getElementById('financeMonthlyBody'); if(monthlyBody)monthlyBody.innerHTML=monthly||'<tr><td colspan="6" style="padding:12px;color:#78716c;">No activity in this reporting period.</td></tr>';
       let ledger=periodRows.filter(r=>filter==='all'||(filter==='due'?r.paidBy!=='Suma Lōra'&&!r.reimbursed&&r.reimbursementStatus!=='na':filter==='sales'?false:filter==='expense'?(r.type!=='income'&&r.type!=='ads'):filter==='income'?((financeTypes.find(t=>t.key===r.type)?.flow||r.type)==='income'):r.type===filter));
-      const syntheticSales=filter==='all'||filter==='sales'?salesRows.map(s=>({id:`sale_${s.id}`,type:'sales',date:s.date,name:`${s.buyer||'Customer'} · ${(s.items||[]).map(i=>`${i.product} ×${i.qty}`).join(', ')}`,qty:(s.items||[]).reduce((n,i)=>n+(Number(i.qty)||0),0),unit:'pcs',paidBy:s.platform||'Sales platform',amount:Number(s.netTotal)||0,notes:'Sales order · gross '+rupiah(s.grossTotal||s.netTotal),synthetic:true,platformFee:s.fees?Object.values(s.fees).reduce((a,b)=>a+(Number(b)||0),0):0})):[];
+      const syntheticSales=filter==='all'||filter==='sales'?salesRows.map(s=>({id:`sale_${s.id}`,type:'sales',date:s.date,name:`${s.buyer||'Customer'} · ${(s.items||[]).map(i=>`${i.product} ×${i.qty}`).join(', ')}`,qty:(s.items||[]).reduce((n,i)=>n+(Number(i.qty)||0),0),unit:'pcs',paidBy:getSalesPlatformLabel(s.platform)||'Sales platform',amount:Number(s.netTotal)||0,notes:'Sales order · gross '+rupiah(s.grossTotal||s.netTotal),synthetic:true,platformFee:s.fees?Object.values(s.fees).reduce((a,b)=>a+(Number(b)||0),0):0})):[];
       if(filter==='sales') ledger=[];
       ledger=[...ledger,...syntheticSales].sort((a,b)=>(b.date||'').localeCompare(a.date||'')||Number(b.id)-Number(a.id));
       const ledgerBody=document.getElementById('financeTableBody');
@@ -2721,6 +2830,8 @@ D: Blend and pour [after C]"></textarea></div>
     }
 
     function renderAll() {
+      // Keep platform management options in sync with saved app data and cloud hydration.
+      try { renderSalesPlatformOptions(); } catch (err) { console.error('Sales platform selector render failed:', err); }
       // Render each module independently: an error in Finance/Home must not leave
       // Inventory and Consumables empty.
       const tasks = [
@@ -2761,11 +2872,21 @@ D: Blend and pour [after C]"></textarea></div>
 
     // CONSUMABLES
     function getActiveMaterialPriceHistory(itemName) { const rows=consumableHistory.filter(h=>h.name===itemName && (h.recordType==='price' || !h.recordType)); const deleted=new Set(consumableHistory.filter(h=>h.recordType==='priceDeleted' && h.name===itemName).map(h=>String(h.targetId))); const remaining=rows.filter(h=>!deleted.has(String(h.id))); const superseded=new Set(remaining.map(h=>h.supersedesId).filter(x=>x!==undefined&&x!==null).map(String)); return remaining.filter(h=>!superseded.has(String(h.id))); }
+    function getCurrentUnitMaterialPriceHistory(itemName) {
+      const item=allConsumableItems().find(i=>i.name===itemName);
+      const rows=getActiveMaterialPriceHistory(itemName).filter(h=>!h.unit || !item || String(h.unit)===String(item.unit));
+      return rows.sort((a,b)=>new Date(b.date)-new Date(a.date)||Number(b.id)-Number(a.id));
+    }
     function getLatestMaterialPrice(itemName) {
-      const history = getActiveMaterialPriceHistory(itemName).sort((a,b) => new Date(b.date) - new Date(a.date) || Number(b.id)-Number(a.id));
-      if (history.length > 0) return Number(history[0].unitPrice)||0;
-      const def = allConsumableItems().find(i => i.name === itemName);
-      return def ? def.defaultPrice : 0;
+      // A unit change deliberately requires a fresh Market price, even if legacy history has no unit saved.
+      const needs=new Set(safeStorageJSON('suma_material_price_needs_update',[]));
+      if(needs.has(itemName))return 0;
+      const history=getCurrentUnitMaterialPriceHistory(itemName);
+      if(history.length>0)return Number(history[0].unitPrice)||0;
+      const allHistory=getActiveMaterialPriceHistory(itemName);
+      if(allHistory.length)return 0; // Never reuse a price saved under a different unit.
+      const def=allConsumableItems().find(i=>i.name===itemName);
+      return def?Number(def.defaultPrice)||0:0;
     }
 
     function saveMarketSortPreference(){
@@ -2780,16 +2901,16 @@ D: Blend and pour [after C]"></textarea></div>
       const groups = getMaterialCategories().filter(g=>selectedGroup==='all'||g===selectedGroup); let rowsHtml = '';
       groups.forEach(groupName => {
         const items = allConsumableItems().filter(item => item.group === groupName && (!query || item.name.toLowerCase().includes(query) || item.group.toLowerCase().includes(query)));
-        const latestPrice=item=>{const hist=getActiveMaterialPriceHistory(item.name).sort((a,b)=>new Date(b.date)-new Date(a.date)||Number(b.id)-Number(a.id));return hist.length?Number(hist[0].unitPrice)||0:Number(item.defaultPrice)||0;};
-        const latestDate=item=>{const hist=getActiveMaterialPriceHistory(item.name).sort((a,b)=>new Date(b.date)-new Date(a.date)||Number(b.id)-Number(a.id));return String(hist[0]?.date||'');};
+        const latestPrice=item=>{const hist=getCurrentUnitMaterialPriceHistory(item.name);return hist.length?Number(hist[0].unitPrice)||0:getLatestMaterialPrice(item.name);};
+        const latestDate=item=>{const hist=getCurrentUnitMaterialPriceHistory(item.name);return String(hist[0]?.date||'');};
         items.sort((a,b)=>{if(sortBy==='price-asc')return latestPrice(a)-latestPrice(b)||a.name.localeCompare(b.name,undefined,{sensitivity:'base'});if(sortBy==='price-desc')return latestPrice(b)-latestPrice(a)||a.name.localeCompare(b.name,undefined,{sensitivity:'base'});if(sortBy==='updated-desc')return latestDate(b).localeCompare(latestDate(a))||a.name.localeCompare(b.name,undefined,{sensitivity:'base'});return a.name.localeCompare(b.name,undefined,{sensitivity:'base'});});
         if (!items.length) return;
         rowsHtml += `<tr class="material-group-row"><td colspan="7" style="background:#F1F3ED;color:#2A3F2E;font-weight:700;padding:11px 12px;border-top:1px solid #DDE4D8;">${escapeHtml(groupName)} <span style="font-size:10px;font-weight:500;color:#78716c;">· ${items.length} items</span></td></tr>`;
         rowsHtml += items.map(item => {
           const history = getActiveMaterialPriceHistory(item.name).sort((a,b) => new Date(b.date) - new Date(a.date) || Number(b.id)-Number(a.id));
-          const latestEntry = history[0]; const latestUnitPrice = latestEntry ? Number(latestEntry.unitPrice)||0 : Number(item.defaultPrice)||0;
-          const lastUpdated = latestEntry ? latestEntry.date : 'Default';
-          const totalInputStr = latestEntry ? `${Number(latestEntry.qty)||0} ${escapeHtml(latestEntry.unit||item.unit)} (Rp. ${(Number(latestEntry.totalPrice)||0).toLocaleString('id-ID')})` : '-';
+          const currentUnitHistory=getCurrentUnitMaterialPriceHistory(item.name); const latestEntry=currentUnitHistory[0]; const allHistory=history; const priceNeedsUpdate=allHistory.length>0&&!latestEntry || new Set(safeStorageJSON('suma_material_price_needs_update',[])).has(item.name); const latestUnitPrice = latestEntry ? Number(latestEntry.unitPrice)||0 : (priceNeedsUpdate?0:Number(item.defaultPrice)||0);
+          const lastUpdated = latestEntry ? latestEntry.date : (priceNeedsUpdate?'Update price':'Default');
+          const totalInputStr = latestEntry ? `${Number(latestEntry.qty)||0} ${escapeHtml(latestEntry.unit||item.unit)} (Rp. ${(Number(latestEntry.totalPrice)||0).toLocaleString('id-ID')})` : (priceNeedsUpdate?`Add price in ${escapeHtml(item.unit)}`:'-');
           return `<tr><td class="market-item-name">${escapeHtml(item.name)}</td><td class="market-unit-price">Rp. ${latestUnitPrice.toLocaleString('id-ID')} / ${escapeHtml(item.unit)}</td><td style="color:#78716c;">${escapeHtml(item.group)}</td><td>${escapeHtml(item.unit)}</td><td style="color:#57534e;">${totalInputStr}</td><td style="color:#78716c;">${lastUpdated}</td><td><div style="display:flex;align-items:center;gap:4px;flex-wrap:nowrap;white-space:nowrap;"><button type="button" onclick="showMaterialHistory('${String(item.name).replace(/'/g,"\\'")}')" class="btn" style="width:auto;padding:6px 8px;font-size:10px;margin:0;white-space:nowrap;">${history.length} updates · View/Edit</button><button type="button" onclick="deleteMarketMaterial('${String(item.name).replace(/'/g,"\\'")}')" class="btn" style="width:auto;padding:6px 8px;font-size:10px;background:#b42318;color:#fff;border:1px solid #b42318;margin:0;display:inline-flex;align-items:center;gap:4px;flex-shrink:0;">Delete</button></div><button type="button" onclick="editMaterialCategory('${String(item.name).replace(/'/g,"\\'")}')" style="font-size:10px;color:#78716c;background:none;border:0;cursor:pointer;text-decoration:underline;margin-top:5px;padding:0;">Edit category</button></td></tr>`;
         }).join('');
       });
@@ -2828,6 +2949,7 @@ D: Blend and pour [after C]"></textarea></div>
       const itemUnit=allConsumableItems().find(i=>i.name===name)?.unit||'unit';
       const record = { id: Date.now(), recordType: 'price', name, qty, unit:itemUnit, totalPrice, unitPrice, date };
       consumableHistory.push(record);
+      const pending=new Set(safeStorageJSON('suma_material_price_needs_update',[])); pending.delete(name); safeStorageSet('suma_material_price_needs_update',JSON.stringify([...pending]));
 
       closeModal("materialModal");
       renderConsumablesTable();
@@ -2906,10 +3028,12 @@ D: Blend and pour [after C]"></textarea></div>
     function saveYieldDefault() { const size=document.getElementById('labProductSize').value, qty=Math.floor(Number(document.getElementById('labYieldQty').value)); if(qty<1) return alert('Yield must be at least 1 piece.'); yieldDefaults[size]=qty; localStorage.setItem('suma_yield_defaults',JSON.stringify(yieldDefaults)); saveAppSetting('yield',size,qty); alert(`${size==='travel'?'Travel Size':'Regular Bar'} default yield saved: ${qty} pcs.`); calculateSoapFormula(); }
     function saveCurrentRecipe() {
       const name=document.getElementById('labRecipeSelect').value;
-      const oils={}; document.querySelectorAll('#labOilsContainer .oil-row').forEach(r=>{const key=r.querySelector('.oil-name-select').value; oils[key]=Number(r.querySelector('.oil-pct-input').value)||0;});
+      const oilRows=[...document.querySelectorAll('#labOilsContainer .oil-row')].map(r=>({name:r.querySelector('.oil-name-select')?.value||'',pct:Number(r.querySelector('.oil-pct-input')?.value)||0})).filter(r=>r.name);
+      const pctFor=key=>oilRows.filter(r=>getOilCoefficientKey(r.name)===key).reduce((sum,r)=>sum+r.pct,0);
+      const oils={Coconut:pctFor('Coconut Oil'),Olive:pctFor('Olive Oil'),InfusedOlive:pctFor('Infused Olive Oil'),Shea:pctFor('Shea Butter'),Palm:pctFor('Palm Oil'),Cocoa:pctFor('Cocoa Butter')};
       const additives=[]; document.querySelectorAll('#labAdditivesContainer .additive-row').forEach(r=>additives.push({name:r.querySelector('.additive-name-select').value,val:Number(r.querySelector('.additive-grams-input').value)||0}));
       if(DEFAULT_RECIPES[name]) { if(!confirm(`Save changes to preset “${name}” in this browser? This will override its saved formula locally.`)) return; }
-      customRecipes[name]={oils:{Coconut:oils['Coconut Oil']||0,Olive:oils['Olive Oil']||0,InfusedOlive:oils['Infused Olive Oil']||0,Shea:oils['Shea Butter']||0,Palm:oils['Palm Oil']||0,Cocoa:oils['Cocoa Butter']||0},additives};
+      customRecipes[name]={oils,oilRows,additives};
       localStorage.setItem('suma_custom_recipes',JSON.stringify(customRecipes)); saveAppSetting('recipe',name,customRecipes[name]); alert(`Recipe “${name}” saved.`);
     }
     function createNewRecipe() {
@@ -2942,14 +3066,16 @@ D: Blend and pour [after C]"></textarea></div>
       const recipe = getRecipeByName(presetName);
 
       const oilsContainer = document.getElementById("labOilsContainer");
-      oilsContainer.innerHTML = `
-        ${createOilRowHtml("Coconut Oil", recipe.oils.Coconut)}
-        ${createOilRowHtml("Olive Oil", recipe.oils.Olive)}
-        ${createOilRowHtml("Infused Olive Oil", recipe.oils.InfusedOlive)}
-        ${createOilRowHtml("Shea Butter", recipe.oils.Shea)}
-        ${createOilRowHtml("Palm Oil", recipe.oils.Palm)}
-        ${createOilRowHtml("Cocoa Butter", recipe.oils.Cocoa)}
-      `;
+      const standardOilRows = [
+        {name:"Coconut Oil",pct:recipe.oils?.Coconut||0},
+        {name:"Olive Oil",pct:recipe.oils?.Olive||0},
+        {name:"Infused Olive Oil",pct:recipe.oils?.InfusedOlive||0},
+        {name:"Shea Butter",pct:recipe.oils?.Shea||0},
+        {name:"Palm Oil",pct:recipe.oils?.Palm||0},
+        {name:"Cocoa Butter",pct:recipe.oils?.Cocoa||0}
+      ];
+      const oilRows=Array.isArray(recipe.oilRows)&&recipe.oilRows.length?recipe.oilRows:standardOilRows;
+      oilsContainer.innerHTML = oilRows.map(row=>createOilRowHtml(row.name||row.material||'',row.pct??row.percentage??0)).join('');
 
       const additivesContainer = document.getElementById("labAdditivesContainer");
       additivesContainer.innerHTML = "";
@@ -2964,17 +3090,8 @@ D: Blend and pour [after C]"></textarea></div>
     }
 
     function createOilRowHtml(oilName, pctVal = 0) {
-      // Use the same shared Market/Storage catalog as the live dropdown refresh.
-      // Include every non-packaging material so custom oils with unusual names are not silently excluded.
-      const catalogOilItems = sortMaterialsByCategoryName(allConsumableItems().filter(i => /raw\s*materials?/i.test(String(i.group || ''))));
-      const optionNames = [...new Set([...Object.keys(OIL_COEFFICIENTS), ...catalogOilItems.map(i => i.name)])];
-      if (oilName && !optionNames.includes(oilName)) optionNames.push(oilName);
-      const options = optionNames.map(name => {
-        const item = catalogOilItems.find(i => i.name === name);
-        const category = item ? ` [${item.group}]` : '';
-        const profileNote = OIL_COEFFICIENTS[name] ? '' : ' · SAP profile needed';
-        return `<option value="${escapeHtml(name)}" ${name === oilName ? 'selected' : ''}>${escapeHtml(name)}${escapeHtml(category)}${profileNote}</option>`;
-      }).join('');
+      const items=getRawMaterialItems(); const selectedName=resolveRawOilName(oilName,items);
+      const options='<option value="" '+(!selectedName?'selected':'')+'>Choose raw oil / butter…</option>'+items.map(item=>{const note=getOilCoefficientKey(item.name)?'':' · SAP profile needed';return `<option value="${escapeHtml(item.name)}" ${item.name===selectedName?'selected':''}>${escapeHtml(item.name)}${note}</option>`;}).join('');
       return `
         <div class="oil-row" style="display: grid; grid-template-columns: 2fr 1fr 1fr 24px; gap: 8px; align-items: center;">
           <select onchange="calculateSoapFormula()" class="oil-name-select input-control">${options}</select>
@@ -2988,11 +3105,11 @@ D: Blend and pour [after C]"></textarea></div>
     }
 
     function createAdditiveRowHtml(addName = "", valGrams = 0) {
+      const items=getRawMaterialItems(); const selected=items.some(i=>i.name===addName)?addName:'';
+      const options='<option value="" '+(!selected?'selected':'')+'>Choose raw material…</option>'+items.map(i=>`<option value="${escapeHtml(i.name)}" ${i.name===selected?'selected':''}>${escapeHtml(i.name)}</option>`).join('');
       return `
         <div class="additive-row" style="display: grid; grid-template-columns: 2fr 1fr 24px; gap: 8px; align-items: center;">
-          <select onchange="calculateSoapFormula()" class="additive-name-select input-control">
-            ${sortMaterialsByCategoryName(allConsumableItems()).map(i => `<option value="${escapeHtml(i.name)}" ${i.name === addName ? 'selected':''}>${escapeHtml(i.name)}</option>`).join("")}
-          </select>
+          <select onchange="calculateSoapFormula()" class="additive-name-select input-control">${options}</select>
           <div style="display:flex; align-items:center; gap:2px;">
             <input type="number" step="0.01" oninput="calculateSoapFormula()" class="additive-grams-input input-control" value="${valGrams}"><span>g</span>
           </div>
@@ -3002,7 +3119,9 @@ D: Blend and pour [after C]"></textarea></div>
     }
 
     function addCustomOilRow() {
-      document.getElementById("labOilsContainer").insertAdjacentHTML('beforeend', createOilRowHtml("Avocado Oil", 0));
+      const items=getRawMaterialItems(); if(!items.length)return showToast('Add a material in the Raw Material category first.');
+      const preferred=items.find(i=>/avocado/i.test(i.name))?.name||items[0].name;
+      document.getElementById("labOilsContainer").insertAdjacentHTML('beforeend', createOilRowHtml(preferred, 0));
       calculateSoapFormula();
     }
 
@@ -3031,6 +3150,8 @@ D: Blend and pour [after C]"></textarea></div>
       let totalPctSum = 0;
       let totalNaohRaw = 0;
       let totalH2oRaw = 0;
+      let missingOilSelection = false;
+      let missingOilProfile = false;
 
       let sumLauric = 0, sumMyristic = 0, sumPalmitic = 0, sumStearic = 0, sumOleic = 0, sumLinoleic = 0, sumLinolenic = 0, sumRicinoleic = 0;
 
@@ -3043,7 +3164,17 @@ D: Blend and pour [after C]"></textarea></div>
         const grams = totalOilGrams * (pct / 100);
         row.querySelector('.oil-grams-display').innerText = `${grams.toFixed(1)} g`;
 
-        const coef = OIL_COEFFICIENTS[oilName] || OIL_COEFFICIENTS["Olive Oil"];
+        if(!oilName){
+          if(pct>0)missingOilSelection=true;
+          row.querySelector('.oil-grams-display').innerText=`${grams.toFixed(1)} g · select oil`;
+          return;
+        }
+        const coef = getOilCoefficient(oilName);
+        if(!coef){
+          if(pct>0)missingOilProfile=true;
+          row.querySelector('.oil-grams-display').innerText=`${grams.toFixed(1)} g · SAP needed`;
+          return;
+        }
         const naohNoSf = grams * coef.sap;
         totalNaohRaw += naohNoSf;
 
@@ -3059,8 +3190,9 @@ D: Blend and pour [after C]"></textarea></div>
       });
 
       const badge = document.getElementById("labOilTotalPercentBadge");
-      badge.innerText = `Total: ${totalPctSum.toFixed(1)}%`;
-      badge.className = (Math.abs(totalPctSum - 100) < 0.1) ? "badge-ok" : "badge-alert";
+      const oilWarning=missingOilSelection?' · Select oil(s)':(missingOilProfile?' · SAP profile needed':'');
+      badge.innerText = `Total: ${totalPctSum.toFixed(1)}%${oilWarning}`;
+      badge.className = (Math.abs(totalPctSum - 100) < 0.1 && !missingOilSelection && !missingOilProfile) ? "badge-ok" : "badge-alert";
 
       const totalNaohWithSuperfat = totalNaohRaw * (1 - (superfatPct / 100));
       totalH2oRaw = totalNaohWithSuperfat * lyeRatio;
@@ -3158,25 +3290,45 @@ D: Blend and pour [after C]"></textarea></div>
 
     function rupiah(value) { return 'Rp. ' + Math.round(Number(value)||0).toLocaleString('id-ID'); }
     function costLine(label,value,small='') { return `<div style="border:1px solid #E7E5E4;background:#fff;border-radius:9px;padding:9px 10px;"><span style="font-size:10px;color:#78716c;display:block;">${label}</span><strong style="font-size:13px;color:#292524;">${rupiah(value)}</strong>${small?`<span style="font-size:10px;color:#78716c;display:block;">${small}</span>`:''}</div>`; }
+    function gramsToMaterialUnits(grams, unit) {
+      const u=String(unit||'').trim().toLowerCase();
+      if(['gr','g','gram','grams'].includes(u))return Number(grams)||0;
+      if(['kg','kilogram','kilograms'].includes(u))return (Number(grams)||0)/1000;
+      if(['mg','milligram','milligrams'].includes(u))return (Number(grams)||0)*1000;
+      return null; // Mass-to-volume or mass-to-piece conversions need a material-specific conversion factor.
+    }
+    function materialCostByGrams(name, grams) {
+      const item=allConsumableItems().find(i=>i.name===name);
+      if(!item)return {ok:false,cost:0,reason:`${name||'Unselected material'} not found in catalog`};
+      const units=gramsToMaterialUnits(grams,item.unit);
+      if(units===null)return {ok:false,cost:0,reason:`${item.name} is measured in ${item.unit}; formula amount is in grams`};
+      return {ok:true,cost:getLatestMaterialPrice(item.name)*units};
+    }
     function calculateBatchHppWithAdditives(oilGrams, naohGrams, citricGrams, waterGrams = 0) {
-      let totalOilCost=0;
+      let totalOilCost=0,totalAdditivesCost=0; const conversionIssues=new Set();
       document.querySelectorAll('#labOilsContainer .oil-row').forEach(row=>{
-        const oilName=row.querySelector('.oil-name-select').value,pct=Number(row.querySelector('.oil-pct-input').value)||0,grams=oilGrams*pct/100;
-        let material='Olive oil – Food Grade';
-        if(oilName.includes('Coconut')) material=allConsumableItems().some(i=>i.name==='Coconut oil – Food Grade')?'Coconut oil – Food Grade':material;
-        if(oilName.includes('Palm')) material='Palm oil – Food Grade'; if(oilName.includes('Shea')) material='Shea butter – Cosmetic Grade'; if(oilName.includes('Cocoa')) material='Cocoa butter – Cosmetic Grade';
-        if(oilName.includes('Infused')) material=allConsumableItems().some(i=>i.name==='Infused olive oil – Food Grade')?'Infused olive oil – Food Grade':'Olive oil – Food Grade';
-        totalOilCost+=getLatestMaterialPrice(material)*grams;
+        const material=row.querySelector('.oil-name-select').value,pct=Number(row.querySelector('.oil-pct-input').value)||0,grams=oilGrams*pct/100;
+        if(!material&&pct>0){conversionIssues.add('Oil material not selected');return;}
+        if(material&&grams>0){
+          const result=materialCostByGrams(material,grams);
+          if(result.ok)totalOilCost+=result.cost;else conversionIssues.add(result.reason);
+          if(pct>0&&!getOilCoefficient(material))conversionIssues.add(`SAP profile needed for ${material}; NaOH estimate is incomplete`);
+        }
       });
-      let totalAdditivesCost=0;
-      document.querySelectorAll('#labAdditivesContainer .additive-row').forEach(row=>{ totalAdditivesCost+=getLatestMaterialPrice(row.querySelector('.additive-name-select').value)*(Number(row.querySelector('.additive-grams-input').value)||0); });
-      const lyeAndAcidCost=getLatestMaterialPrice('NaOH – Cosmetic Grade')*naohGrams+getLatestMaterialPrice('Citric acid – Cosmetic Grade')*citricGrams+getLatestMaterialPrice('Purified water – Lab Grade')*(Number(waterGrams)||0);
+      document.querySelectorAll('#labAdditivesContainer .additive-row').forEach(row=>{
+        const material=row.querySelector('.additive-name-select').value,grams=Number(row.querySelector('.additive-grams-input').value)||0;
+        if(!material&&grams>0){conversionIssues.add('Additive material not selected');return;}
+        if(material&&grams>0){const result=materialCostByGrams(material,grams);if(result.ok)totalAdditivesCost+=result.cost;else conversionIssues.add(result.reason);}
+      });
+      const chemicalCosts=[['NaOH – Cosmetic Grade',naohGrams],['Citric acid – Cosmetic Grade',citricGrams],['Purified water – Lab Grade',Number(waterGrams)||0]];
+      let lyeAndAcidCost=0;
+      chemicalCosts.forEach(([name,grams])=>{if(grams>0){const result=materialCostByGrams(name,grams);if(result.ok)lyeAndAcidCost+=result.cost;else conversionIssues.add(result.reason);}});
       const formulaBase=totalOilCost+totalAdditivesCost+lyeAndAcidCost;
       const formulaWithWaste=formulaBase*1.05;
       const yieldQty=Math.max(1,Math.floor(Number(document.getElementById('labYieldQty').value)||1));
       const formulaPerPc=formulaWithWaste/yieldQty, oilPerPc=totalOilCost*1.05/yieldQty, additivePerPc=(totalAdditivesCost+lyeAndAcidCost)*1.05/yieldQty;
       let packingBatch=0;
-      document.querySelectorAll('#labPackingContainer .packing-row').forEach(row=>{ const material=row.querySelector('.packing-name-select').value,qty=Number(row.querySelector('.packing-qty-input').value)||0; packingBatch+=getLatestMaterialPrice(material)*qty*yieldQty; });
+      document.querySelectorAll('#labPackingContainer .packing-row').forEach(row=>{const material=row.querySelector('.packing-name-select').value,qty=Number(row.querySelector('.packing-qty-input').value)||0;if(material)packingBatch+=getLatestMaterialPrice(material)*qty*yieldQty;});
       const packingPerPc=packingBatch/yieldQty;
       const sellingPrice=Math.max(0,parseRupiahNumber(document.getElementById('labSellingPrice').value));
       const shopeePct=Math.max(0,Math.min(100,Number(document.getElementById('labShopeeFeePct').value)||0));
@@ -3187,9 +3339,10 @@ D: Blend and pour [after C]"></textarea></div>
       const afterTeam=afterCosts-teamFee;
       const net=afterTeam;
       const batchHpp=formulaWithWaste+packingBatch;
-      const hppEl=document.getElementById('labEstimatedHpp'); if(hppEl) hppEl.innerText=`${rupiah(formulaPerPc+packingPerPc)} / pc · Batch ${rupiah(batchHpp)}`;
+      const hppEl=document.getElementById('labEstimatedHpp'); if(hppEl) hppEl.innerText=`${rupiah(formulaPerPc+packingPerPc)} / pc · Batch ${rupiah(batchHpp)}`+(conversionIssues.size?' · CHECK UNITS':'');
       document.getElementById('labProfitBreakdown').innerHTML=[
-        costLine('Selling price',sellingPrice),costLine('Formula HPP / batch (+5% loss)',formulaWithWaste,`Oils ${rupiah(totalOilCost)} · Additives, NaOH, citric & water ${rupiah(totalAdditivesCost+lyeAndAcidCost)} · Market latest unit prices` ),costLine('Formula HPP / pc',formulaPerPc),costLine('Packing / pc',packingPerPc),costLine('Total HPP / pc',formulaPerPc+packingPerPc),costLine('Shopee fee (−)',shopeeFee,`${shopeePct}% of selling price`),costLine('Profit before team fee',afterCosts),costLine(`Team fee (− ${teamPct}%)`,teamFee),costLine('Shareable net after team fee',afterTeam)
+        ...(conversionIssues.size?[`<div style="grid-column:1/-1;border:1px solid #f0c36d;background:#fff8e6;border-radius:9px;padding:9px 10px;font-size:11px;color:#92400e;"><strong>HPP needs review</strong><br>${[...conversionIssues].map(escapeHtml).join('<br>')}<br>Mass formula amounts can only be priced automatically when material unit is gr/g/kg/mg. For ml, bottle, pcs, etc., configure an appropriate conversion before relying on HPP.</div>`]:[]),
+        costLine('Selling price',sellingPrice),costLine('Formula HPP / batch (+5% loss)',formulaWithWaste,`Oils ${rupiah(totalOilCost)} · Additives, NaOH, citric & water ${rupiah(totalAdditivesCost+lyeAndAcidCost)} · Market latest unit prices`),costLine('Formula HPP / pc',formulaPerPc),costLine('Packing / pc',packingPerPc),costLine('Total HPP / pc',formulaPerPc+packingPerPc),costLine('Shopee fee (−)',shopeeFee,`${shopeePct}% of selling price`),costLine('Profit before team fee',afterCosts),costLine(`Team fee (− ${teamPct}%)`,teamFee),costLine('Shareable net after team fee',afterTeam)
       ].join('');
       document.getElementById('labNetProfit').innerText=rupiah(net);
     }
@@ -3317,15 +3470,10 @@ D: Blend and pour [after C]"></textarea></div>
         const now=new Date(), y=now.getFullYear(), m=now.getMonth();
         const first=new Date(y,m,1), last=new Date(y,m+1,0);
         const fmt=d=>`${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}-${String(d.getDate()).padStart(2,'0')}`;
-        if(!from.value) from.value=fmt(first);
-        if(!to.value) to.value=fmt(last);
+        if(!from.value) from.value=fmt(first); if(!to.value) to.value=fmt(last);
       }
       const sel=document.getElementById('salesPlatformFilter');
-      if(sel){
-        const current=sel.value||'all', platforms=[...new Set(sales.map(s=>String(s.platform||'').trim()).filter(Boolean))].sort((a,b)=>a.localeCompare(b));
-        sel.innerHTML='<option value="all">All platforms</option>'+platforms.map(p=>`<option value="${escapeHtml(p)}">${escapeHtml(p)}</option>`).join('');
-        if(platforms.includes(current)) sel.value=current;
-      }
+      if(sel){const current=sel.value||'all', all=getSalesPlatforms(), used=[...new Set(sales.map(s=>String(s.platform||'').trim()).filter(Boolean))]; const ids=[...new Set([...all.filter(p=>p.active).map(p=>p.value),...used])]; ids.sort((a,b)=>getSalesPlatformLabel(a).localeCompare(getSalesPlatformLabel(b),undefined,{sensitivity:'base'})); sel.innerHTML='<option value="all">All platforms</option>'+ids.map(id=>{const p=all.find(x=>x.value===id);return `<option value="${escapeHtml(id)}">${escapeHtml(getSalesPlatformLabel(id))}${p&&p.active?'':' (historical)'}</option>`;}).join(''); if([...sel.options].some(o=>o.value===current))sel.value=current;}
     }
     function resetSalesFilters(){
       const from=document.getElementById('salesDateFrom'), to=document.getElementById('salesDateTo');
@@ -3347,7 +3495,7 @@ D: Blend and pour [after C]"></textarea></div>
         if((from||to)&&!date)return false;
         if(platform!=='all'&&String(s.platform||'')!==platform)return false;
         if(query){
-          const hay=[s.buyer,s.platform,...(s.items||[]).flatMap(it=>[it.product,it.batchCode])].join(' ').toLowerCase();
+          const hay=[s.buyer,s.platform,getSalesPlatformLabel(s.platform),...(s.items||[]).flatMap(it=>[it.product,it.batchCode])].join(' ').toLowerCase();
           if(!hay.includes(query))return false;
         }
         return true;
@@ -3371,7 +3519,7 @@ D: Blend and pour [after C]"></textarea></div>
           const fees=s.fees?Object.values(s.fees).reduce((a,b)=>a+(Number(b)||0),0):Math.max(0,(Number(s.grossTotal)||Number(s.netTotal)||0)-(Number(s.netTotal)||0));
           const g=Number(s.grossTotal)||Number(s.netTotal)||0, net=Number(s.netTotal)||0, teamFee=Math.max(0,net)*0.25;
           gross+=g;platformFees+=fees;afterPlatform+=net;team+=teamFee;
-          body+=`<tr><td>${escapeHtml(formatDateOnly(s.date||''))}</td><td>${escapeHtml(s.buyer||'Anonymous')}</td><td>${escapeHtml(s.platform||'')}</td><td class="sales-items-cell">${escapeHtml(itemSummary)}</td><td class="sales-fee-cell">−${rupiah(fees)}</td><td class="sales-net-cell">${rupiah(net)}<div>After team: ${rupiah(net-teamFee)}</div></td><td class="sales-actions-cell"><button type="button" onclick="openSalesModalForEdit(${Number(s.id)})" class="btn-action">Edit</button><button type="button" onclick="deleteSale(${Number(s.id)})" class="btn-action">Delete</button></td></tr>`;
+          body+=`<tr><td>${escapeHtml(formatDateOnly(s.date||''))}</td><td>${escapeHtml(s.buyer||'Anonymous')}</td><td>${escapeHtml(getSalesPlatformLabel(s.platform)||'')}</td><td class="sales-items-cell">${escapeHtml(itemSummary)}</td><td class="sales-fee-cell">−${rupiah(fees)}</td><td class="sales-net-cell">${rupiah(net)}<div>After team: ${rupiah(net-teamFee)}</div></td><td class="sales-actions-cell"><button type="button" onclick="openSalesModalForEdit(${Number(s.id)})" class="btn-action">Edit</button><button type="button" onclick="deleteSale(${Number(s.id)})" class="btn-action">Delete</button></td></tr>`;
         });
         body+=`<tr class="sales-total-row"><td colspan="4">${escapeHtml(month)} totals · ${totalMonthItems} items sold</td><td>−${rupiah(platformFees)}</td><td colspan="2">Gross ${rupiah(gross)} · After platform ${rupiah(afterPlatform)} · Team 25% −${rupiah(team)} · Ads −${rupiah(adsMonth)} · After team & ads ${rupiah(afterPlatform-team-adsMonth)}</td></tr>`;
       });
@@ -3454,7 +3602,7 @@ D: Blend and pour [after C]"></textarea></div>
     }
     function buildBatchMaterialRequirements(product, targetYield) {
       const recipeName=resolveRecipeNameForProduct(product);
-      if(!recipeName) return {error:`No Botanical Studio recipe matches “${product}”.`};
+      if(!recipeName)return {error:`No Botanical Studio recipe matches “${product}”.`};
       const recipe=getRecipeByName(recipeName);
       const volTotal=Math.max(0,Number(document.getElementById('labParamVolTotal')?.value)||1200);
       const oilPercent=Math.max(0,Number(document.getElementById('labParamOilPercent')?.value)||67.858);
@@ -3462,43 +3610,36 @@ D: Blend and pour [after C]"></textarea></div>
       const baseYield=Math.max(1,Math.floor(Number(document.getElementById('labYieldQty')?.value)||12));
       const scale=Math.max(0,Number(targetYield)||0)/baseYield;
       const sameSelected=normalizeMaterialName(document.getElementById('labRecipeSelect')?.value)===normalizeMaterialName(recipeName);
-      const requirements=[];
-      const oilMaterialMap={
-        Coconut:{formula:'Coconut Oil',material:'Coconut oil – Food Grade'},
-        Olive:{formula:'Olive Oil',material:'Olive oil – Food Grade'},
-        InfusedOlive:{formula:'Infused Olive Oil',material:'Infused olive oil – Food Grade'},
-        Shea:{formula:'Shea Butter',material:'Shea butter – Cosmetic Grade'},
-        Palm:{formula:'Palm Oil',material:'Palm oil – Food Grade'},
-        Cocoa:{formula:'Cocoa Butter',material:'Cocoa butter – Cosmetic Grade'}
-      };
-      let totalNaohRaw=0;
+      const requirements=[]; let totalNaohRaw=0;
       const liveOils=sameSelected?[...document.querySelectorAll('#labOilsContainer .oil-row')].map(row=>({name:row.querySelector('.oil-name-select')?.value||'',pct:Number(row.querySelector('.oil-pct-input')?.value)||0})):[];
-      const oilRows=liveOils.length?liveOils:Object.entries(recipe.oils||{}).map(([key,pct])=>({name:({Coconut:'Coconut Oil',Olive:'Olive Oil',InfusedOlive:'Infused Olive Oil',Shea:'Shea Butter',Palm:'Palm Oil',Cocoa:'Cocoa Butter'})[key]||key,pct:Number(pct)||0}));
-      oilRows.forEach(oil=>{
-        const pct=Math.max(0,Number(oil.pct)||0); if(!pct) return;
+      const oilRows=liveOils.length?liveOils:(Array.isArray(recipe.oilRows)&&recipe.oilRows.length?recipe.oilRows:Object.entries(recipe.oils||{}).map(([key,pct])=>({name:({Coconut:'Coconut Oil',Olive:'Olive Oil',InfusedOlive:'Infused Olive Oil',Shea:'Shea Butter',Palm:'Palm Oil',Cocoa:'Cocoa Butter'})[key]||key,pct:Number(pct)||0})));
+      for(const oil of oilRows){
+        const pct=Math.max(0,Number(oil.pct)||0); if(!pct)continue;
+        const enteredName=String(oil.name||'').trim();
+        const actualName=resolveRawOilName(enteredName,getRawMaterialItems());
+        if(!actualName)return {error:`Oil row (“${enteredName||'not selected'}”) must select a material in the Raw Material category.`};
+        const item=allConsumableItems().find(i=>i.name===actualName);
+        if(!item||!isRawMaterialItem(item))return {error:`“${actualName}” is not in the Raw Material category. Reclassify it if it is a soap ingredient.`};
+        const coef=getOilCoefficient(actualName);
+        if(!coef)return {error:`No validated SAP profile for “${actualName}”. Add/verify its SAP profile before creating a production batch; otherwise NaOH consumption cannot be calculated safely.`};
         const grams=totalOilGrams*pct/100*scale;
-        const oilName=String(oil.name||'');
-        let map=null;
-        if(oilName.includes('Coconut')) map={formula:'Coconut Oil',material:'Coconut oil – Food Grade'};
-        else if(oilName.includes('Infused')) map={formula:'Infused Olive Oil',material:'Infused olive oil – Food Grade'};
-        else if(oilName.includes('Olive')) map={formula:'Olive Oil',material:'Olive oil – Food Grade'};
-        else if(oilName.includes('Shea')) map={formula:'Shea Butter',material:'Shea butter – Cosmetic Grade'};
-        else if(oilName.includes('Palm')) map={formula:'Palm Oil',material:'Palm oil – Food Grade'};
-        else if(oilName.includes('Cocoa')) map={formula:'Cocoa Butter',material:'Cocoa butter – Cosmetic Grade'};
-        else map={formula:oilName,material:oilName};
-        requirements.push({name:map.material,qty:grams,unit:'gr'});
-        const coef=OIL_COEFFICIENTS[map.formula]||OIL_COEFFICIENTS['Olive Oil'];
+        const stockQty=gramsToMaterialUnits(grams,item.unit);
+        if(stockQty===null)return {error:`“${actualName}” uses unit ${item.unit}, but the soap formula is measured in grams. Set its unit to gr, g, kg, or mg before production, or add a validated conversion factor.`};
+        requirements.push({name:item.name,qty:stockQty,unit:item.unit});
         totalNaohRaw+=(grams/Math.max(scale,0.0000001))*coef.sap;
-      });
-      // Additives use live Botanical Studio amounts when the same recipe is selected;
-      // otherwise scale the saved preset doses from the standard 1200 g formula batch.
+      }
       const liveAdditives=sameSelected?[...document.querySelectorAll('#labAdditivesContainer .additive-row')].map(row=>({name:row.querySelector('.additive-name-select')?.value||'',qty:Number(row.querySelector('.additive-grams-input')?.value)||0})):[];
       const additives=liveAdditives.length?liveAdditives:(recipe.additives||[]).map(a=>({name:a.name,qty:(Number(a.val)||0)*(totalOilGrams/814.296)}));
-      additives.forEach(a=>{
-        if(!a.name) return;
+      for(const a of additives){
         const qty=(normalizeMaterialName(a.name).includes('sucrose')||normalizeMaterialName(a.name).includes('sugar'))?totalOilGrams*0.02*scale:(Number(a.qty)||0)*scale;
-        if(qty>0) requirements.push({name:a.name,qty,unit:'gr'});
-      });
+        if(qty<=0)continue;
+        if(!a.name)return {error:'Every additive with a non-zero quantity must have a selected Raw Material item.'};
+        const item=allConsumableItems().find(i=>i.name===a.name);
+        if(!item||!isRawMaterialItem(item))return {error:`Additive “${a.name}” must belong to the Raw Material category.`};
+        const stockQty=gramsToMaterialUnits(qty,item.unit);
+        if(stockQty===null)return {error:`Additive “${a.name}” uses unit ${item.unit}; the formula amount is in grams. Set its unit to gr, g, kg, or mg before production.`};
+        requirements.push({name:item.name,qty:stockQty,unit:item.unit});
+      }
       const superfat=Math.max(0,Math.min(100,Number(document.getElementById('labParamSuperfat')?.value)||5));
       const lyeRatio=Math.max(0,Number(document.getElementById('labParamLyeRatio')?.value)||2.5);
       const naohNoSuperfat=totalNaohRaw*(1-superfat/100);
@@ -3506,16 +3647,30 @@ D: Blend and pour [after C]"></textarea></div>
       const extraNaohForCitric=citricGrams*0.624;
       const finalNaoh=(naohNoSuperfat+extraNaohForCitric)*scale;
       const waterGrams=Math.max(0,naohNoSuperfat*lyeRatio)*scale;
-      if(finalNaoh>0) requirements.push({name:'NaOH – Cosmetic Grade',qty:finalNaoh,unit:'gr'});
-      if(citricGrams>0) requirements.push({name:'Citric acid – Cosmetic Grade',qty:citricGrams*scale,unit:'gr'});
-      if(waterGrams>0) requirements.push({name:'Purified water – Lab Grade',qty:waterGrams,unit:'gr'});
+      const addMeasuredRequirement=(name,grams)=>{
+        if(!(grams>0))return null;
+        const item=allConsumableItems().find(i=>i.name===name)||findStorageMaterialForRequirement(name);
+        if(!item)return `Required material “${name}” is missing from the catalog.`;
+        const stockQty=gramsToMaterialUnits(grams,item.unit);
+        if(stockQty===null)return `“${item.name}” uses unit ${item.unit}, but its formula quantity is in grams. Set it to gr, g, kg, or mg before production.`;
+        requirements.push({name:item.name,qty:stockQty,unit:item.unit});
+        return null;
+      };
+      for(const [name,grams] of [['NaOH – Cosmetic Grade',finalNaoh],['Citric acid – Cosmetic Grade',citricGrams*scale],['Purified water – Lab Grade',waterGrams]]){
+        const error=addMeasuredRequirement(name,grams);if(error)return {error};
+      }
       const size=String(product||'').toUpperCase().startsWith('TS-')?'travel':'regular';
       const savedPacking=packingDefaults[`${recipeName}|${size}`];
       const packing=sameSelected?[...document.querySelectorAll('#labPackingContainer .packing-row')].map(row=>({name:row.querySelector('.packing-name-select')?.value||'',qty:Number(row.querySelector('.packing-qty-input')?.value)||0})).filter(x=>x.name): (savedPacking || (size==='travel'?[{name:'Paper Belt (TS)',qty:1}]:[{name:'Paper Belt',qty:1}]));
-      packing.forEach(a=>{if(a.name&&(Number(a.qty)||0)>0)requirements.push({name:a.name,qty:(Number(a.qty)||0)*Number(targetYield),unit:'pcs'});});
-      // Merge duplicate ingredient rows before stock validation.
+      for(const pack of packing){
+        const perPiece=Math.max(0,Number(pack.qty)||0);if(!perPiece)continue;
+        if(!pack.name)return {error:'A packing row has a quantity but no material selected.'};
+        const item=allConsumableItems().find(i=>i.name===pack.name)||findStorageMaterialForRequirement(pack.name);
+        if(!item)return {error:`Packing material “${pack.name}” is missing from the catalog.`};
+        requirements.push({name:item.name,qty:perPiece*Number(targetYield),unit:item.unit});
+      }
       const merged=new Map();
-      requirements.forEach(r=>{const key=r.name;const prev=merged.get(key);if(prev)prev.qty+=r.qty;else merged.set(key,{...r});});
+      requirements.forEach(r=>{const key=r.name,prev=merged.get(key);if(prev)prev.qty+=r.qty;else merged.set(key,{...r});});
       return {recipeName,requirements:[...merged.values()].filter(r=>r.qty>0)};
     }
     function findStorageMaterialForRequirement(name) {
@@ -3595,7 +3750,7 @@ D: Blend and pour [after C]"></textarea></div>
     }
 
     function toggleShopeeFeeFields() {
-      const isShopee = document.getElementById("salesPlatformSelect").value === "Shopee";
+      const isShopee = isShopeePlatform(document.getElementById("salesPlatformSelect").value);
       document.getElementById("shopeeFeesContainer").style.display = isShopee ? "block" : "none";
       calculateOrderTotals();
     }
@@ -3636,13 +3791,14 @@ D: Blend and pour [after C]"></textarea></div>
       const gross = rows.reduce((sum, r) => sum + Math.max(0, Number(r.querySelector(".order-qty").value) || 0) * Math.max(0, Number(r.querySelector(".order-price").value) || 0), 0);
       const platform = document.getElementById("salesPlatformSelect")?.value;
       const feeIds = ["feeAdmin","feeGratisOngkir","feeOther","feePromotion"];
-      const fees = platform === "Shopee" ? feeIds.reduce((sum,id) => sum + parseRupiahNumber(document.getElementById(id).value), 0) : 0;
+      const fees = isShopeePlatform(platform) ? feeIds.reduce((sum,id) => sum + parseRupiahNumber(document.getElementById(id).value), 0) : 0;
       document.getElementById("grossTotalDisplay").textContent = `Rp. ${gross.toLocaleString("id-ID")}`;
       document.getElementById("feesTotalDisplay").textContent = `- Rp. ${fees.toLocaleString("id-ID")}`;
       document.getElementById("netTotalDisplay").textContent = `Rp. ${Math.max(0,gross-fees).toLocaleString("id-ID")}`;
     }
     function openSalesModalForCreate() {
       document.getElementById("formSales").reset();
+      renderSalesPlatformOptions('Shopee');
       document.getElementById("editSaleId").value = "";
       document.getElementById("salesModalTitle").textContent = "Record Sales Order";
       document.getElementById("salesDateInput").value = new Date().toISOString().slice(0,10);
@@ -3654,6 +3810,7 @@ D: Blend and pour [after C]"></textarea></div>
       const sale = sales.find(x => Number(x.id) === Number(id));
       if (!sale) return alert("Transaksi tidak ditemukan.");
       document.getElementById("formSales").reset();
+      renderSalesPlatformOptions(sale.platform, true);
       document.getElementById("editSaleId").value = sale.id;
       document.getElementById("salesModalTitle").textContent = "Edit Sales Order";
       document.getElementById("salesBuyerInput").value = sale.buyer || "";
@@ -3688,7 +3845,7 @@ D: Blend and pour [after C]"></textarea></div>
       }
       items.forEach(i => { const b = batches.find(b => b.code === i.batchCode); b.remainingQty = Number(b.remainingQty) - i.qty; });
       const grossTotal = items.reduce((sum,i) => sum + i.qty*i.price, 0);
-      const fees = platform === "Shopee" ? {
+      const fees = isShopeePlatform(platform) ? {
         admin:parseRupiahNumber(document.getElementById("feeAdmin").value), // Biaya Platform
         gratisOngkir:parseRupiahNumber(document.getElementById("feeGratisOngkir").value), // Biaya Gratis Ongkir Extra
         other:parseRupiahNumber(document.getElementById("feeOther").value), // Biaya Layanan
@@ -3714,7 +3871,7 @@ D: Blend and pour [after C]"></textarea></div>
         if (!map[name]) map[name] = {name, orders:0, pieces:0, spent:0, last:"", products:new Set(), platforms:new Set()};
         const b=map[name]; b.orders++; b.spent += Number(s.netTotal ?? s.grossTotal)||0;
         if (s.date && s.date > b.last) b.last = s.date;
-        if(s.platform)b.platforms.add(s.platform);
+        if(s.platform)b.platforms.add(getSalesPlatformLabel(s.platform));
         (s.items||[]).forEach(i => { b.products.add(i.product || i.name || 'Product'); b.pieces += Number(i.qty)||0; });
       });
       const sort=document.getElementById('buyerSortSelect')?.value||'spent';
