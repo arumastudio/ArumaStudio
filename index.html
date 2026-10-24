@@ -780,7 +780,7 @@
   @media(max-width:900px){
     #tab-consumables .market-table-header,#tab-storage .warehouse-table-header{grid-template-columns:minmax(0,1fr)!important}
     #tab-consumables .market-filters{width:100%}
-    #tab-consumables .market-filters .input-control{min-width:0;width:100%!important}
+    #tab-consumables .market-filters .input-control{min-width:0;width:100%!important} #tab-consumables .market-filters label{flex:1 1 220px;}
   }
 </style>
 
@@ -1477,7 +1477,7 @@
       </div>
 
       <div class="table-container">
-        <div class="table-header market-table-header"><div class="market-heading"><h3>Materials & Packaging Cost Tracker</h3><div class="market-subtitle"><span>Categories identify each material class; pricing history is tracked separately for each item.</span></div></div><div class="market-filters"><input id="consumablesSearch" class="input-control" style="width:220px;" placeholder="Search material or category…" oninput="renderConsumablesTable()"><select id="consumablesGroupFilter" class="input-control" style="width:170px;" onchange="renderConsumablesTable()"><option value="all">All categories</option></select></div></div>
+        <div class="table-header market-table-header"><div class="market-heading"><h3>Materials & Packaging Cost Tracker</h3><div class="market-subtitle"><span>Categories identify each material class; pricing history is tracked separately for each item.</span></div></div><div class="market-filters"><input id="consumablesSearch" class="input-control" style="width:220px;" placeholder="Search material or category…" oninput="renderConsumablesTable()"><select id="consumablesGroupFilter" class="input-control" style="width:170px;" onchange="renderConsumablesTable()"><option value="all">All categories</option></select><label for="marketSortBy" style="display:flex;align-items:center;gap:6px;font-size:12px;color:#77717d;white-space:nowrap;">Sort by <select id="marketSortBy" class="input-control" style="width:190px;" onchange="saveMarketSortPreference();renderConsumablesTable()"><option value="name">Name (A–Z) within category (default)</option><option value="price-asc">Price (low–high) within category</option><option value="price-desc">Price (high–low) within category</option><option value="updated-desc">Recently updated within category</option></select></label></div></div>
         <table>
           <thead>
             <tr><th>Item Name</th><th>Unit Price (HPP Basis)</th><th>Category</th><th>Unit</th><th>Latest Total Input</th><th>Last Updated</th><th>History</th></tr>
@@ -2708,11 +2708,21 @@ D: Blend and pour [after C]"></textarea></div>
       return def ? def.defaultPrice : 0;
     }
 
+    function saveMarketSortPreference(){
+      const value=document.getElementById('marketSortBy')?.value||'name';
+      try{localStorage.setItem('suma_market_sort_by',value);}catch(e){}
+    }
     function renderConsumablesTable() {
       const query=(document.getElementById('consumablesSearch')?.value||'').trim().toLowerCase(), selectedGroup=document.getElementById('consumablesGroupFilter')?.value||'all';
+      const sortSel=document.getElementById('marketSortBy');
+      if(sortSel&&!sortSel.dataset.initialized){let saved=null;try{saved=localStorage.getItem('suma_market_sort_by')}catch(e){}sortSel.value=(['name','price-asc','price-desc','updated-desc'].includes(saved))?saved:'name';sortSel.dataset.initialized='1';}
+      const sortBy=sortSel?.value||'name';
       const groups = getMaterialCategories().filter(g=>selectedGroup==='all'||g===selectedGroup); let rowsHtml = '';
       groups.forEach(groupName => {
         const items = allConsumableItems().filter(item => item.group === groupName && (!query || item.name.toLowerCase().includes(query) || item.group.toLowerCase().includes(query)));
+        const latestPrice=item=>{const hist=getActiveMaterialPriceHistory(item.name).sort((a,b)=>new Date(b.date)-new Date(a.date)||Number(b.id)-Number(a.id));return hist.length?Number(hist[0].unitPrice)||0:Number(item.defaultPrice)||0;};
+        const latestDate=item=>{const hist=getActiveMaterialPriceHistory(item.name).sort((a,b)=>new Date(b.date)-new Date(a.date)||Number(b.id)-Number(a.id));return String(hist[0]?.date||'');};
+        items.sort((a,b)=>{if(sortBy==='price-asc')return latestPrice(a)-latestPrice(b)||a.name.localeCompare(b.name,undefined,{sensitivity:'base'});if(sortBy==='price-desc')return latestPrice(b)-latestPrice(a)||a.name.localeCompare(b.name,undefined,{sensitivity:'base'});if(sortBy==='updated-desc')return latestDate(b).localeCompare(latestDate(a))||a.name.localeCompare(b.name,undefined,{sensitivity:'base'});return a.name.localeCompare(b.name,undefined,{sensitivity:'base'});});
         if (!items.length) return;
         rowsHtml += `<tr class="material-group-row"><td colspan="7" style="background:#F1F3ED;color:#2A3F2E;font-weight:700;padding:11px 12px;border-top:1px solid #DDE4D8;">${escapeHtml(groupName)} <span style="font-size:10px;font-weight:500;color:#78716c;">· ${items.length} items</span></td></tr>`;
         rowsHtml += items.map(item => {
