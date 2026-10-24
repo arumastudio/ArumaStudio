@@ -1342,11 +1342,11 @@
       <div style="font-size:10px;letter-spacing:.16em;text-transform:uppercase;color:#a8a29e;margin:2px 0 20px;">Botanical Management System</div>
       <h2 id="loginHeading" style="font-family:serif;font-size:20px;margin:0 0 6px;color:#292524;">Welcome back</h2>
       <p id="loginHint" style="font-size:12px;line-height:1.5;color:#78716c;margin:0 0 16px;">Sign in to continue.</p>
-      <label style="font-size:11px;color:#78716c;display:block;">Username</label><input id="loginUsername" class="input-control" autocomplete="username" required style="margin-bottom:12px;">
+      <label style="font-size:11px;color:#78716c;display:block;">Email</label><input id="loginUsername" type="email" class="input-control" autocomplete="username" required placeholder="you@example.com" style="margin-bottom:12px;">
       <label style="font-size:11px;color:#78716c;display:block;">Password</label><input id="loginPassword" type="password" class="input-control" autocomplete="current-password" required style="margin-bottom:16px;">
       <button id="loginSubmit" type="submit" class="btn">Sign In</button>
-      <p id="loginNotice" style="font-size:10px;line-height:1.5;color:#a8a29e;margin:14px 0 0;">First use? Enter a username and password to create the first administrator account.</p>
-      <button id="recoverLoginBtn" type="button" style="display:block;width:100%;margin-top:12px;border:0;background:transparent;color:#78716c;text-decoration:underline;font-size:11px;cursor:pointer;">Can’t sign in? Reset login only (keep business data)</button>
+      <p id="loginNotice" style="font-size:10px;line-height:1.5;color:#a8a29e;margin:14px 0 0;">Sign in with the email and password created in Supabase Authentication.</p>
+      <button id="recoverLoginBtn" type="button" style="display:block;width:100%;margin-top:12px;border:0;background:transparent;color:#78716c;text-decoration:underline;font-size:11px;cursor:pointer;">Can’t sign in? Check Supabase Authentication users</button>
     </form>
   </div>
 
@@ -1985,9 +1985,18 @@ D: Blend and pour [after C]"></textarea></div>
   <div id="storageAdjustModal" class="modal-overlay"><div class="modal-box" style="max-width:520px;"><div class="modal-header"><h3 style="font-family:serif;">Adjust Warehouse Stock</h3><button type="button" onclick="closeModal('storageAdjustModal')" class="close-btn">&times;</button></div><form id="storageAdjustForm" style="display:flex;flex-direction:column;gap:10px;"><div><label style="font-size:11px;color:#78716c;">Material / Item</label><select id="storageItem" class="input-control" required></select></div><div class="grid-2" style="margin:0;gap:10px;"><div><label style="font-size:11px;color:#78716c;">Movement</label><select id="storageMovement" class="input-control"><option value="in">Stock in (+)</option><option value="out">Stock out (−)</option><option value="set">Set exact stock</option></select></div><div><label style="font-size:11px;color:#78716c;">Quantity</label><input id="storageQty" type="number" min="0" step="any" class="input-control" required></div></div><div><label style="font-size:11px;color:#78716c;">Note / Reference</label><input id="storageNote" class="input-control" placeholder="e.g. purchase, production use, stock count"></div><button type="submit" class="btn">Save Stock Movement</button></form></div></div>
   <div id="financeOptionsModal" class="modal-overlay"><div class="modal-box" style="max-width:520px;"><div class="modal-header"><h3 id="financeOptionsTitle" style="font-family:serif;">Finance Options</h3><button type="button" onclick="closeModal('financeOptionsModal')" class="close-btn">&times;</button></div><p id="financeOptionsHint" style="font-size:12px;color:#78716c;line-height:1.5;">Add, rename or remove options.</p><div id="financeOptionsList" style="display:flex;flex-direction:column;gap:8px;margin:12px 0;"></div><form id="financeOptionForm" style="display:flex;flex-direction:column;gap:8px;"><input id="financeOptionLabel" class="input-control" placeholder="New option name" required><div id="financeOptionFlowWrap"><label style="font-size:11px;color:#78716c;">Financial direction</label><select id="financeOptionFlow" class="input-control"><option value="expense">Money out / expense</option><option value="income">Money in / income</option></select></div><button type="submit" class="btn">+ Add Option</button></form></div></div>
   <div id="appToast" style="position:fixed;left:50%;bottom:24px;transform:translateX(-50%);z-index:99999;background:#24382c;color:white;padding:11px 16px;border-radius:12px;box-shadow:0 8px 24px #0002;font-size:13px;display:none;max-width:90vw;"></div>
-  <div id="userManagerModal" class="modal-overlay"><div class="modal-box" style="max-width:560px;"><div class="modal-header"><h3>User Management</h3><button type="button" onclick="closeModal('userManagerModal')" class="close-btn">&times;</button></div><p style="font-size:11px;color:#78716c;line-height:1.5;">Manage accounts saved in this browser. This is a local convenience lock, not server-grade security; anyone with access to this browser profile or the HTML source may be able to bypass it.</p><form id="addUserForm" style="display:flex;gap:8px;flex-wrap:wrap;margin-bottom:16px;"><input id="newUsername" class="input-control" required placeholder="New username" style="flex:1;min-width:120px;"><input id="newUserPassword" type="password" class="input-control" required minlength="6" placeholder="Password (min. 6 chars)" style="flex:1;min-width:150px;"><button class="btn" style="width:auto;" type="submit">Add User</button></form><div style="overflow:auto;"><table><thead><tr><th>Username</th><th>Role</th><th>Action</th></tr></thead><tbody id="userTableBody"></tbody></table></div></div></div>
+  <div id="userManagerModal" class="modal-overlay"><div class="modal-box" style="max-width:560px;"><div class="modal-header"><h3>User Management</h3><button type="button" onclick="closeModal('userManagerModal')" class="close-btn">&times;</button></div><p style="font-size:11px;color:#78716c;line-height:1.5;">Cloud accounts are managed securely through Supabase Authentication. Use the button below to open the project user dashboard.</p><button type="button" class="btn" onclick="openUserManager()">Open Supabase User Management</button><p style="font-size:11px;color:#78716c;">Create users in Supabase → Authentication → Users. Every authenticated user currently shares access to this ERP workspace.</p><div style="overflow:auto;"><table><thead><tr><th>Account management</th></tr></thead><tbody id="userTableBody"><tr><td>Managed in Supabase Dashboard</td></tr></tbody></table></div></div></div>
 
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
   <script>
+    // SUPABASE CLOUD CONFIG — publishable key is designed for browser use; never put a secret key here.
+    const SUPABASE_URL = "https://oviboanwsnqrkipuihnq.supabase.co";
+    const SUPABASE_PUBLISHABLE_KEY = "sb_publishable_1bPpwEuUj425NsD8ibzs-w_vsTDAqYw";
+    const supabaseClient = window.supabase?.createClient(SUPABASE_URL, SUPABASE_PUBLISHABLE_KEY, { auth: { persistSession: true, autoRefreshToken: true, detectSessionInUrl: true } });
+    let cloudSyncReady = false;
+    let cloudHydrating = false;
+    let cloudSyncQueue = Promise.resolve();
+    const CLOUD_EXCLUDED_KEYS = new Set(["suma_login_users", "suma_login_session", "suma_recovery_snapshot_v1"]);
     // MASTER CATALOG
     const CATEGORIES = [
       {
@@ -3375,10 +3384,8 @@ D: Blend and pour [after C]"></textarea></div>
       ).join("") || '<tr><td colspan="8" style="text-align:center;color:#a8a29e;padding:18px 12px;">Belum ada data pembeli.</td></tr>';
     }
 
-    // Browser-local sign-in. First sign-in creates the initial administrator.
-    function saveLoginUsers() {
-      if (!safeStorageSet('suma_login_users', JSON.stringify(financeUsers))) setLoginMessage('Browser storage is blocked. Open this HTML in a normal browser window and allow local storage.', true);
-    }
+    // Supabase Auth sign-in + cloud synchronization of app data stored under suma_* keys.
+    function saveLoginUsers() { /* User accounts are managed by Supabase Authentication, not in this browser. */ }
     function setLoginMessage(message, isError = false) {
       const notice = document.getElementById('loginNotice');
       if (notice) { notice.textContent = message; notice.style.color = isError ? '#b91c1c' : '#78716c'; }
@@ -3386,84 +3393,127 @@ D: Blend and pour [after C]"></textarea></div>
     function showLoginGate() {
       const gate = document.getElementById('loginGate');
       if (gate) gate.classList.remove('hidden');
-      const hasUsers = Array.isArray(financeUsers) && financeUsers.length > 0;
       const heading = document.getElementById('loginHeading');
       const hint = document.getElementById('loginHint');
       const submit = document.getElementById('loginSubmit');
-      if (!hasUsers) {
-        if (heading) heading.textContent = 'Create administrator';
-        if (hint) hint.textContent = 'Create the first account for this browser.';
-        if (submit) submit.textContent = 'Create Admin & Sign In';
-        setLoginMessage('First use: enter a username and a password (at least 6 characters) to create the administrator account.');
-      } else {
-        if (heading) heading.textContent = 'Welcome back';
-        if (hint) hint.textContent = 'Sign in to continue.';
-        if (submit) submit.textContent = 'Sign In';
-        setLoginMessage('Your username and password are saved in this browser only. Sign in to continue.');
-      }
+      if (heading) heading.textContent = 'Welcome back';
+      if (hint) hint.textContent = 'Sign in with your Suma Lōra cloud account.';
+      if (submit) submit.textContent = 'Sign In';
+      setLoginMessage('Use the email and password created in Supabase → Authentication → Users.');
     }
     function finishLogin(user) {
-      financeUser = user;
-      safeStorageSet('suma_login_session', user.username);
+      financeUser = { username: user.email || 'Suma Lōra user', email: user.email, id: user.id, role: 'Cloud User' };
       const gate = document.getElementById('loginGate');
       if (gate) gate.classList.add('hidden');
       const activeUserLabel = document.getElementById('activeUserLabel');
-      if (activeUserLabel) activeUserLabel.textContent = user.username;
+      if (activeUserLabel) activeUserLabel.textContent = financeUser.username;
     }
-    function handleLogin(e) {
-      e.preventDefault();
-      const username = document.getElementById('loginUsername').value.trim();
-      const password = document.getElementById('loginPassword').value;
-      if (!username || !password) return setLoginMessage('Enter both username and password.', true);
-      if (!Array.isArray(financeUsers)) financeUsers = [];
-      if (financeUsers.length === 0) {
-        if (password.length < 6) return setLoginMessage('Use a password with at least 6 characters.', true);
-        const user = { username, password, role: 'Admin', createdAt: new Date().toISOString() };
-        financeUsers.push(user); saveLoginUsers(); finishLogin(user);
-        document.getElementById('loginPassword').value = '';
-        return;
+    async function cloudRequest(path, options = {}) {
+      const { data: { session } } = await supabaseClient.auth.getSession();
+      if (!session?.access_token) throw new Error('Session expired. Please sign in again.');
+      const response = await fetch(`${SUPABASE_URL}/rest/v1/${path}`, {
+        ...options, headers: { apikey: SUPABASE_PUBLISHABLE_KEY, Authorization: `Bearer ${session.access_token}`, 'Content-Type': 'application/json', ...(options.headers || {}) }
+      });
+      if (!response.ok) { const body = await response.text(); throw new Error(body || `Cloud request failed (${response.status})`); }
+      if (response.status === 204) return null;
+      const text = await response.text(); return text ? JSON.parse(text) : null;
+    }
+    function isCloudDataKey(key) { return typeof key === 'string' && (key.startsWith('suma_') || key.startsWith('sl_')) && !CLOUD_EXCLUDED_KEYS.has(key); }
+    async function syncLocalDataToCloud() {
+      const rows = [];
+      for (let i = 0; i < localStorage.length; i++) {
+        const key = localStorage.key(i);
+        if (isCloudDataKey(key)) rows.push({ key, value: localStorage.getItem(key) ?? '' });
       }
-      const user = financeUsers.find(u => String(u.username || '').toLowerCase() === username.toLowerCase() && String(u.password ?? u.pass ?? '') === password);
-      if (!user) return setLoginMessage('Username or password is incorrect.', true);
-      finishLogin(user);
-      document.getElementById('loginPassword').value = '';
+      for (const row of rows) {
+        await cloudRequest('erp_records?on_conflict=key', { method: 'POST', headers: { Prefer: 'resolution=merge-duplicates,return=minimal' }, body: JSON.stringify(row) });
+      }
     }
-    function logoutApp() {
+    async function loadCloudDataToLocal() {
+      cloudHydrating = true;
+      try {
+        const rows = await cloudRequest('erp_records?select=key,value');
+        if (!Array.isArray(rows)) throw new Error('Unexpected cloud data response.');
+        if (rows.length === 0) {
+          // First signed-in device seeds the empty cloud from its existing local data.
+          await syncLocalDataToCloud();
+        } else {
+          // Cloud is the shared source of truth once initialized. Preserve a local recovery snapshot first.
+          try {
+            const backup = {};
+            for (let i = 0; i < localStorage.length; i++) { const key = localStorage.key(i); if (isCloudDataKey(key)) backup[key] = localStorage.getItem(key); }
+            localStorage.setItem('suma_precloud_backup_v1', JSON.stringify({ savedAt: new Date().toISOString(), storage: backup }));
+          } catch (e) { console.warn('Could not create pre-cloud backup', e); }
+          rows.forEach(row => { if (isCloudDataKey(row.key) && typeof row.value === 'string') localStorage.setItem(row.key, row.value); });
+        }
+      } finally { cloudHydrating = false; }
+      cloudSyncReady = true;
+      setSyncStatus('Cloud synced', '#10B981');
+    }
+    function queueCloudSave(key, value) {
+      if (!cloudSyncReady || cloudHydrating || !isCloudDataKey(key) || !supabaseClient) return;
+      cloudSyncQueue = cloudSyncQueue.then(async () => {
+        await cloudRequest('erp_records?on_conflict=key', { method: 'POST', headers: { Prefer: 'resolution=merge-duplicates,return=minimal' }, body: JSON.stringify({ key, value: String(value ?? '') }) });
+        setSyncStatus('Cloud synced', '#10B981');
+      }).catch(err => { console.error('Cloud save failed:', err); setSyncStatus('Local saved · cloud sync failed', '#bd5549'); });
+    }
+    // Intercept app writes so existing features continue to save locally and also sync to Supabase.
+    (function installCloudStorageSync() {
+      const originalSetItem = Storage.prototype.setItem;
+      Storage.prototype.setItem = function(key, value) { originalSetItem.call(this, key, value); if (this === window.localStorage) queueCloudSave(String(key), String(value)); };
+      const originalRemoveItem = Storage.prototype.removeItem;
+      Storage.prototype.removeItem = function(key) { originalRemoveItem.call(this, key); if (this === window.localStorage && isCloudDataKey(String(key)) && cloudSyncReady && !cloudHydrating) {
+        cloudSyncQueue = cloudSyncQueue.then(() => cloudRequest(`erp_records?key=eq.${encodeURIComponent(String(key))}`, { method: 'DELETE', headers: { Prefer: 'return=minimal' } })).catch(err => { console.error('Cloud delete failed:', err); setSyncStatus('Local saved · cloud delete failed', '#bd5549'); });
+      } };
+    })();
+    async function handleLogin(e) {
+      e.preventDefault();
+      if (!supabaseClient) return setLoginMessage('Supabase client did not load. Check your internet connection and reload the page.', true);
+      const email = document.getElementById('loginUsername').value.trim();
+      const password = document.getElementById('loginPassword').value;
+      if (!email || !password) return setLoginMessage('Enter your email and password.', true);
+      const submit = document.getElementById('loginSubmit'); if (submit) { submit.disabled = true; submit.textContent = 'Signing in…'; }
+      setLoginMessage('Signing in and connecting to cloud…');
+      try {
+        const { data, error } = await supabaseClient.auth.signInWithPassword({ email, password });
+        if (error) throw error;
+        await loadCloudDataToLocal();
+        finishLogin(data.user);
+        document.getElementById('loginPassword').value = '';
+        renderAll();
+        setLoginMessage('Signed in. Your business data is synced with Supabase.');
+      } catch (err) {
+        console.error('Supabase sign-in failed:', err);
+        setLoginMessage(err.message || 'Could not sign in. Check email, password, and Supabase setup.', true);
+      } finally { if (submit) { submit.disabled = false; submit.textContent = 'Sign In'; } }
+    }
+    async function logoutApp() {
+      cloudSyncReady = false;
       financeUser = null;
-      localStorage.removeItem('suma_login_session');
+      try { if (supabaseClient) await supabaseClient.auth.signOut(); } catch (err) { console.warn('Supabase sign-out issue:', err); }
       showLoginGate();
       const form = document.getElementById('loginForm'); if (form) form.reset();
     }
     function openUserManager() {
-      if (!financeUser) return showLoginGate();
-      renderUserManager(); openModal('userManagerModal');
+      alert('Cloud accounts are managed in Supabase Dashboard → Authentication → Users. Add users there with their email and password.');
+      window.open('https://supabase.com/dashboard/project/oviboanwsnqrkipuihnq/auth/users', '_blank', 'noopener');
     }
-    function renderUserManager() {
-      const body = document.getElementById('userTableBody'); if (!body) return;
-      body.innerHTML = (financeUsers || []).map((u, i) => `<tr><td>${escapeHtml(u.username || '')}</td><td>${escapeHtml(u.role || (i === 0 ? 'Admin' : 'User'))}</td><td>${u.username === financeUser?.username ? '<span style="color:#78716c;font-size:11px;">Current user</span>' : `<button type="button" class="btn-action" style="color:#E11D48;" onclick="removeManagedUser(${i})">Delete</button>`}</td></tr>`).join('') || '<tr><td colspan="3">No users.</td></tr>';
-    }
-    function addManagedUser(e) {
-      e.preventDefault();
-      if (!financeUser) return showLoginGate();
-      const username = document.getElementById('newUsername').value.trim();
-      const password = document.getElementById('newUserPassword').value;
-      if (!username || password.length < 6) return alert('Enter a username and password with at least 6 characters.');
-      if (financeUsers.some(u => String(u.username || '').toLowerCase() === username.toLowerCase())) return alert('That username already exists.');
-      financeUsers.push({ username, password, role: 'User', createdAt: new Date().toISOString() });
-      saveLoginUsers(); document.getElementById('addUserForm').reset(); renderUserManager();
-    }
-    function removeManagedUser(index) {
-      const user = financeUsers[index]; if (!user || user.username === financeUser?.username) return;
-      if (!confirm(`Delete user ${user.username}?`)) return;
-      financeUsers.splice(index, 1); saveLoginUsers(); renderUserManager();
-    }
-    function restoreLoginSession() {
-      // Always require credentials whenever the page is opened or refreshed.
-      // Accounts remain saved locally; only the signed-in session is cleared.
-      try { financeUsers = safeStorageJSON('suma_login_users', []); } catch (_) { financeUsers = []; }
-      try { localStorage.removeItem('suma_login_session'); } catch (_) {}
+    function renderUserManager() {}
+    function addManagedUser(e) { e.preventDefault(); openUserManager(); }
+    function removeManagedUser(index) { openUserManager(); }
+    async function restoreLoginSession() {
+      cloudSyncReady = false;
       financeUser = null;
       showLoginGate();
+      if (!supabaseClient) { setLoginMessage('Supabase client did not load. Check internet access and reload.', true); return; }
+      try {
+        const { data: { session } } = await supabaseClient.auth.getSession();
+        if (session?.user) {
+          await loadCloudDataToLocal();
+          finishLogin(session.user);
+          renderAll();
+        }
+      } catch (err) { console.warn('Could not restore Supabase session:', err); setLoginMessage('Could not connect to cloud. Sign in again when online.', true); }
     }
 
     // Close a modal when clicking its backdrop; keep clicks inside the dialog intact.
@@ -3476,14 +3526,8 @@ D: Blend and pour [after C]"></textarea></div>
       if (loginForm) loginForm.addEventListener('submit', handleLogin);
       const recoverBtn = document.getElementById('recoverLoginBtn');
       if (recoverBtn) recoverBtn.addEventListener('click', () => {
-        const ok = window.confirm('Reset only the local login accounts for this HTML file? Batches, sales, materials, and other business data will not be deleted.');
-        if (!ok) return;
-        financeUsers = [];
-        safeStorageSet('suma_login_users', '[]');
-        try { localStorage.removeItem('suma_login_session'); } catch (_) {}
-        const form = document.getElementById('loginForm'); if (form) form.reset();
-        showLoginGate();
-        setLoginMessage('Login reset only. Your business data was not cleared. Create a new administrator username and password (at least 6 characters).');
+        setLoginMessage('Open Supabase Dashboard → Authentication → Users to confirm the account exists or reset its password.');
+        window.open('https://supabase.com/dashboard/project/oviboanwsnqrkipuihnq/auth/users', '_blank', 'noopener');
       });
       try { init(); } catch (err) { console.error('App initialization error:', err); setLoginMessage('Login is available, but part of the app failed to initialize. Please sign in, then send this error to support: ' + (err?.message || err), true); }
       restoreLoginSession();
