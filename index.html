@@ -3457,6 +3457,45 @@ D: Blend and pour [after C]"></textarea></div>
         setSyncStatus('Cloud synced', '#10B981');
       }).catch(err => { console.error('Cloud save failed:', err); setSyncStatus('Local saved · cloud sync failed', '#bd5549'); });
     }
+    // Pull changes made by other signed-in devices. This uses lightweight polling,
+    // so Supabase Realtime replication does not need to be enabled for this table.
+    let cloudPullInProgress = false;
+    let cloudLastSeen = new Map();
+    async function refreshCloudDataFromOtherDevices() {
+      if (!cloudSyncReady || cloudHydrating || cloudPullInProgress || !supabaseClient) return;
+      // Avoid applying remote changes while this device has queued writes waiting to upload.
+      if (cloudSyncQueue && typeof cloudSyncQueue.then === 'function') {
+        // Queue serializes writes; a pull queued after it won't race an earlier local save.
+      }
+      cloudPullInProgress = true;
+      try {
+        await cloudSyncQueue;
+        const rows = await cloudRequest('erp_records?select=key,value,updated_at');
+        if (!Array.isArray(rows)) return;
+        let changed = false;
+        cloudHydrating = true;
+        try {
+          for (const row of rows) {
+            if (!isCloudDataKey(row.key) || typeof row.value !== 'string') continue;
+            const localValue = localStorage.getItem(row.key);
+            if (localValue !== row.value) {
+              localStorage.setItem(row.key, row.value);
+              changed = true;
+            }
+            cloudLastSeen.set(row.key, row.updated_at || row.value);
+          }
+        } finally { cloudHydrating = false; }
+        if (changed) {
+          // Refresh the app's in-memory datasets as well as the visible UI.
+          loadDataFromStorage();
+          setSyncStatus('Cloud updates received', '#10B981');
+        }
+      } catch (err) {
+        console.warn('Cloud refresh failed:', err);
+        setSyncStatus('Cloud refresh failed · check connection', '#bd5549');
+      } finally { cloudPullInProgress = false; }
+    }
+
     // Intercept app writes so existing features continue to save locally and also sync to Supabase.
     (function installCloudStorageSync() {
       const originalSetItem = Storage.prototype.setItem;
@@ -3531,6 +3570,8 @@ D: Blend and pour [after C]"></textarea></div>
       });
       try { init(); } catch (err) { console.error('App initialization error:', err); setLoginMessage('Login is available, but part of the app failed to initialize. Please sign in, then send this error to support: ' + (err?.message || err), true); }
       restoreLoginSession();
+      // Poll for edits from other laptops while the ERP is open.
+      window.setInterval(refreshCloudDataFromOtherDevices, 5000);
       showNextSoapTip();
       window.setInterval(showNextSoapTip, 12000);
     });
