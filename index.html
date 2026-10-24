@@ -1896,7 +1896,7 @@ D: Blend and pour [after C]"></textarea></div>
   </div>
 
   <!-- MODAL: NEW MATERIAL -->
-  <div id="newMaterialModal" class="modal-overlay"><div class="modal-box"><div class="modal-header"><h3>Add New Material</h3><button onclick="closeModal('newMaterialModal')" class="close-btn">&times;</button></div><form id="formNewMaterial" style="display:flex;flex-direction:column;gap:10px;"><div><label style="font-size:11px;color:#78716c;">Material Name</label><input id="newMatName" required class="input-control" placeholder="e.g. Botanical extract"></div><div class="grid-2" style="margin:0;gap:8px;"><div><label style="font-size:11px;color:#78716c;">Category</label><select id="newMatCategory" required class="input-control"></select><div class="inline-category-add"><input id="newMatCategoryName" class="input-control" placeholder="New category name"><button type="button" class="btn" style="width:auto;white-space:nowrap;" onclick="addCategoryForNewMaterial()">+ Add category</button></div></div><div><label style="font-size:11px;color:#78716c;">Unit</label><input id="newMatUnit" required class="input-control" placeholder="gr, ml, pcs, m"></div></div><div><label style="font-size:11px;color:#78716c;">Specifications / details (optional)</label><textarea id="newMatSpecs" class="input-control" rows="2" placeholder="Grade, supplier, material details, etc."></textarea></div><div><label style="font-size:11px;color:#78716c;">Starting Unit Price (Rp; optional)</label><input type="text" id="newMatUnitPrice" class="input-control currency-input" value="Rp. 0" inputmode="numeric"></div><button type="submit" class="btn">Save Material</button></form></div></div>
+  <div id="newMaterialModal" class="modal-overlay"><div class="modal-box"><div class="modal-header"><h3>Add New Material</h3><button onclick="closeModal('newMaterialModal')" class="close-btn">&times;</button></div><form id="formNewMaterial" style="display:flex;flex-direction:column;gap:10px;"><div><label style="font-size:11px;color:#78716c;">Material Name</label><input id="newMatName" required class="input-control" placeholder="e.g. Botanical extract"></div><div class="grid-2" style="margin:0;gap:8px;"><div><label style="font-size:11px;color:#78716c;">Category</label><select id="newMatCategory" required class="input-control"></select><div class="inline-category-add"><input id="newMatCategoryName" class="input-control" placeholder="New category name"><button type="button" class="btn" style="width:auto;white-space:nowrap;" onclick="addCategoryForNewMaterial()">+ Add category</button></div></div><div><label style="font-size:11px;color:#78716c;">Unit</label><select id="newMatUnit" required class="input-control" onchange="updateNewMaterialUnitPrice()"><option value="gr">gr</option><option value="kg">kg</option><option value="ml">ml</option><option value="L">L</option><option value="pcs">pcs</option><option value="bottle">bottle</option><option value="pack">pack</option><option value="roll">roll</option><option value="sheet">sheet</option><option value="m">m</option><option value="cm">cm</option><option value="set">set</option></select></div></div><div><label style="font-size:11px;color:#78716c;">Specifications / details (optional)</label><textarea id="newMatSpecs" class="input-control" rows="2" placeholder="Grade, supplier, material details, etc."></textarea></div><div class="grid-2" style="margin:0;gap:8px;"><div><label style="font-size:11px;color:#78716c;">Input quantity (<span id="newMatQtyUnitLabel">gr</span>)</label><input type="number" min="0.0001" step="any" id="newMatInputQty" class="input-control" value="1" oninput="updateNewMaterialUnitPrice()" required></div><div><label style="font-size:11px;color:#78716c;">Input total price (Rp)</label><input type="text" id="newMatTotalPrice" class="input-control currency-input" value="Rp. 0" inputmode="numeric" oninput="updateNewMaterialUnitPrice()"></div></div><div><label style="font-size:11px;color:#78716c;">Calculated unit price (Rp / <span id="newMatUnitPriceUnitLabel">gr</span>)</label><input type="text" id="newMatUnitPrice" class="input-control" value="Rp. 0" readonly></div><button type="submit" class="btn">Save Material</button></form></div></div>
 
   <!-- MODAL: MATERIAL PRICE HISTORY -->
   <div id="materialHistoryModal" class="modal-overlay"><div class="modal-box" style="max-width:850px;width:96%;"><div class="modal-header"><h3 id="materialHistoryTitle">Material Price History</h3><button onclick="closeModal('materialHistoryModal')" class="close-btn">&times;</button></div><div style="display:flex;justify-content:flex-end;margin-bottom:10px;"><button type="button" class="btn" style="width:auto;" onclick="openMaterialPriceForActive()">+ Add Material Price</button></div><div style="height:250px;margin-bottom:14px;"><canvas id="materialPriceChart"></canvas></div><div style="overflow:auto;"><table><thead><tr><th>Date</th><th>Quantity / Unit</th><th>Total Paid (Rp)</th><th>Unit Price (Rp)</th><th>Actions</th></tr></thead><tbody id="materialHistoryBody"></tbody></table></div><p style="font-size:10px;color:#78716c;margin:10px 0 0;">Edit a record to correct its date, quantity, or total purchase price. The latest valid record becomes the HPP price.</p></div></div>
@@ -1990,7 +1990,7 @@ D: Blend and pour [after C]"></textarea></div>
           <div class="shopee-fee-grid">
             <div><label style="font-size: 9px; color: #9A3412;">Biaya Platform</label><input type="text" id="feeAdmin" value="Rp. 0" class="input-control currency-input"></div>
             <div><label style="font-size: 9px; color: #9A3412;">Biaya Gratis Ongkir Extra</label><input type="text" id="feeGratisOngkir" value="Rp. 0" class="input-control currency-input"></div>
-            <div><label style="font-size: 9px; color: #9A3412;">Biaya Layanan</label><input type="text" id="feeOther" value="Rp. 0" class="input-control currency-input"></div>
+            <div><label style="font-size: 9px; color: #9A3412;">Biaya Layanan</label><input type="text" id="feeOther" value="Rp. 0" class="input-control currency-input"></div><div><label style="font-size: 9px; color: #9A3412;">Promotion fee</label><input type="text" id="feePromotion" value="Rp. 0" class="input-control currency-input"></div>
           </div>
         </div>
 
@@ -2168,14 +2168,15 @@ D: Blend and pour [after C]"></textarea></div>
       const groupFilter=document.getElementById('consumablesGroupFilter'); if(groupFilter){const old=groupFilter.value||'all';groupFilter.innerHTML='<option value="all">All categories</option>'+[...new Set(items.map(i=>i.group))].sort().map(g=>`<option value="${escapeHtml(g)}">${escapeHtml(g)}</option>`).join('');groupFilter.value=[...groupFilter.options].some(o=>o.value===old)?old:'all';}
       document.querySelectorAll('.additive-name-select,.packing-name-select').forEach(sel => {
         const selected = sel.value;
-        const filter = sel.classList.contains('packing-name-select') ? items.filter(i=>/Packing|pack/i.test(i.group)) : items;
+        const filter = sel.classList.contains('packing-name-select') ? items.filter(i=>/Packing|pack/i.test(i.group)) : items.filter(i=>/raw\s*materials?/i.test(String(i.group||'')));
+        if(selected && !filter.some(i=>i.name===selected)) { const previous=items.find(i=>i.name===selected); if(previous && /raw\s*materials?/i.test(String(previous.group||''))) filter.push(previous); }
         sel.innerHTML = filter.map(i=>`<option value="${escapeHtml(i.name)}" ${i.name===selected?'selected':''}>${escapeHtml(i.name)}</option>`).join('');
       });
       // Oil breakdown choices are linked to the shared Market/Storage material catalog.
       // Built-in oils retain their validated SAP/fatty-acid coefficients; new oils are selectable but need a verified profile.
       document.querySelectorAll('.oil-name-select').forEach(sel=>{
         const selected=sel.value;
-        const oilItems=sortMaterialsByCategoryName(items.filter(i=>!/packing|packaging/i.test(String(i.group||''))));
+        const oilItems=sortMaterialsByCategoryName(items.filter(i=>/raw\s*materials?/i.test(String(i.group||''))));
         const names=[...new Set([...Object.keys(OIL_COEFFICIENTS),...oilItems.map(i=>i.name)])];
         if(selected && !names.includes(selected)) names.push(selected);
         sel.innerHTML=names.map(n=>{const item=oilItems.find(i=>i.name===n);const category=item?` [${item.group}]`:'';return `<option value="${escapeHtml(n)}" ${n===selected?'selected':''}>${escapeHtml(n)}${escapeHtml(category)}${OIL_COEFFICIENTS[n]?'':' · SAP profile needed'}</option>`;}).join('');
@@ -2191,16 +2192,17 @@ D: Blend and pour [after C]"></textarea></div>
     function saveMaterialCategoryEdit(e) { e.preventDefault(); const name=document.getElementById('categoryEditMaterialName').value, group=document.getElementById('categoryEditValue').value; if(!name||!group)return; materialCategoryOverrides[name]=group; persistMaterialCatalog(); renderMaterialDropdowns();renderConsumablesTable();calculateSoapFormula(); const record={id:Date.now(),recordType:'categoryOverride',name,group,date:new Date().toISOString().slice(0,10)}; consumableHistory.push(record); saveDataToStorage(); noteLocalSave({action:'addConsumableHistory',record}); closeModal('materialCategoryEditModal'); showToast(`Category updated to ${group}`); }
 
     function addCategoryForNewMaterial(){const input=document.getElementById('newMatCategoryName'),name=(input?.value||'').trim();if(!name)return showToast('Enter a category name first.');const cats=getMaterialCategories();if(cats.some(c=>c.toLowerCase()===name.toLowerCase()))return showToast('That category already exists.');customMaterialCategories=[...customMaterialCategories,name];persistMaterialCatalog();renderMaterialDropdowns();const sel=document.getElementById('newMatCategory');if(sel)sel.value=name;if(input)input.value='';saveAppSetting('categories','materialCategories',getMaterialCategories());showToast('Category added.');}
-    function openNewMaterialModal() { renderMaterialDropdowns(); document.getElementById('newMatName').value=''; document.getElementById('newMatUnit').value='gr'; document.getElementById('newMatUnitPrice').value='Rp. 0'; if(document.getElementById('newMatSpecs'))document.getElementById('newMatSpecs').value=''; if(document.getElementById('newMatCategoryName'))document.getElementById('newMatCategoryName').value=''; openModal('newMaterialModal'); }
+    function openNewMaterialModal() { renderMaterialDropdowns(); document.getElementById('newMatName').value=''; document.getElementById('newMatUnit').value='gr'; document.getElementById('newMatInputQty').value='1'; document.getElementById('newMatTotalPrice').value='Rp. 0'; updateNewMaterialUnitPrice(); if(document.getElementById('newMatSpecs'))document.getElementById('newMatSpecs').value=''; if(document.getElementById('newMatCategoryName'))document.getElementById('newMatCategoryName').value=''; openModal('newMaterialModal'); }
+    function updateNewMaterialUnitPrice(){const unit=document.getElementById('newMatUnit')?.value||'gr',qty=Number(document.getElementById('newMatInputQty')?.value)||0,total=parseRupiahNumber(document.getElementById('newMatTotalPrice')?.value||'0'),unitPrice=qty>0?total/qty:0;const a=document.getElementById('newMatQtyUnitLabel'),b=document.getElementById('newMatUnitPriceUnitLabel'),price=document.getElementById('newMatUnitPrice');if(a)a.textContent=unit;if(b)b.textContent=unit;if(price)price.value='Rp. '+Math.round(unitPrice).toLocaleString('id-ID');}
     function handleCreateMaterial(e) {
       e.preventDefault();
-      const name=document.getElementById('newMatName').value.trim(), group=document.getElementById('newMatCategory').value, unit=document.getElementById('newMatUnit').value.trim(), defaultPrice=parseRupiahNumber(document.getElementById('newMatUnitPrice').value), specs=(document.getElementById('newMatSpecs')?.value||'').trim();
-      if(!name||!unit) return alert('Please enter material name and unit.');
+      const name=document.getElementById('newMatName').value.trim(), group=document.getElementById('newMatCategory').value, unit=document.getElementById('newMatUnit').value, inputQty=Number(document.getElementById('newMatInputQty').value), totalPrice=parseRupiahNumber(document.getElementById('newMatTotalPrice').value), defaultPrice=inputQty>0?totalPrice/inputQty:0, specs=(document.getElementById('newMatSpecs')?.value||'').trim();
+      if(!name||!unit||!Number.isFinite(inputQty)||inputQty<=0||totalPrice<0) return alert('Please enter material name, unit, a quantity greater than zero, and a valid total price.');
       if(allConsumableItems().some(i=>i.name.toLowerCase()===name.toLowerCase())) return alert('A material with this name already exists.');
       const item={name,group,unit,defaultPrice,specs,custom:true}; customConsumableItems.push(item); persistMaterialCatalog(); if(specs){const allSpecs=safeStorageJSON('suma_material_specs_overrides',{});allSpecs[name]=specs;localStorage.setItem('suma_material_specs_overrides',JSON.stringify(allSpecs));} renderMaterialDropdowns(); renderConsumablesTable(); renderStorage();
-      const catalogRecord={id:Date.now(),recordType:'catalog',name,group,unit,specs,defaultPrice,date:new Date().toISOString().slice(0,10)};
-      consumableHistory.push(catalogRecord); saveDataToStorage(); noteLocalSave({action:'addConsumableHistory',record:catalogRecord});
-      const stock=getStorageData();if(!stock[name])stock[name]={qty:0,unit,threshold:0,updatedAt:new Date().toISOString().slice(0,10)};saveStorageData(stock);
+      const today=new Date().toISOString().slice(0,10);const catalogRecord={id:Date.now(),recordType:'catalog',name,group,unit,specs,defaultPrice,date:today};
+      consumableHistory.push(catalogRecord); if(totalPrice>0){consumableHistory.push({id:Date.now()+1,recordType:'price',name,date:today,qty:inputQty,unit,totalPrice,unitPrice:defaultPrice});} saveDataToStorage(); noteLocalSave({action:'addConsumableHistory',record:catalogRecord}); if(totalPrice>0)noteLocalSave({action:'addConsumableHistory',record:consumableHistory[consumableHistory.length-1]});
+      const stock=getStorageData();if(!stock[name])stock[name]={qty:inputQty,unit,threshold:0,updatedAt:today};else stock[name]={...stock[name],qty:(Number(stock[name].qty)||0)+inputQty,unit,updatedAt:today};saveStorageData(stock);
       closeModal('newMaterialModal'); renderStorage(); calculateSoapFormula();
     }
     function manageMaterialCategories() {
@@ -2245,6 +2247,7 @@ D: Blend and pour [after C]"></textarea></div>
       const date=document.getElementById(`mh-date-${id}`).value, qty=Number(document.getElementById(`mh-qty-${id}`).value), totalPrice=parseRupiahNumber(document.getElementById(`mh-total-${id}`).value), unit=document.getElementById(`mh-unit-${id}`).value.trim();
       if(!date||qty<=0||totalPrice<0||!unit) return alert('Check date, quantity, unit and total price.');
       const item=allConsumableItems().find(i=>i.name===activeHistoryMaterial); if(item){ if(customConsumableItems.some(i=>i.name===activeHistoryMaterial)){customConsumableItems=customConsumableItems.map(i=>i.name===activeHistoryMaterial?{...i,unit}:i);localStorage.setItem('suma_custom_materials',JSON.stringify(customConsumableItems));} else { const units=safeStorageJSON('suma_material_unit_overrides', {}); units[activeHistoryMaterial]=unit; localStorage.setItem('suma_material_unit_overrides',JSON.stringify(units)); } }
+      const stock=getStorageData();if(stock[activeHistoryMaterial]){stock[activeHistoryMaterial]={...stock[activeHistoryMaterial],unit,updatedAt:new Date().toISOString().slice(0,10)};saveStorageData(stock);}
       const revision={...h,id:Date.now(),supersedesId:h.id,date,qty,unit,totalPrice,unitPrice:totalPrice/qty,editedAt:new Date().toISOString(),recordType:'price'};
       consumableHistory.push(revision);
       saveDataToStorage(); renderConsumablesTable(); calculateSoapFormula();
@@ -2963,7 +2966,7 @@ D: Blend and pour [after C]"></textarea></div>
     function createOilRowHtml(oilName, pctVal = 0) {
       // Use the same shared Market/Storage catalog as the live dropdown refresh.
       // Include every non-packaging material so custom oils with unusual names are not silently excluded.
-      const catalogOilItems = sortMaterialsByCategoryName(allConsumableItems().filter(i => !/packing|packaging/i.test(String(i.group || ''))));
+      const catalogOilItems = sortMaterialsByCategoryName(allConsumableItems().filter(i => /raw\s*materials?/i.test(String(i.group || ''))));
       const optionNames = [...new Set([...Object.keys(OIL_COEFFICIENTS), ...catalogOilItems.map(i => i.name)])];
       if (oilName && !optionNames.includes(oilName)) optionNames.push(oilName);
       const options = optionNames.map(name => {
@@ -3632,7 +3635,7 @@ D: Blend and pour [after C]"></textarea></div>
       const rows = [...document.querySelectorAll("#orderItemsContainer .order-item-row")];
       const gross = rows.reduce((sum, r) => sum + Math.max(0, Number(r.querySelector(".order-qty").value) || 0) * Math.max(0, Number(r.querySelector(".order-price").value) || 0), 0);
       const platform = document.getElementById("salesPlatformSelect")?.value;
-      const feeIds = ["feeAdmin","feeGratisOngkir","feeOther"];
+      const feeIds = ["feeAdmin","feeGratisOngkir","feeOther","feePromotion"];
       const fees = platform === "Shopee" ? feeIds.reduce((sum,id) => sum + parseRupiahNumber(document.getElementById(id).value), 0) : 0;
       document.getElementById("grossTotalDisplay").textContent = `Rp. ${gross.toLocaleString("id-ID")}`;
       document.getElementById("feesTotalDisplay").textContent = `- Rp. ${fees.toLocaleString("id-ID")}`;
@@ -3643,7 +3646,7 @@ D: Blend and pour [after C]"></textarea></div>
       document.getElementById("editSaleId").value = "";
       document.getElementById("salesModalTitle").textContent = "Record Sales Order";
       document.getElementById("salesDateInput").value = new Date().toISOString().slice(0,10);
-      ["feeAdmin","feeGratisOngkir","feeOther"].forEach(id => document.getElementById(id).value = "Rp. 0");
+      ["feeAdmin","feeGratisOngkir","feeOther","feePromotion"].forEach(id => document.getElementById(id).value = "Rp. 0");
       document.getElementById("orderItemsContainer").innerHTML = "";
       addOrderItemRow(); toggleShopeeFeeFields(); openModal("salesModal");
     }
@@ -3657,7 +3660,7 @@ D: Blend and pour [after C]"></textarea></div>
       document.getElementById("salesPlatformSelect").value = sale.platform;
       document.getElementById("salesDateInput").value = sale.date;
       const f = sale.fees || {};
-      [["feeAdmin","admin"],["feeGratisOngkir","gratisOngkir"],["feeOther","other"]].forEach(([id,key]) => document.getElementById(id).value = `Rp. ${Number(f[key]||0).toLocaleString("id-ID")}`);
+      [["feeAdmin","admin"],["feeGratisOngkir","gratisOngkir"],["feeOther","other"],["feePromotion","promotion"]].forEach(([id,key]) => document.getElementById(id).value = `Rp. ${Number(f[key]||0).toLocaleString("id-ID")}`);
       document.getElementById("orderItemsContainer").innerHTML = "";
       (sale.items || []).forEach(item => addOrderItemRow(item));
       toggleShopeeFeeFields(); openModal("salesModal");
@@ -3688,8 +3691,9 @@ D: Blend and pour [after C]"></textarea></div>
       const fees = platform === "Shopee" ? {
         admin:parseRupiahNumber(document.getElementById("feeAdmin").value), // Biaya Platform
         gratisOngkir:parseRupiahNumber(document.getElementById("feeGratisOngkir").value), // Biaya Gratis Ongkir Extra
-        other:parseRupiahNumber(document.getElementById("feeOther").value) // Biaya Layanan
-      } : {admin:0,gratisOngkir:0,other:0};
+        other:parseRupiahNumber(document.getElementById("feeOther").value), // Biaya Layanan
+        promotion:parseRupiahNumber(document.getElementById("feePromotion").value) // Promotion fee
+      } : {admin:0,gratisOngkir:0,other:0,promotion:0};
       const record = { id:old ? old.id : Date.now(), buyer:document.getElementById("salesBuyerInput").value.trim(), platform,
         date:document.getElementById("salesDateInput").value, items, grossTotal, fees,
         netTotal:Math.max(0,grossTotal-Object.values(fees).reduce((a,b)=>a+b,0)) };
