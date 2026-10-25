@@ -1433,6 +1433,114 @@
     @media(prefers-reduced-motion:reduce){.project-gate,.project-logo-frame,.project-intro,.project-options,.inventory-category-content{animation:none!important;transition:none!important;}}
 
 </style>
+
+<style id="aruma-fullscreen-minimal-v29">
+  /* v29: immersive, full-bleed white workspace opening with typography-led choices */
+  #projectGate.project-gate{
+    inset:0!important; width:100vw!important; height:100vh!important; height:100dvh!important;
+    max-width:none!important; padding:0!important; margin:0!important; overflow:hidden!important;
+    background:#fff!important; color:#252521!important; isolation:isolate;
+  }
+  #projectGate .project-shell{
+    position:relative!important; display:flex!important; flex-direction:column!important;
+    justify-content:flex-end!important; align-items:stretch!important;
+    width:100%!important; max-width:none!important; height:100%!important; min-height:100%!important;
+    box-sizing:border-box!important; margin:0!important; padding:clamp(26px,4.3vw,68px)!important;
+  }
+  #projectGate .project-logo-frame{
+    position:absolute!important; inset:0!important; z-index:0!important; width:100%!important;
+    height:100%!important; max-height:none!important; aspect-ratio:auto!important;
+    margin:0!important; overflow:hidden!important; background:#fff!important; border:0!important;
+    border-radius:0!important; box-shadow:none!important; animation:arumaLogoReveal .95s cubic-bezier(.2,.75,.25,1) both!important;
+  }
+  #projectGate .project-logo-frame video{
+    display:block!important; width:100%!important; height:100%!important; max-height:none!important;
+    object-fit:cover!important; object-position:center center!important; outline:none!important;
+    border:0!important; border-radius:0!important; background:#fff!important;
+    /* The source movie uses warm ivory whites; lift them toward white without losing the grey mark/grid. */
+    filter:brightness(1.065) saturate(.72)!important;
+  }
+  #projectGate .project-intro{
+    position:relative!important; z-index:2!important; width:min(900px,100%)!important;
+    text-align:left!important; margin:auto 0 clamp(20px,3vh,34px)!important; padding:0!important;
+    animation:none;
+  }
+  #projectGate .project-eyebrow{
+    color:#5f625b!important; font-size:10px!important; font-weight:650!important;
+    letter-spacing:.28em!important; margin:0 0 14px!important;
+  }
+  #projectGate .project-intro h1{
+    color:#20211e!important; font-family:Georgia,'Times New Roman',serif!important;
+    font-size:clamp(34px,5.4vw,72px)!important; font-weight:400!important;
+    letter-spacing:-.055em!important; line-height:.98!important; max-width:900px!important;
+  }
+  #projectGate .project-intro p{
+    margin:15px 0 0!important; color:#55574f!important; font-size:clamp(12px,1.1vw,15px)!important;
+    letter-spacing:.025em!important; line-height:1.6!important;
+  }
+  #projectGate .project-options{
+    position:relative!important; z-index:2!important; display:grid!important;
+    grid-template-columns:repeat(4,minmax(0,1fr))!important; gap:0!important; width:100%!important;
+    border-top:1px solid rgba(37,37,33,.28)!important; border-bottom:1px solid rgba(37,37,33,.18)!important;
+    margin:0!important; padding:0!important; background:transparent!important; animation:none;
+  }
+  #projectGate .project-option{
+    display:flex!important; flex-direction:column!important; align-items:flex-start!important;
+    justify-content:flex-start!important; position:relative!important; gap:clamp(15px,2.1vh,23px)!important;
+    min-width:0!important; min-height:clamp(144px,19vh,204px)!important;
+    padding:clamp(17px,2.2vw,31px) clamp(12px,1.7vw,24px)!important;
+    border:0!important; border-radius:0!important; border-right:1px solid rgba(37,37,33,.16)!important;
+    background:transparent!important; color:#20211e!important; text-align:left!important;
+    box-shadow:none!important; transform:none!important; transition:background .22s ease,color .22s ease!important;
+  }
+  #projectGate .project-option:last-child{border-right:0!important;}
+  #projectGate .project-option:hover,#projectGate .project-option:focus-visible{
+    background:rgba(32,33,30,.045)!important; color:#171815!important; box-shadow:none!important;
+    transform:none!important; outline:0!important;
+  }
+  #projectGate .project-option.primary{background:transparent!important; color:#20211e!important; border-color:rgba(37,37,33,.16)!important;}
+  #projectGate .project-option.primary:hover,#projectGate .project-option.primary:focus-visible{background:rgba(32,33,30,.045)!important; color:#171815!important;}
+  #projectGate .project-option-number{
+    width:auto!important; height:auto!important; flex:0 0 auto!important; border:0!important; border-radius:0!important;
+    justify-content:flex-start!important; font-family:Arial,sans-serif!important; font-size:10px!important;
+    letter-spacing:.16em!important; opacity:.7!important; padding:0!important;
+  }
+  #projectGate .project-option-copy{gap:8px!important; width:100%!important; flex:1!important;}
+  #projectGate .project-option-copy strong{
+    font-family:Georgia,'Times New Roman',serif!important; font-size:clamp(23px,2.55vw,37px)!important;
+    line-height:1.04!important; font-weight:400!important; letter-spacing:-.045em!important;
+    overflow-wrap:anywhere!important;
+  }
+  #projectGate .project-option-copy small{
+    color:inherit!important; font-family:Arial,sans-serif!important; font-size:10px!important;
+    letter-spacing:.025em!important; line-height:1.55!important; opacity:.7!important;
+  }
+  #projectGate .project-option-arrow{position:absolute!important; right:clamp(12px,1.7vw,24px)!important; bottom:clamp(17px,2.2vw,31px)!important; font-size:21px!important; font-weight:300!important; opacity:.72!important;}
+  #projectGate .project-notice{position:relative!important; z-index:2!important; text-align:left!important; margin:14px 0 0!important; color:#595b54!important;}
+  #projectGate .project-notice.is-progress{align-items:flex-start!important; border:0!important; border-left:2px solid #7c8174!important; border-radius:0!important; padding:10px 14px!important; background:rgba(255,255,255,.86)!important; box-shadow:none!important;}
+  #projectGate .project-notice.is-progress strong{font-size:24px!important; color:#252621!important;}
+  #projectGate .project-footer{position:relative!important; z-index:2!important; text-align:left!important; margin:18px 0 0!important; color:#6d6e66!important; font-size:9px!important; letter-spacing:.24em!important;}
+  @media(max-width:760px){
+    #projectGate.project-gate{overflow-y:auto!important;}
+    #projectGate .project-shell{min-height:100dvh!important;height:auto!important;padding:20px 18px 24px!important;}
+    #projectGate .project-logo-frame{position:fixed!important;}
+    #projectGate .project-logo-frame video{object-position:center center!important;}
+    #projectGate .project-intro{margin-top:min(42vh,340px)!important;margin-bottom:18px!important;}
+    #projectGate .project-intro h1{font-size:clamp(34px,10vw,58px)!important;}
+    #projectGate .project-options{grid-template-columns:repeat(2,minmax(0,1fr))!important;}
+    #projectGate .project-option{min-height:150px!important;padding:15px 12px 42px!important;border-bottom:1px solid rgba(37,37,33,.16)!important;}
+    #projectGate .project-option:nth-child(2){border-right:0!important;}
+    #projectGate .project-option:nth-child(3),#projectGate .project-option:nth-child(4){border-bottom:0!important;}
+    #projectGate .project-option-copy strong{font-size:clamp(23px,6vw,31px)!important;}
+    #projectGate .project-option-arrow{right:12px!important;bottom:12px!important;}
+    #projectGate .project-footer{line-height:1.6!important;}
+  }
+  @media(prefers-reduced-motion:reduce){
+    #projectGate .project-logo-frame{animation:none!important;}
+    #projectGate .project-option{transition:none!important;}
+  }
+</style>
+
 </head>
 <body class="app-container">
   <!-- ARUMA Studio animated opening + workspace selector. Video and poster are embedded, so this remains a single-file GitHub Pages deployment. -->
