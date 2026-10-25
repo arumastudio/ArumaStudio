@@ -1885,6 +1885,15 @@ D: Blend and pour [after C]"></textarea></div>
     <section id="tab-finance" class="tab-content">
       <div style="border-bottom:1px solid #E7E5E4;padding-bottom:16px;margin-bottom:18px;display:flex;justify-content:space-between;gap:12px;align-items:center;flex-wrap:wrap;"><div><span style="font-size:10px;text-transform:uppercase;letter-spacing:.1em;color:#78716c;font-weight:600;">Capital, Sales & Cashflow</span><h2 style="font-size:22px;color:#1c1917;margin:2px 0 0;font-family:serif;">Finance</h2></div></div>
       <div class="finance-period-inline"><span class="period-label">Reporting period</span><div style="display:flex;gap:10px;flex-wrap:wrap;align-items:end;"><div><label style="font-size:11px;color:#78716c;">From</label><input id="finStartDate" type="date" class="input-control" onchange="renderFinance()"></div><div><label style="font-size:11px;color:#78716c;">To</label><input id="finEndDate" type="date" class="input-control" onchange="renderFinance()"></div><button type="button" class="btn" style="width:auto;" onclick="setFinanceThisMonth()">This Month</button><button type="button" class="btn" style="width:auto;background:#6B705C;" onclick="setFinanceAllTime()">All Time</button></div></div>
+      <div class="card" style="margin:0 0 14px;padding:16px 18px;background:linear-gradient(125deg,#f4f0e8,#fbfaf7);border:1px solid #ded8cb;">
+        <div style="display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap;margin-bottom:12px;"><div><div style="font-size:10px;text-transform:uppercase;letter-spacing:.12em;color:#78716c;font-weight:700;">All-time tracked balance</div><div style="font-size:11px;color:#78716c;margin-top:4px;">Calculated from opening balances, Sales Orders, Finance records, reimbursements, and account transfers.</div></div><div style="display:flex;gap:8px;flex-wrap:wrap;"><button type="button" class="btn btn-secondary" style="width:auto;" onclick="openFinanceOpeningModal()">Set opening balance</button><button type="button" class="btn" style="width:auto;" onclick="openFinanceTransferModal()">Transfer between accounts</button></div></div>
+        <div class="grid-3" style="grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:10px;margin:0;">
+          <div class="finance-stat"><div class="label">Bank balance</div><div class="value" id="finBalanceBank">Rp. 0</div></div>
+          <div class="finance-stat"><div class="label">Shopee balance</div><div class="value" id="finBalanceShopee">Rp. 0</div></div>
+          <div class="finance-stat"><div class="label">Total Suma Lōra balance</div><div class="value" id="finBalanceTotal">Rp. 0</div></div>
+        </div><p id="finBalanceNote" style="font-size:10px;line-height:1.5;color:#78716c;margin:10px 0 0;">Opening balances default to Rp. 0. Sales are estimated into the platform account (Shopee orders → Shopee; other platforms → Bank). Team fee is a profit allocation shown separately and is not deducted from account balances until you record an actual payout as a finance expense.</p>
+      </div>
+      <div class="card" style="margin-bottom:14px;"><div style="display:flex;align-items:end;justify-content:space-between;gap:12px;flex-wrap:wrap;"><div><h3 style="font-family:serif;font-size:15px;margin:0 0 4px;">Outstanding reimbursement</h3><strong id="financeDueTotal" style="font-size:22px;color:#9A3412;">Rp. 0</strong><div style="font-size:11px;color:#78716c;">Expenses paid by others and not yet reimbursed by Suma Lōra.</div></div><div style="min-width:190px;"><label for="financeDuePayerFilter" style="font-size:11px;color:#78716c;">Filter by who paid</label><select id="financeDuePayerFilter" class="input-control" onchange="renderFinance()"><option value="all">All payers</option></select></div></div><div id="financeDueBody" style="margin-top:10px;"></div></div>
       <div class="grid-4" style="grid-template-columns:repeat(auto-fit,minmax(160px,1fr));">
         <div class="finance-stat"><div class="label">Gross sales</div><div class="value" id="finGrossSales">Rp. 0</div></div>
         <div class="finance-stat"><div class="label">Shopee/platform fees</div><div class="value" id="finPlatformFees">Rp. 0</div></div>
@@ -1896,27 +1905,27 @@ D: Blend and pour [after C]"></textarea></div>
         <div class="finance-stat"><div class="label">Net cashflow (period)</div><div class="value" id="finNetCashflow">Rp. 0</div></div>
       </div>
       <div class="grid-2" style="margin-top:4px;">
-        <div class="card"><h3 style="font-family:serif;font-size:15px;margin:0 0 8px;">Equipment / Capital Assets</h3><div style="font-size:11px;color:#78716c;">Total equipment purchases (all time)</div><strong id="finEquipmentTotal" style="font-size:22px;display:block;margin:5px 0;">Rp. 0</strong><div style="font-size:11px;color:#78716c;">Unreimbursed personal spending</div><strong id="finReimbursementDue" style="font-size:18px;display:block;margin-top:5px;color:#9A3412;">Rp. 0</strong></div>
+        <div class="card"><h3 style="font-family:serif;font-size:15px;margin:0 0 8px;">Equipment / Capital Assets</h3><div style="font-size:11px;color:#78716c;">Total equipment purchases (all time)</div><strong id="finEquipmentTotal" style="font-size:22px;display:block;margin:5px 0;">Rp. 0</strong><div style="font-size:11px;color:#78716c;">Outstanding reimbursement for expenses paid by others</div><strong id="finReimbursementDue" style="font-size:18px;display:block;margin-top:5px;color:#9A3412;">Rp. 0</strong><div style="overflow:auto;margin-top:12px;"><table style="min-width:600px;"><thead><tr><th>Storage equipment</th><th>Expected purchase value</th><th>Recorded equipment expense</th><th>Payment coverage</th><th>Capital recovery</th></tr></thead><tbody id="financeEquipmentStatusBody"></tbody></table></div><p style="font-size:10px;line-height:1.5;color:#78716c;margin:8px 0 0;">Link equipment purchases to a Storage item in Finance History. Payment coverage compares recorded purchase expense with the current Storage value; capital recovery must be manually allocated from net profit, not gross sales.</p></div>
         <div class="card"><h3 style="font-family:serif;font-size:15px;margin:0 0 8px;">Monthly Summary</h3><div style="overflow:auto;"><table><thead><tr><th>Month</th><th>Gross Sales</th><th>After Platform</th><th>Ads</th><th>Team Fee</th><th>After Fees</th></tr></thead><tbody id="financeMonthlyBody"></tbody></table></div></div>
       </div>
       <div class="finance-record-action"><div><span class="section-kicker">LEDGER ENTRY</span><strong>Record a purchase, income, asset, or ad expense</strong><p>Open the form only when you need to add a transaction.</p></div><button type="button" class="btn" id="toggleFinanceRecordBtn" aria-expanded="false" onclick="toggleFinanceRecordForm()">+ Add Finance Record</button></div>
-      <div class="card finance-record-panel" id="financeRecordPanel" style="margin-bottom:18px;" hidden><div class="finance-record-panel-heading"><h3 style="font-family:serif;font-size:16px;margin:0;">Add Finance Record</h3><button type="button" class="btn btn-secondary" style="width:auto;" onclick="toggleFinanceRecordForm(false)">Close</button></div>
-        <form id="financeForm" style="display:flex;flex-direction:column;gap:10px;"><div class="grid-2" style="margin:0;gap:10px;">
+      <div class="card finance-record-panel" id="financeRecordPanel" style="margin-bottom:18px;" hidden><div class="finance-record-panel-heading"><h3 id="financeFormHeading" style="font-family:serif;font-size:16px;margin:0;">Add Finance Record</h3><button type="button" class="btn btn-secondary" style="width:auto;" onclick="toggleFinanceRecordForm(false)">Close</button></div>
+        <form id="financeForm" style="display:flex;flex-direction:column;gap:10px;"><input type="hidden" id="finEditingId" value=""><div class="grid-2" style="margin:0;gap:10px;">
           <div><label style="font-size:11px;color:#78716c;">Record Type</label><div style="display:flex;gap:6px;align-items:center;"><select id="finType" class="input-control" style="flex:1"><option value="expense">Material / Operating Purchase</option><option value="equipment">Equipment / Capital Asset</option><option value="income">Other Income</option><option value="ads">Shopee Ads Fee</option></select><button type="button" class="btn" style="width:auto;padding:9px 10px;white-space:nowrap;" onclick="openFinanceOptionsModal('types')">+ Add / Edit</button></div></div>
           <div><label style="font-size:11px;color:#78716c;">Purchase / Transaction Date</label><input id="finDate" type="date" class="input-control" required></div>
           <div><label style="font-size:11px;color:#78716c;">Item / Transaction Name</label><input id="finName" class="input-control" placeholder="e.g. Olive oil / beaker / mixer" required></div>
-          <div><label style="font-size:11px;color:#78716c;">Quantity (optional)</label><div style="display:flex;gap:6px"><input id="finQty" type="number" min="0" step="any" class="input-control" placeholder="e.g. 2"><input id="finUnit" class="input-control" placeholder="Unit (pcs, kg, botol)" style="max-width:150px"></div></div>
+          <div><label style="font-size:11px;color:#78716c;">Quantity (optional)</label><div style="display:flex;gap:6px"><input id="finQty" type="number" min="0" step="any" class="input-control" placeholder="e.g. 2"><select id="finUnit" class="input-control" style="max-width:150px"><option value="pcs">pcs</option><option value="kg">kg</option><option value="gr">gr</option><option value="g">g</option><option value="bottle">botol / bottle</option><option value="ml">ml</option><option value="L">L</option><option value="pack">pack</option><option value="roll">roll</option><option value="set">set</option><option value="unit">unit</option><option value="pair">pair</option><option value="jar">jar</option><option value="tube">tube</option><option value="sheet">sheet</option><option value="m">m</option><option value="cm">cm</option><option value="mg">mg</option></select></div></div>
           <div><label style="font-size:11px;color:#78716c;">Paid by</label><div style="display:flex;gap:6px;align-items:center;"><select id="finSource" class="input-control" style="flex:1"><option value="Suma Lōra">Suma Lōra</option><option value="Personal">Personal money</option><option value="LU">LU</option><option value="MA">MA</option><option value="Other">Other</option></select><button type="button" class="btn" style="width:auto;padding:9px 10px;white-space:nowrap;" onclick="openFinanceOptionsModal('payers')">Manage</button></div></div>
-          <div><label style="font-size:11px;color:#78716c;">Bought through / channel</label><input id="finChannel" class="input-control" placeholder="e.g. Shopee, Tokopedia, offline store"></div>
+          <div><label style="font-size:11px;color:#78716c;">Account used / received</label><select id="finAccount" class="input-control"><option value="bank">Suma Lōra Bank</option><option value="shopee">Shopee Balance</option></select><p id="finAccountHelp" class="field-help" style="margin:4px 0 0;">Select the Suma Lōra balance this record affects.</p></div><div id="finAssetLinkWrap" hidden><label style="font-size:11px;color:#78716c;">Related Storage equipment</label><select id="finAssetItem" class="input-control"><option value="">No linked equipment</option></select></div><div id="finAssetRecoveryWrap" hidden><label style="font-size:11px;color:#78716c;">Capital recovered toward this equipment (Rp, optional)</label><input id="finAssetRecovery" type="text" inputmode="numeric" class="input-control" placeholder="Rp. 0"><p class="field-help" style="margin:4px 0 0;">Enter the incremental net profit allocated toward recovering this equipment cost in this record (not the cumulative total). This is tracking only and does not change cash balance.</p></div><div><label style="font-size:11px;color:#78716c;">Bought through / channel</label><input id="finChannel" class="input-control" placeholder="e.g. Shopee, Tokopedia, offline store"></div>
           <div><label style="font-size:11px;color:#78716c;">Amount (Rp)</label><input id="finAmount" type="text" inputmode="numeric" class="input-control currency-input" required placeholder="Rp. 0"></div>
         </div>
-        <div class="grid-2" style="margin:0;gap:10px;"><div><label style="font-size:11px;color:#78716c;">Payment status</label><select id="finPaymentStatus" class="input-control"><option value="paid">Already paid</option><option value="pending">Pay later / unpaid</option></select></div><div><label style="font-size:11px;color:#78716c;">Reimbursement status</label><select id="finReimbursed" class="input-control"><option value="no">Not reimbursed</option><option value="yes">Already reimbursed by Suma Lōra</option><option value="na">Not applicable</option></select></div></div>
+        <div><label style="font-size:11px;color:#78716c;">Payment status</label><select id="finPaymentStatus" class="input-control"><option value="paid">Already paid</option><option value="pending">Pay later / unpaid</option></select><p class="field-help" style="margin:4px 0 0;">If someone other than Suma Lōra paid an expense, the amount becomes a reimbursement liability when marked as paid. Record reimbursements from Finance History.</p></div>
         <div><label style="font-size:11px;color:#78716c;">Notes (optional)</label><input id="finNotes" class="input-control" placeholder="e.g. paid by personal account; reimburse after sales"></div>
-        <div style="font-size:10px;color:#78716c;">Sales orders are pulled from Sales Orders. Add Shopee Ads as a dated record here. Purchases paid personally can be marked for reimbursement tracking.</div><button type="submit" class="btn">Save Finance Record</button></form>
+        <div style="font-size:10px;color:#78716c;">Sales orders are pulled automatically. Expenses paid by Suma Lōra reduce the selected balance when paid; expenses paid by someone else create an outstanding reimbursement after payment.</div><button id="financeSaveBtn" type="submit" class="btn">Save Finance Record</button></form>
       </div>
       <div class="card" style="margin:12px 0;display:flex;gap:18px;flex-wrap:wrap;align-items:center;"><div><div style="font-size:10px;color:#78716c;text-transform:uppercase;">Money in</div><strong id="financeTotalIn" style="font-size:18px;">Rp. 0</strong></div><div><div style="font-size:10px;color:#78716c;text-transform:uppercase;">Money out</div><strong id="financeTotalOut" style="font-size:18px;">Rp. 0</strong></div><div><div style="font-size:10px;color:#78716c;text-transform:uppercase;">Transaction count</div><strong id="financeTransactionCount" style="font-size:18px;">0 transactions</strong></div></div>
-      <div class="table-container"><div class="table-header" style="gap:10px;flex-wrap:wrap;"><h3 style="font-size:15px;margin:0;font-family:serif;">Finance History · Money In & Out</h3><select id="financeFilter" class="input-control" style="width:auto;min-width:170px;" onchange="renderFinance()"><option value="all">All records</option><option value="income">Other income</option><option value="expense">Materials / operating</option><option value="equipment">Equipment / assets</option><option value="ads">Shopee Ads</option><option value="sales">Sales orders</option><option value="due">Unreimbursed personal</option></select></div>
-        <table><thead><tr><th>Date</th><th>Type</th><th>Item / Transaction</th><th>Qty</th><th>Paid by</th><th>Amount</th><th>Reimbursement</th><th>Notes</th><th>Action</th></tr></thead><tbody id="financeTableBody"></tbody></table>
+      <div class="table-container"><div class="table-header" style="gap:10px;flex-wrap:wrap;"><h3 style="font-size:15px;margin:0;font-family:serif;">Finance History · Money In & Out</h3><select id="financeFilter" class="input-control" style="width:auto;min-width:170px;" onchange="renderFinance()"><option value="all">All records</option><option value="income">Other income</option><option value="expense">Materials / operating</option><option value="equipment">Equipment / assets</option><option value="ads">Shopee Ads</option><option value="sales">Sales orders</option><option value="due">Unreimbursed personal</option><option value="transfers">Account transfers</option></select></div>
+        <table><thead><tr><th>Date</th><th>Type</th><th>Item / Transaction</th><th>Qty</th><th>Paid by</th><th>Amount</th><th>Status / Reimbursement</th><th>Notes</th><th>Action</th></tr></thead><tbody id="financeTableBody"></tbody></table>
       </div>
     </section>
 
@@ -1943,6 +1952,10 @@ D: Blend and pour [after C]"></textarea></div>
     </section>
 
   </main>
+
+  <div id="financeReimbursementModal" class="modal-overlay"><div class="modal-box" style="max-width:460px;"><div class="modal-header"><h3 style="font-family:serif;">Record reimbursement</h3><button type="button" onclick="closeModal('financeReimbursementModal')" class="close-btn">&times;</button></div><p id="financeReimbursementHint" style="font-size:12px;color:#78716c;line-height:1.6;">Record the amount reimbursed to the person who paid this expense.</p><form id="financeReimbursementForm" style="display:flex;flex-direction:column;gap:10px;"><input type="hidden" id="financeReimbursementId"><div><label>Date</label><input type="date" id="financeReimbursementDate" class="input-control" required></div><div><label>Amount reimbursed (Rp)</label><input type="text" id="financeReimbursementAmount" class="input-control" inputmode="numeric" placeholder="Rp. 0" required></div><div><label>Balance used</label><select id="financeReimbursementAccount" class="input-control"><option value="bank">Suma Lōra Bank</option><option value="shopee">Shopee Balance</option></select></div><button type="submit" class="btn">Save reimbursement</button></form></div></div>
+  <div id="financeOpeningModal" class="modal-overlay"><div class="modal-box" style="max-width:460px;"><div class="modal-header"><h3 style="font-family:serif;">Set opening balances</h3><button type="button" onclick="closeModal('financeOpeningModal')" class="close-btn">&times;</button></div><p style="font-size:12px;color:#78716c;line-height:1.6;">Enter the starting balances at the point you began tracking in this ERP. These amounts are a baseline, not new income.</p><form id="financeOpeningForm" style="display:flex;flex-direction:column;gap:10px;"><div><label>Bank opening balance (Rp)</label><input type="text" id="financeOpeningBank" class="input-control" inputmode="numeric" placeholder="Rp. 0" required></div><div><label>Shopee opening balance (Rp)</label><input type="text" id="financeOpeningShopee" class="input-control" inputmode="numeric" placeholder="Rp. 0" required></div><button type="submit" class="btn">Save opening balances</button></form></div></div>
+  <div id="financeTransferModal" class="modal-overlay"><div class="modal-box" style="max-width:460px;"><div class="modal-header"><h3 style="font-family:serif;">Transfer between accounts</h3><button type="button" onclick="closeModal('financeTransferModal')" class="close-btn">&times;</button></div><p style="font-size:12px;color:#78716c;line-height:1.6;">Transfer moves money between the tracked Bank and Shopee balances; it does not change the combined total.</p><form id="financeTransferForm" style="display:flex;flex-direction:column;gap:10px;"><div><label>Date</label><input type="date" id="financeTransferDate" class="input-control" required></div><div class="grid-2" style="margin:0;gap:10px;"><div><label>From</label><select id="financeTransferFrom" class="input-control"><option value="shopee">Shopee Balance</option><option value="bank">Suma Lōra Bank</option></select></div><div><label>To</label><select id="financeTransferTo" class="input-control"><option value="bank">Suma Lōra Bank</option><option value="shopee">Shopee Balance</option></select></div></div><div><label>Amount (Rp)</label><input type="text" id="financeTransferAmount" class="input-control" inputmode="numeric" placeholder="Rp. 0" required></div><div><label>Notes (optional)</label><input type="text" id="financeTransferNotes" class="input-control" placeholder="e.g. Shopee payout to bank"></div><button type="submit" class="btn">Save transfer</button></form></div></div>
 
   <!-- MODAL: UPDATE CONSUMABLE PRICE -->
   <div id="materialModal" class="modal-overlay">
@@ -2652,7 +2665,7 @@ D: Blend and pour [after C]"></textarea></div>
 
     // v7.6 utilities: local process SOPs, section tabs, collapsed finance form and rack assignment.
     function formatDateOnly(value){ if(!value)return '—'; const raw=String(value).split('T')[0].split(' ')[0]; const m=raw.match(/^(\d{4})-(\d{2})-(\d{2})$/); return m?`${m[3]}/${m[2]}/${m[1]}`:raw; }
-    function toggleFinanceRecordForm(force){const panel=document.getElementById('financeRecordPanel'),btn=document.getElementById('toggleFinanceRecordBtn');if(!panel||!btn)return;const open=typeof force==='boolean'?force:panel.hidden;panel.hidden=!open;btn.setAttribute('aria-expanded',String(open));btn.textContent=open?'− Close Finance Record':'+ Add Finance Record';if(open)panel.scrollIntoView({behavior:'smooth',block:'start'});}
+    function toggleFinanceRecordForm(force){const panel=document.getElementById('financeRecordPanel'),btn=document.getElementById('toggleFinanceRecordBtn');if(!panel||!btn)return;const open=typeof force==='boolean'?force:panel.hidden;panel.hidden=!open;btn.setAttribute('aria-expanded',String(open));btn.textContent=open?'− Close Finance Record':'+ Add Finance Record';if(open){renderFinanceOptionSelects();renderFinanceAccountOptions();updateFinanceConditionalFields();panel.scrollIntoView({behavior:'smooth',block:'start'});}}
     function setBotanicalSection(which){const soap=which==='soap';const soapPanel=document.getElementById('botanicalSoapPanel'),oilPanel=document.getElementById('botanicalOilsPanel'),soapBtn=document.getElementById('botanicalTabSoap'),oilBtn=document.getElementById('botanicalTabOils');if(soapPanel)soapPanel.hidden=!soap;if(oilPanel)oilPanel.hidden=soap;if(soapBtn){soapBtn.classList.toggle('active',soap);soapBtn.setAttribute('aria-selected',String(soap));}if(oilBtn){oilBtn.classList.toggle('active',!soap);oilBtn.setAttribute('aria-selected',String(!soap));}}
     let storageViewMode='materials';
     function setStorageView(which){storageViewMode=which;const materials=which==='materials',matBtn=document.getElementById('storageViewMaterials'),equipBtn=document.getElementById('storageViewEquipment');matBtn?.classList.toggle('active',materials);equipBtn?.classList.toggle('active',!materials);matBtn?.setAttribute('aria-selected',String(materials));equipBtn?.setAttribute('aria-selected',String(!materials));const add=document.querySelector('#tab-storage .page-actions button');if(add)add.textContent=materials?'+ Add New Material':'+ Add Tool / Equipment';const th=document.querySelector('#tab-storage table thead tr');if(th)th.innerHTML=materials?'<th>Material / Item</th><th>Category</th><th>Quantity in stock</th><th>Unit</th><th>Last updated</th><th>Action</th>':'<th>Tool / Equipment</th><th>Category</th><th>Quantity / Condition</th><th>Unit</th><th>Price / unit</th><th>Total price</th><th>Last updated</th><th>Action</th>';renderStorage();}
@@ -2807,6 +2820,8 @@ D: Blend and pour [after C]"></textarea></div>
       document.getElementById("finStartDate").value = firstDay;
       document.getElementById("finEndDate").value = today;
       renderFinanceOptionSelects();
+      renderFinanceAccountOptions();
+      document.getElementById('finAccount')?.addEventListener('change',updateFinanceConditionalFields);
       setFinanceThisMonth();
       renderProcessLibrary();
       renderProcessFlow();
@@ -2867,11 +2882,18 @@ D: Blend and pour [after C]"></textarea></div>
       bind('formSales', 'submit', handleSaveSale);
       bind('formMaterialPrice', 'submit', handleSaveMaterialPrice);
       bind('financeForm', 'submit', handleSaveFinance);
+      bind('financeReimbursementForm','submit',handleSaveFinanceReimbursement);
+      bind('financeOpeningForm','submit',handleSaveFinanceOpening);
+      bind('financeTransferForm','submit',handleSaveFinanceTransfer);
+      bind('finSource','change',updateFinanceConditionalFields);
+      bind('finType','change',updateFinanceConditionalFields);
+      bind('finAssetItem','change',updateFinanceConditionalFields);
       bind('categoryManagerForm', 'submit', saveMaterialCategories);
       bind('materialCategoryEditForm', 'submit', saveMaterialCategoryEdit);
       bind('financeOptionForm', 'submit', saveFinanceOption);
       bind('salesPlatformManagerForm', 'submit', saveSalesPlatformOption);
       bind('finAmount', 'input', e => e.target.value = formatRupiahInput(e.target.value));
+      ['financeReimbursementAmount','financeOpeningBank','financeOpeningShopee','financeTransferAmount','finAssetRecovery'].forEach(id=>bind(id,'input',e=>e.target.value=formatRupiahInput(e.target.value)));
       bind('addUserForm', 'submit', addManagedUser);
       document.querySelectorAll('.currency-input').forEach(input => {
         if (!input.dataset.currencyBound) {
@@ -3049,52 +3071,182 @@ D: Blend and pour [after C]"></textarea></div>
       renderFinance();
     }
     function setFinanceAllTime() { document.getElementById('finStartDate').value=''; document.getElementById('finEndDate').value=''; renderFinance(); }
+    function isFinanceIncomeRecord(r) {
+      const t=financeTypes.find(x=>x.key===r.type);
+      return t ? t.flow==='income' : r.type==='income';
+    }
+    function isFinanceExpenseRecord(r) { return !isFinanceIncomeRecord(r) && r.type!=='sales' && r.type!=='transfer' && r.type!=='financeDeleted'; }
+    function isSumaLoraPayer(value) { return ['suma lōra','suma lora','suma-lora'].includes(String(value||'').trim().toLowerCase()); }
+    function financeSalesNetAmount(s) {
+      if(s&&s.netTotal!==undefined&&s.netTotal!==null&&s.netTotal!=='') return Math.max(0,Number(s.netTotal)||0);
+      const gross=Math.max(0,Number(s?.grossTotal)||0),fees=s?.fees?Object.values(s.fees).reduce((n,v)=>n+(Number(v)||0),0):0;
+      return Math.max(0,gross-fees);
+    }
+    function getFinanceOpeningBalances() {
+      const raw=safeStorageJSON('suma_finance_opening_balances',{bank:0,shopee:0});
+      return {bank:Math.max(0,Number(raw?.bank)||0),shopee:Math.max(0,Number(raw?.shopee)||0)};
+    }
+    function getFinanceTransfers() { const rows=safeStorageJSON('suma_finance_transfers',[]);return Array.isArray(rows)?rows.filter(x=>x&&typeof x==='object'):[]; }
+    function setFinanceTransfers(rows) { return safeStorageSet('suma_finance_transfers',JSON.stringify(rows)); }
+    function financeReimbursedAmount(r) {
+      const list=Array.isArray(r?.reimbursements)?r.reimbursements:[];
+      if(list.length) return Math.min(Number(r?.amount)||0,list.reduce((n,x)=>n+(Number(x.amount)||0),0));
+      // Legacy records stored only a boolean; preserve their completed status, but do not invent a historical account/date.
+      return r?.reimbursed ? Math.max(0,Number(r.amount)||0) : 0;
+    }
+    function financeOutstandingAmount(r) {
+      if(!r || !isFinanceExpenseRecord(r) || isSumaLoraPayer(r.paidBy) || r.paymentStatus==='pending' || r.reimbursementStatus==='na') return 0;
+      if(r.reimbursed && !(Array.isArray(r.reimbursements)&&r.reimbursements.length)) return 0;
+      return Math.max(0,(Number(r.amount)||0)-financeReimbursedAmount(r));
+    }
+    function getFinanceAccountBalances() {
+      const opening=getFinanceOpeningBalances(), balances={bank:opening.bank,shopee:opening.shopee};
+      // A recorded sale is provisionally credited to its platform account: Shopee to Shopee, other platforms to Bank.
+      (Array.isArray(sales)?sales:[]).forEach(s=>{const account=isShopeePlatform(s.platform)?'shopee':'bank';balances[account]+=financeSalesNetAmount(s);});
+      getFinanceRecords().forEach(r=>{
+        const amount=Math.max(0,Number(r.amount)||0), account=r.account==='shopee'?'shopee':'bank';
+        if(isFinanceIncomeRecord(r)) { if(r.paymentStatus!=='pending') balances[account]+=amount; }
+        else if(isFinanceExpenseRecord(r)) {
+          if(isSumaLoraPayer(r.paidBy)) { if(r.paymentStatus!=='pending') balances[account]-=amount; }
+          // If another person paid, Suma Lōra cash only leaves when reimbursement is recorded below.
+          (Array.isArray(r.reimbursements)?r.reimbursements:[]).forEach(x=>{const ra=x.account==='shopee'?'shopee':'bank';balances[ra]-=Math.max(0,Number(x.amount)||0);});
+        }
+      });
+      getFinanceTransfers().forEach(t=>{const from=t.from==='shopee'?'shopee':'bank',to=t.to==='shopee'?'shopee':'bank',amount=Math.max(0,Number(t.amount)||0);if(from!==to){balances[from]-=amount;balances[to]+=amount;}});
+      return balances;
+    }
+    function renderFinanceAccountOptions() {
+      const payer=document.getElementById('financeDuePayerFilter');
+      if(payer){const before=payer.value||'all';payer.innerHTML='<option value="all">All payers</option>'+financePayers.filter(p=>!isSumaLoraPayer(p)).map(p=>`<option value="${escapeHtml(p)}">${escapeHtml(p)}</option>`).join('');if([...payer.options].some(o=>o.value===before))payer.value=before;}
+      const asset=document.getElementById('finAssetItem');
+      if(asset){const before=asset.value||'',items=getStorageItems().filter(i=>i.storageType==='asset').sort((a,b)=>String(a.group||'').localeCompare(String(b.group||''))||String(a.name||'').localeCompare(String(b.name||'')));asset.innerHTML='<option value="">No linked equipment</option>'+items.map(i=>`<option value="${escapeHtml(i.name)}">${escapeHtml(i.group)} · ${escapeHtml(i.name)}</option>`).join('');if([...asset.options].some(o=>o.value===before))asset.value=before;}
+    }
+    function updateFinanceConditionalFields() {
+      const type=document.getElementById('finType')?.value||'expense', payer=document.getElementById('finSource')?.value||'Suma Lōra';
+      const accountWrap=document.getElementById('finAccount')?.closest('div');
+      const accountHelp=document.getElementById('finAccountHelp');
+      const income=isFinanceIncomeRecord({type});
+      if(accountWrap)accountWrap.style.display=(income||isSumaLoraPayer(payer))?'block':'none';
+      if(accountHelp)accountHelp.textContent=income?'Account receiving this income.':(isSumaLoraPayer(payer)?'This balance will decrease when this expense is marked as paid.':'This expense was paid by someone else; Suma Lōra balance decreases only when reimbursed.');
+      const assetWrap=document.getElementById('finAssetLinkWrap');if(assetWrap)assetWrap.hidden=type!=='equipment';
+      const recoveryWrap=document.getElementById('finAssetRecoveryWrap');if(recoveryWrap)recoveryWrap.hidden=type!=='equipment'||!document.getElementById('finAssetItem')?.value;
+    }
+    function resetFinanceFormForAdd() {
+      const form=document.getElementById('financeForm');if(form)form.reset();
+      const id=document.getElementById('finEditingId');if(id)id.value='';
+      const date=document.getElementById('finDate');if(date)date.value=new Date().toISOString().slice(0,10);
+      const paid=document.getElementById('finPaymentStatus');if(paid)paid.value='paid';
+      const account=document.getElementById('finAccount');if(account)account.value='bank';
+      const amount=document.getElementById('finAmount');if(amount)amount.value='Rp. 0';
+      const recovery=document.getElementById('finAssetRecovery');if(recovery)recovery.value='Rp. 0';
+      const heading=document.getElementById('financeFormHeading');if(heading)heading.textContent='Add Finance Record';
+      const save=document.getElementById('financeSaveBtn');if(save)save.textContent='Save Finance Record';
+      renderFinanceOptionSelects();renderFinanceAccountOptions();updateFinanceConditionalFields();
+    }
+    function openEditFinanceRecord(id) {
+      const r=getFinanceRecords().find(x=>String(x.id)===String(id));if(!r)return showToast('Finance record not found.');
+      renderFinanceOptionSelects();renderFinanceAccountOptions();
+      toggleFinanceRecordForm(true);
+      document.getElementById('finEditingId').value=String(r.id);
+      for(const [field,value] of [['finType',r.type||'expense'],['finDate',r.date||new Date().toISOString().slice(0,10)],['finName',r.name||''],['finQty',r.qty==null?'':r.qty],['finUnit',r.unit||'pcs'],['finSource',r.paidBy||'Suma Lōra'],['finAccount',r.account||'bank'],['finAssetItem',r.assetItemName||''],['finChannel',r.channel||''],['finPaymentStatus',r.paymentStatus||'paid'],['finNotes',r.notes||'']]){const el=document.getElementById(field);if(el){if(el.tagName==='SELECT'&&value&&!Array.from(el.options).some(o=>o.value===String(value))){el.add(new Option(String(value),String(value)));}el.value=value;}}
+      document.getElementById('finAmount').value=rupiah(r.amount||0);
+      document.getElementById('finAssetRecovery').value=rupiah(r.capitalRecovered||0);
+      document.getElementById('financeFormHeading').textContent='Edit Finance Record';document.getElementById('financeSaveBtn').textContent='Save Changes';
+      updateFinanceConditionalFields();
+    }
     function handleSaveFinance(e) {
-      e.preventDefault(); e.stopPropagation();
-      const amount=parseRupiahNumber(document.getElementById('finAmount').value), date=document.getElementById('finDate').value, name=document.getElementById('finName').value.trim();
-      if(!date||!name||amount<=0) { showToast('Please enter a date, transaction name, and amount greater than Rp. 0.'); return; }
-      const type=document.getElementById('finType').value, paidBy=document.getElementById('finSource').value;
-      const record={id:Date.now(),financeId:'',type,date,name,qty:document.getElementById('finQty').value?Number(document.getElementById('finQty').value):null,unit:document.getElementById('finUnit').value.trim(),channel:document.getElementById('finChannel').value.trim(),paidBy,amount,paymentStatus:document.getElementById('finPaymentStatus').value,reimbursed:document.getElementById('finReimbursed').value==='yes',reimbursementStatus:document.getElementById('finReimbursed').value,notes:document.getElementById('finNotes').value.trim(),createdAt:new Date().toISOString()}; record.financeId=String(record.id);
-      const rows=getFinanceRecords(); rows.push(record); if(!setFinanceRecords(rows)) { showToast('Could not save: browser storage is unavailable.'); return; }
-      const form=document.getElementById('financeForm'); form.reset(); document.getElementById('finDate').value=new Date().toISOString().slice(0,10); document.getElementById('finPaymentStatus').value='paid'; document.getElementById('finReimbursed').value='no';
-      appendFinanceHistorySnapshot(record); renderFinance(); showToast('Finance record saved.');
+      e.preventDefault();e.stopPropagation();
+      const amount=parseRupiahNumber(document.getElementById('finAmount').value),date=document.getElementById('finDate').value,name=document.getElementById('finName').value.trim();
+      if(!date||!name||amount<=0)return showToast('Please enter a date, transaction name, and amount greater than Rp. 0.');
+      const type=document.getElementById('finType').value,paidBy=document.getElementById('finSource').value,editingId=document.getElementById('finEditingId').value;
+      const rows=getFinanceRecords(),old=editingId?rows.find(r=>String(r.id)===String(editingId)):null;
+      const oldReimbursements=Array.isArray(old?.reimbursements)?old.reimbursements:[];
+      const reimbursementTotal=old?financeReimbursedAmount(old):0;
+      if(old&&reimbursementTotal>amount)return showToast('Amount cannot be lower than reimbursements already recorded.');
+      if(old&&oldReimbursements.length&&isSumaLoraPayer(paidBy))return showToast('This record already has reimbursement history. Keep its external payer, or create a separate correction record.');
+      if(old&&oldReimbursements.length&&document.getElementById('finPaymentStatus').value==='pending')return showToast('A record with reimbursement payments cannot be changed back to unpaid. Create a correction record if needed.');
+      const capitalRecovered=Math.max(0,parseRupiahNumber(document.getElementById('finAssetRecovery')?.value||'0'));
+      const record={...(old||{}),id:old?old.id:Date.now(),financeId:String(old?.financeId||old?.id||Date.now()),type,date,name,qty:document.getElementById('finQty').value?Number(document.getElementById('finQty').value):null,unit:document.getElementById('finUnit').value,channel:document.getElementById('finChannel').value.trim(),paidBy,account:document.getElementById('finAccount').value==='shopee'?'shopee':'bank',assetItemName:type==='equipment'?(document.getElementById('finAssetItem')?.value||''): '',capitalRecovered,amount,paymentStatus:document.getElementById('finPaymentStatus').value,reimbursed:old?.reimbursed||false,reimbursements:oldReimbursements,reimbursementStatus:old?.reimbursementStatus==='na'?'no':(old?.reimbursementStatus||'no'),notes:document.getElementById('finNotes').value.trim(),createdAt:old?.createdAt||new Date().toISOString(),updatedAt:new Date().toISOString()};
+      if(!old)rows.push(record);else rows[rows.findIndex(r=>String(r.id)===String(old.id))]=record;
+      if(!setFinanceRecords(rows))return showToast('Could not save: browser storage is unavailable.');
+      appendFinanceHistorySnapshot(record);resetFinanceFormForAdd();toggleFinanceRecordForm(false);renderFinance();showToast(old?'Finance record updated.':'Finance record saved.');
     }
-    function toggleFinanceStatus(id, field) {
-      const rows=getFinanceRecords(), row=rows.find(r=>String(r.id)===String(id)); if(!row)return;
-      if(field==='payment') row.paymentStatus=row.paymentStatus==='pending'?'paid':'pending';
-      if(field==='reimbursement') { row.reimbursed=!row.reimbursed; row.reimbursementStatus=row.reimbursed?'yes':'no'; }
-      setFinanceRecords(rows); appendFinanceHistorySnapshot(row); renderFinance(); showToast('Payment status updated.');
+    function deleteFinanceRecord(id) {
+      const rows=getFinanceRecords(),row=rows.find(r=>String(r.id)===String(id));if(!row)return;
+      if(Array.isArray(row.reimbursements)&&row.reimbursements.length)return showToast('This record has reimbursement payments. Edit/correct it instead of deleting, so the cash outflows remain traceable.');
+      if(!confirm('Delete this finance record? Its cash-balance effect and any linked equipment cost/recovery totals will be removed.'))return;
+      setFinanceRecords(rows.filter(r=>String(r.id)!==String(id)));appendFinanceHistorySnapshot(row,true);renderFinance();showToast('Finance record deleted.');
     }
-    function deleteFinanceRecord(id) { if(!confirm('Delete this finance record?'))return; const rows=getFinanceRecords(), row=rows.find(r=>String(r.id)===String(id)); setFinanceRecords(rows.filter(r=>String(r.id)!==String(id))); if(row)appendFinanceHistorySnapshot(row,true); renderFinance(); showToast('Finance record deleted.'); }
+    let activeFinanceReimbursementId='';
+    function openFinanceReimbursement(id) {
+      const r=getFinanceRecords().find(x=>String(x.id)===String(id));if(!r)return;
+      const due=financeOutstandingAmount(r);if(due<=0)return showToast('No outstanding reimbursement remains.');
+      activeFinanceReimbursementId=String(id);document.getElementById('financeReimbursementId').value=String(id);document.getElementById('financeReimbursementDate').value=new Date().toISOString().slice(0,10);document.getElementById('financeReimbursementAmount').value=rupiah(due);document.getElementById('financeReimbursementAccount').value='bank';document.getElementById('financeReimbursementHint').textContent=`${r.name} · Paid by ${r.paidBy}. Outstanding: ${rupiah(due)}. You can record a partial reimbursement.`;openModal('financeReimbursementModal');
+    }
+    function handleSaveFinanceReimbursement(e) {
+      e.preventDefault();const id=document.getElementById('financeReimbursementId').value,rows=getFinanceRecords(),r=rows.find(x=>String(x.id)===String(id));if(!r)return;
+      const date=document.getElementById('financeReimbursementDate').value,amount=parseRupiahNumber(document.getElementById('financeReimbursementAmount').value),account=document.getElementById('financeReimbursementAccount').value==='shopee'?'shopee':'bank',due=financeOutstandingAmount(r);
+      if(!date||amount<=0||amount>due)return showToast(`Enter a reimbursement amount up to ${rupiah(due)}.`);
+      r.reimbursements=Array.isArray(r.reimbursements)?r.reimbursements:[];r.reimbursements.push({date,amount,account,createdAt:new Date().toISOString()});r.reimbursed=financeReimbursedAmount(r)>=Number(r.amount||0);r.reimbursementStatus=r.reimbursed?'yes':'no';r.updatedAt=new Date().toISOString();
+      if(!setFinanceRecords(rows))return showToast('Could not save reimbursement.');appendFinanceHistorySnapshot(r);closeModal('financeReimbursementModal');renderFinance();showToast('Reimbursement saved and deducted from the selected balance.');
+    }
+    function openFinanceOpeningModal() { const b=getFinanceOpeningBalances();document.getElementById('financeOpeningBank').value=rupiah(b.bank);document.getElementById('financeOpeningShopee').value=rupiah(b.shopee);openModal('financeOpeningModal'); }
+    function handleSaveFinanceOpening(e) { e.preventDefault();const bank=parseRupiahNumber(document.getElementById('financeOpeningBank').value),shopee=parseRupiahNumber(document.getElementById('financeOpeningShopee').value);if(bank<0||shopee<0)return showToast('Opening balance cannot be negative.');if(!safeStorageSet('suma_finance_opening_balances',JSON.stringify({bank,shopee,updatedAt:new Date().toISOString()})))return showToast('Opening balances could not be saved.');closeModal('financeOpeningModal');renderFinance();showToast('Opening balances saved.'); }
+    function openFinanceTransferModal() { const date=document.getElementById('financeTransferDate');if(date)date.value=new Date().toISOString().slice(0,10);document.getElementById('financeTransferAmount').value='Rp. 0';document.getElementById('financeTransferNotes').value='';document.getElementById('financeTransferFrom').value='shopee';document.getElementById('financeTransferTo').value='bank';openModal('financeTransferModal'); }
+    function handleSaveFinanceTransfer(e) { e.preventDefault();const date=document.getElementById('financeTransferDate').value,from=document.getElementById('financeTransferFrom').value,to=document.getElementById('financeTransferTo').value,amount=parseRupiahNumber(document.getElementById('financeTransferAmount').value),notes=document.getElementById('financeTransferNotes').value.trim();if(!date||!amount||amount<=0||from===to)return showToast('Choose different accounts and enter a valid transfer amount.');const list=getFinanceTransfers();list.push({id:Date.now(),date,from,to,amount,notes,createdAt:new Date().toISOString()});if(!setFinanceTransfers(list))return showToast('Transfer could not be saved.');closeModal('financeTransferModal');renderFinance();showToast('Account transfer saved.'); }
+    function renderFinanceEquipmentStatus(rows) {
+      const body=document.getElementById('financeEquipmentStatusBody');if(!body)return;
+      const assets=getStorageItems().filter(i=>i.storageType==='asset').sort((a,b)=>String(a.group||'').localeCompare(String(b.group||''))||String(a.name||'').localeCompare(String(b.name||'')));
+      if(!assets.length){body.innerHTML='<tr><td colspan="5" style="padding:12px;color:#78716c;">No equipment registered in Storage yet.</td></tr>';return;}
+      body.innerHTML=assets.map(item=>{
+        const stock=getStorageData()[item.name]||{},qty=Math.max(0,Number(stock.qty)||0),unitPrice=Math.max(0,Number(stock.purchasePrice??item.purchasePrice)||0),target=unitPrice*qty;
+        const related=rows.filter(r=>r.type==='equipment'&&r.assetItemName===item.name),recorded=related.filter(r=>r.paymentStatus!=='pending').reduce((n,r)=>n+(Number(r.amount)||0),0),due=related.reduce((n,r)=>n+financeOutstandingAmount(r),0),recovered=related.reduce((n,r)=>n+(Number(r.capitalRecovered)||0),0);
+        const paymentStatus=target<=0?'Set purchase price in Storage':recorded+0.5>=target?'Cost covered by Finance records':`Unrecorded ${rupiah(Math.max(0,target-recorded))}`;
+        const recoveryStatus=target<=0?'Set target value':recovered+0.5>=target?'Break-even amount reached':`To recover ${rupiah(Math.max(0,target-recovered))}`;
+        return `<tr><td><strong>${escapeHtml(item.name)}</strong><div style="font-size:10px;color:#78716c;">${escapeHtml(item.group||'Equipment')} · ${qty} ${escapeHtml(item.unit||'pcs')}</div></td><td>${target>0?rupiah(target):'—'}</td><td>${rupiah(recorded)}${due>0?`<div style="font-size:10px;color:#9A3412;">Reimbursement due ${rupiah(due)}</div>`:''}</td><td><span style="font-size:11px;${target>0&&recorded>=target?'color:#166534;':'color:#9A3412;'}">${escapeHtml(paymentStatus)}</span></td><td><strong style="font-size:11px;">${rupiah(recovered)}</strong><div style="font-size:10px;color:${recovered>=target&&target>0?'#166534':'#9A3412'};">${escapeHtml(recoveryStatus)}</div></td></tr>`;
+      }).join('');
+    }
     function renderFinance() {
-      const rows=getFinanceRecords(), start=document.getElementById('finStartDate')?.value||'', end=document.getElementById('finEndDate')?.value||'', filter=document.getElementById('financeFilter')?.value||'all';
+      const rows=getFinanceRecords();renderFinanceAccountOptions();const start=document.getElementById('finStartDate')?.value||'',end=document.getElementById('finEndDate')?.value||'',filter=document.getElementById('financeFilter')?.value||'all';
       const inPeriod=date=>(!start||date>=start)&&(!end||date<=end);
       const salesRows=sales.filter(s=>inPeriod(s.date||''));
       const gross=salesRows.reduce((n,s)=>n+(Number(s.grossTotal)||Number(s.netTotal)||0),0);
       const platform=salesRows.reduce((n,s)=>n+(s.fees?Object.values(s.fees).reduce((a,b)=>a+(Number(b)||0),0):Math.max(0,(Number(s.grossTotal)||0)-(Number(s.netTotal)||0))),0);
-      const afterPlatform=salesRows.reduce((n,s)=>n+(Number(s.netTotal)||0),0), team=afterPlatform*.25;
+      const afterPlatform=salesRows.reduce((n,s)=>n+financeSalesNetAmount(s),0),team=afterPlatform*.25;
       const periodRows=rows.filter(r=>inPeriod(r.date||''));
-      const ads=periodRows.filter(r=>r.type==='ads').reduce((n,r)=>n+(Number(r.amount)||0),0);
-      const expenses=periodRows.filter(r=>{const t=financeTypes.find(x=>x.key===r.type);return (t?t.flow!=='income':!['income'].includes(r.type)) && r.type!=='ads';}).reduce((n,r)=>n+(Number(r.amount)||0),0);
-      const otherIncome=periodRows.filter(r=>{const t=financeTypes.find(x=>x.key===r.type);return t?t.flow==='income':r.type==='income';}).reduce((n,r)=>n+(Number(r.amount)||0),0);
+      const paidPeriodRows=periodRows.filter(r=>r.paymentStatus!=='pending');
+      const ads=paidPeriodRows.filter(r=>r.type==='ads').reduce((n,r)=>n+(Number(r.amount)||0),0);
+      const expenses=paidPeriodRows.filter(r=>isFinanceExpenseRecord(r)&&r.type!=='ads').reduce((n,r)=>n+(Number(r.amount)||0),0);
+      const otherIncome=paidPeriodRows.filter(isFinanceIncomeRecord).reduce((n,r)=>n+(Number(r.amount)||0),0);
       const put=(id,val)=>{const el=document.getElementById(id);if(el)el.textContent=rupiah(val);};
       put('finGrossSales',gross);put('finPlatformFees',platform);put('finSalesIncome',afterPlatform);put('finTeamFee',team);put('finAdsTotal',ads);put('finAfterTeamAds',afterPlatform-team-ads);put('finExpenses',expenses);put('finNetCashflow',afterPlatform-team-ads+otherIncome-expenses);
       put('finEquipmentTotal',rows.filter(r=>r.type==='equipment').reduce((n,r)=>n+(Number(r.amount)||0),0));
-      put('finReimbursementDue',rows.filter(r=>r.paidBy!=='Suma Lōra'&&!r.reimbursed&&r.reimbursementStatus!=='na').reduce((n,r)=>n+(Number(r.amount)||0),0));
+      const reimbursementDue=rows.reduce((n,r)=>n+financeOutstandingAmount(r),0);put('finReimbursementDue',reimbursementDue);
+      const opening=getFinanceOpeningBalances(),balances=getFinanceAccountBalances();put('finBalanceBank',balances.bank);put('finBalanceShopee',balances.shopee);put('finBalanceTotal',balances.bank+balances.shopee);
+      const dueFilter=document.getElementById('financeDuePayerFilter')?.value||'all';
+      const dues=rows.filter(r=>financeOutstandingAmount(r)>0&&(dueFilter==='all'||r.paidBy===dueFilter)).sort((a,b)=>(b.date||'').localeCompare(a.date||''));
+      const dueTotal=dues.reduce((n,r)=>n+financeOutstandingAmount(r),0);put('financeDueTotal',dueTotal);
+      const dueBody=document.getElementById('financeDueBody');if(dueBody)dueBody.innerHTML=dues.length?`<div style="overflow:auto;"><table style="min-width:550px;"><thead><tr><th>Date</th><th>Paid by</th><th>Expense</th><th>Outstanding</th><th>Action</th></tr></thead><tbody>${dues.map(r=>`<tr><td>${escapeHtml(formatDateOnly(r.date||''))}</td><td>${escapeHtml(r.paidBy||'—')}</td><td>${escapeHtml(r.name||'')}</td><td style="color:#9A3412;font-weight:700;">${rupiah(financeOutstandingAmount(r))}</td><td><button type="button" class="btn" style="width:auto;padding:6px 9px;font-size:10px;" onclick="openFinanceReimbursement('${String(r.id).replace(/'/g,'\\\'')}')">Mark reimbursed</button></td></tr>`).join('')}</tbody></table></div>`:'<div style="font-size:12px;color:#78716c;padding:10px 0;">No outstanding reimbursement for the selected payer.</div>';
       const monthSet=new Set([...salesRows.map(s=>(s.date||'').slice(0,7)),...periodRows.map(r=>(r.date||'').slice(0,7))].filter(Boolean));
-      const monthly=[...monthSet].sort().map(month=>{const ss=salesRows.filter(s=>(s.date||'').slice(0,7)===month), rr=periodRows.filter(r=>(r.date||'').slice(0,7)===month);const g=ss.reduce((n,s)=>n+(Number(s.grossTotal)||Number(s.netTotal)||0),0), net=ss.reduce((n,s)=>n+(Number(s.netTotal)||0),0), a=rr.filter(r=>r.type==='ads').reduce((n,r)=>n+(Number(r.amount)||0),0), t=net*.25;return `<tr><td>${escapeHtml(month)}</td><td>${rupiah(g)}</td><td>${rupiah(net)}</td><td>${rupiah(a)}</td><td>${rupiah(t)}</td><td>${rupiah(net-t-a)}</td></tr>`;}).join('');
-      const monthlyBody=document.getElementById('financeMonthlyBody'); if(monthlyBody)monthlyBody.innerHTML=monthly||'<tr><td colspan="6" style="padding:12px;color:#78716c;">No activity in this reporting period.</td></tr>';
-      let ledger=periodRows.filter(r=>filter==='all'||(filter==='due'?r.paidBy!=='Suma Lōra'&&!r.reimbursed&&r.reimbursementStatus!=='na':filter==='sales'?false:filter==='expense'?(r.type!=='income'&&r.type!=='ads'):filter==='income'?((financeTypes.find(t=>t.key===r.type)?.flow||r.type)==='income'):r.type===filter));
-      const syntheticSales=filter==='all'||filter==='sales'?salesRows.map(s=>({id:`sale_${s.id}`,type:'sales',date:s.date,name:`${s.buyer||'Customer'} · ${(s.items||[]).map(i=>`${i.product} ×${i.qty}`).join(', ')}`,qty:(s.items||[]).reduce((n,i)=>n+(Number(i.qty)||0),0),unit:'pcs',paidBy:getSalesPlatformLabel(s.platform)||'Sales platform',amount:Number(s.netTotal)||0,notes:'Sales order · gross '+rupiah(s.grossTotal||s.netTotal),synthetic:true,platformFee:s.fees?Object.values(s.fees).reduce((a,b)=>a+(Number(b)||0),0):0})):[];
-      if(filter==='sales') ledger=[];
-      ledger=[...ledger,...syntheticSales].sort((a,b)=>(b.date||'').localeCompare(a.date||'')||Number(b.id)-Number(a.id));
+      const monthly=[...monthSet].sort().map(month=>{const ss=salesRows.filter(s=>(s.date||'').slice(0,7)===month),rr=periodRows.filter(r=>(r.date||'').slice(0,7)===month);const g=ss.reduce((n,s)=>n+(Number(s.grossTotal)||Number(s.netTotal)||0),0),net=ss.reduce((n,s)=>n+(Number(s.netTotal)||0),0),a=rr.filter(r=>r.type==='ads'&&r.paymentStatus!=='pending').reduce((n,r)=>n+(Number(r.amount)||0),0),t=net*.25;return `<tr><td>${escapeHtml(month)}</td><td>${rupiah(g)}</td><td>${rupiah(net)}</td><td>${rupiah(a)}</td><td>${rupiah(t)}</td><td>${rupiah(net-t-a)}</td></tr>`;}).join('');
+      const monthlyBody=document.getElementById('financeMonthlyBody');if(monthlyBody)monthlyBody.innerHTML=monthly||'<tr><td colspan="6" style="padding:12px;color:#78716c;">No activity in this reporting period.</td></tr>';
+      let ledger=periodRows.filter(r=>filter==='all'||(filter==='due'?financeOutstandingAmount(r)>0:filter==='sales'?false:filter==='transfers'?false:filter==='expense'?isFinanceExpenseRecord(r)&&r.type!=='ads':filter==='income'?isFinanceIncomeRecord(r):r.type===filter));
+      const syntheticSales=(filter==='all'||filter==='sales')?salesRows.map(s=>({id:`sale_${s.id}`,type:'sales',date:s.date,name:`${s.buyer||'Customer'} · ${(s.items||[]).map(i=>`${i.product} ×${i.qty}`).join(', ')}`,qty:(s.items||[]).reduce((n,i)=>n+(Number(i.qty)||0),0),unit:'pcs',paidBy:getSalesPlatformLabel(s.platform)||'Sales platform',amount:financeSalesNetAmount(s),notes:'Sales order · gross '+rupiah(s.grossTotal||s.netTotal),synthetic:true,platformFee:s.fees?Object.values(s.fees).reduce((a,b)=>a+(Number(b)||0),0):0})) : [];
+      const transfers=(filter==='all'||filter==='transfers')?getFinanceTransfers().filter(t=>inPeriod(t.date||'')).map(t=>({id:`transfer_${t.id}`,type:'transfer',date:t.date,name:t.notes||'Account transfer',qty:null,unit:'',paidBy:'Suma Lōra',amount:Number(t.amount)||0,notes:`${t.from==='shopee'?'Shopee Balance':'Bank'} → ${t.to==='shopee'?'Shopee Balance':'Bank'}`,synthetic:true,transfer:t})):[];
+      ledger=[...ledger,...syntheticSales,...transfers].sort((a,b)=>(b.date||'').localeCompare(a.date||'')||String(b.id).localeCompare(String(a.id)));
       const ledgerBody=document.getElementById('financeTableBody');
-      const rowHtml=r=>{const isPersonal=r.paidBy!=='Suma Lōra'&&r.type!=='income'&&r.type!=='ads'&&r.type!=='sales';return `<tr><td>${escapeHtml(formatDateOnly(r.date||''))}</td><td>${escapeHtml(r.type==='sales'?'Sales Order':financeTypeLabel(r.type))}</td><td><strong>${escapeHtml(r.name||'')}</strong>${r.channel?`<div style="font-size:10px;color:#78716c;">Via ${escapeHtml(r.channel)}</div>`:''}</td><td>${r.qty==null?'—':`${escapeHtml(r.qty)} ${escapeHtml(r.unit||'')}`}</td><td>${escapeHtml(r.paidBy||'—')}</td><td style="white-space:nowrap;font-weight:700;" class="${(r.type==='sales'||(financeTypes.find(t=>t.key===r.type)?.flow||r.type)==='income')?'':'negative-money'}">${(r.type==='sales'||(financeTypes.find(t=>t.key===r.type)?.flow||r.type)==='income'?'':'−')+rupiah(r.amount)}${r.type==='sales'?`<div style="font-size:10px;color:#b9c2bb;">Platform fee −${rupiah(r.platformFee||0)}</div>`:''}</td><td>${r.type==='sales'?'—':`<button type="button" class="btn" style="width:auto;padding:5px 8px;font-size:10px;background:${r.paymentStatus==='pending'?'#9A3412':'#6B705C'}" onclick="toggleFinanceStatus('${r.id}','payment')">${r.paymentStatus==='pending'?'Mark paid':'Paid'}</button>${isPersonal?`<button type="button" class="btn" style="width:auto;padding:5px 8px;font-size:10px;margin-top:4px;background:${r.reimbursed?'#166534':'#9A3412'}" onclick="toggleFinanceStatus('${r.id}','reimbursement')">${r.reimbursed?'Reimbursed':'Mark reimbursed'}</button>`:''}`}</td><td>${escapeHtml(r.notes||'')}</td><td>${r.synthetic?'—':`<button type="button" class="btn" style="width:auto;padding:5px 8px;font-size:10px;background:#a33" onclick="deleteFinanceRecord('${r.id}')">Delete</button>`}</td></tr>`;};
+      const rowHtml=r=>{
+        const isPersonal=!r.synthetic&&isFinanceExpenseRecord(r)&&!isSumaLoraPayer(r.paidBy), isIncome=r.type==='sales'||isFinanceIncomeRecord(r), isTransfer=r.type==='transfer';
+        const statusText=isTransfer?'Transfer between accounts':r.type==='sales'?'Sales order':(r.paymentStatus==='pending'?'Pay later / unpaid':isIncome?'Income recorded':isSumaLoraPayer(r.paidBy)?`Paid from ${r.account==='shopee'?'Shopee Balance':'Bank'}`:isPersonal?(financeOutstandingAmount(r)>0?`Outstanding ${rupiah(financeOutstandingAmount(r))}`:'Reimbursement complete'):'Paid');
+        const reimbursementBtn=isPersonal&&financeOutstandingAmount(r)>0?`<button type="button" class="btn" style="width:auto;padding:5px 8px;font-size:10px;background:#9A3412;margin-top:4px;" onclick="openFinanceReimbursement('${String(r.id).replace(/'/g,'\\\'')}')">${financeReimbursedAmount(r)>0?'Reimburse more':'Mark reimbursed'}</button>`:'';
+        return `<tr><td>${escapeHtml(formatDateOnly(r.date||''))}</td><td>${escapeHtml(isTransfer?'Account transfer':r.type==='sales'?'Sales Order':financeTypeLabel(r.type))}</td><td><strong>${escapeHtml(r.name||'')}</strong>${r.channel?`<div style="font-size:10px;color:#78716c;">Via ${escapeHtml(r.channel)}</div>`:''}${r.assetItemName?`<div style="font-size:10px;color:#78716c;">Equipment: ${escapeHtml(r.assetItemName)}</div>`:''}${isTransfer?`<div style="font-size:10px;color:#78716c;">${escapeHtml(r.notes||'')}</div>`:''}</td><td>${r.qty==null?'—':`${escapeHtml(r.qty)} ${escapeHtml(r.unit||'')}`}</td><td>${escapeHtml(r.paidBy||'—')}</td><td style="white-space:nowrap;font-weight:700;" class="${(!isIncome&&!isTransfer)?'negative-money':''}">${!isIncome&&!isTransfer?'−':''}${rupiah(r.amount)}${r.type==='sales'?`<div style="font-size:10px;color:#78716c;">Platform fee −${rupiah(r.platformFee||0)}</div>`:''}</td><td><div style="font-size:11px;">${escapeHtml(statusText)}</div>${r.type!=='sales'&&!isTransfer?reimbursementBtn:''}${Array.isArray(r.reimbursements)&&r.reimbursements.length?`<div title="${escapeHtml(r.reimbursements.map(x=>`${x.date}: ${rupiah(x.amount)} from ${x.account}`).join('; '))}" style="font-size:10px;color:#78716c;margin-top:3px;">${r.reimbursements.length} reimbursement payment(s)</div>`:''}</td><td>${escapeHtml(r.notes||'')}</td><td>${r.synthetic?'—':`<div style="display:flex;gap:5px;flex-wrap:wrap;"><button type="button" class="btn btn-secondary" style="width:auto;padding:5px 8px;font-size:10px;" onclick="openEditFinanceRecord('${String(r.id).replace(/'/g,'\\\'')}')">Edit</button><button type="button" class="btn" style="width:auto;padding:5px 8px;font-size:10px;background:#a33;" onclick="deleteFinanceRecord('${String(r.id).replace(/'/g,'\\\'')}')">Delete</button></div>`}</td></tr>`;
+      };
       const groupedMonths=[...new Set(ledger.map(r=>(r.date||'Undated').slice(0,7)||'Undated'))].sort().reverse();
-      if(ledgerBody) ledgerBody.innerHTML=ledger.length?groupedMonths.map(month=>{const monthRows=ledger.filter(r=>((r.date||'Undated').slice(0,7)||'Undated')===month);const monthIn=monthRows.filter(r=>r.type==='income'||r.type==='sales').reduce((n,r)=>n+(Number(r.amount)||0),0);const monthOut=monthRows.filter(r=>r.type!=='income'&&r.type!=='sales').reduce((n,r)=>n+(Number(r.amount)||0),0);return `<tr><td colspan="9" style="background:#F1F3ED;color:#2A3F2E;font-weight:700;padding:10px;">${escapeHtml(month)} · ${monthRows.length} transactions · In ${rupiah(monthIn)} · Out −${rupiah(monthOut)}</td></tr>`+monthRows.map(rowHtml).join('');}).join(''):'<tr><td colspan="9" style="padding:18px;color:#78716c;text-align:center;">No finance transactions for this reporting period.</td></tr>';
-      const countEl=document.getElementById('financeTransactionCount'); if(countEl)countEl.textContent=`${ledger.length} transactions · ${ledger.filter(r=>r.type!=='sales').length} finance records`;
-      const totalIn=document.getElementById('financeTotalIn'); if(totalIn)totalIn.textContent=rupiah(afterPlatform+otherIncome);
-      const totalOut=document.getElementById('financeTotalOut'); if(totalOut){totalOut.textContent='−'+rupiah(platform+team+ads+expenses);totalOut.classList.add('negative-money');}
+      if(ledgerBody)ledgerBody.innerHTML=ledger.length?groupedMonths.map(month=>{const monthRows=ledger.filter(r=>((r.date||'Undated').slice(0,7)||'Undated')===month);const monthIn=monthRows.filter(r=>r.type==='sales'||isFinanceIncomeRecord(r)).reduce((n,r)=>n+(Number(r.amount)||0),0),monthOut=monthRows.filter(r=>r.type!=='sales'&&r.type!=='transfer'&&!isFinanceIncomeRecord(r)).reduce((n,r)=>n+(Number(r.amount)||0),0);return `<tr><td colspan="9" style="background:#F1F3ED;color:#2A3F2E;font-weight:700;padding:10px;">${escapeHtml(month)} · ${monthRows.length} transactions · In ${rupiah(monthIn)} · Out −${rupiah(monthOut)}</td></tr>`+monthRows.map(rowHtml).join('');}).join(''):'<tr><td colspan="9" style="padding:18px;color:#78716c;text-align:center;">No finance transactions for this reporting period.</td></tr>';
+      const countEl=document.getElementById('financeTransactionCount');if(countEl)countEl.textContent=`${ledger.length} transactions · ${ledger.filter(r=>r.type!=='sales'&&r.type!=='transfer').length} finance records`;
+      const totalIn=document.getElementById('financeTotalIn');if(totalIn)totalIn.textContent=rupiah(afterPlatform+otherIncome);
+      const totalOut=document.getElementById('financeTotalOut');if(totalOut){totalOut.textContent='−'+rupiah(platform+team+ads+expenses);totalOut.classList.add('negative-money');}
+      renderFinanceEquipmentStatus(rows);
     }
 
     function renderAll() {
