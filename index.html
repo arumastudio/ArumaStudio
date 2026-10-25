@@ -1928,6 +1928,12 @@ D: Blend and pour [after C]"></textarea></div>
       </div>
       <div class="card" style="margin:12px 0;display:flex;gap:18px;flex-wrap:wrap;align-items:center;"><div><div style="font-size:10px;color:#78716c;text-transform:uppercase;">Money in</div><strong id="financeTotalIn" style="font-size:18px;">Rp. 0</strong></div><div><div style="font-size:10px;color:#78716c;text-transform:uppercase;">Money out</div><strong id="financeTotalOut" style="font-size:18px;">Rp. 0</strong></div><div><div style="font-size:10px;color:#78716c;text-transform:uppercase;">Transaction count</div><strong id="financeTransactionCount" style="font-size:18px;">0 transactions</strong></div></div>
       <div class="table-container"><div class="table-header" style="gap:10px;flex-wrap:wrap;align-items:end;"><h3 style="font-size:15px;margin:0;font-family:serif;flex:1 1 100%;">Finance History · Money In & Out</h3><div style="flex:1 1 220px;min-width:180px;"><label for="financeHistorySearch" style="font-size:10px;color:#78716c;display:block;margin-bottom:4px;">Search</label><input id="financeHistorySearch" type="search" class="input-control" placeholder="Search name, payer, notes…" oninput="renderFinance()"></div><div><label for="financeFilter" style="font-size:10px;color:#78716c;display:block;margin-bottom:4px;">Filter</label><select id="financeFilter" class="input-control" style="width:auto;min-width:160px;" onchange="renderFinance()"><option value="all">All records</option><option value="income">Other income</option><option value="expense">Materials / operating</option><option value="equipment">Equipment / assets</option><option value="ads">Shopee Ads</option><option value="sales">Sales orders</option><option value="due">Unreimbursed personal</option><option value="transfers">Account transfers</option></select></div><div><label for="financeHistoryPaymentStatus" style="font-size:10px;color:#78716c;display:block;margin-bottom:4px;">Payment status</label><select id="financeHistoryPaymentStatus" class="input-control" style="width:auto;min-width:150px;" onchange="renderFinance()"><option value="all">All payment status</option><option value="pending">Pending / unpaid</option><option value="paid">Paid / received</option><option value="due">Reimbursement due</option></select></div><div><label for="financeHistorySort" style="font-size:10px;color:#78716c;display:block;margin-bottom:4px;">Sort by</label><select id="financeHistorySort" class="input-control" style="width:auto;min-width:160px;" onchange="renderFinance()"><option value="date_desc">Date (newest first)</option><option value="date_asc">Date (oldest first)</option><option value="amount_desc">Amount (high–low)</option><option value="amount_asc">Amount (low–high)</option><option value="name_asc">Name (A–Z)</option><option value="name_desc">Name (Z–A)</option></select></div><div><label for="financeHistoryStartDate" style="font-size:10px;color:#78716c;display:block;margin-bottom:4px;">History from</label><input id="financeHistoryStartDate" type="date" class="input-control" onchange="renderFinance()"></div><div><label for="financeHistoryEndDate" style="font-size:10px;color:#78716c;display:block;margin-bottom:4px;">History to</label><input id="financeHistoryEndDate" type="date" class="input-control" onchange="renderFinance()"></div><button type="button" class="btn btn-secondary" style="width:auto;" onclick="syncFinanceHistoryRangeFromReport();renderFinance()">Use report range</button></div>
+        <div id="financeHistorySummary" style="display:grid;grid-template-columns:repeat(auto-fit,minmax(155px,1fr));gap:8px;margin:12px 0 14px;">
+          <div style="border:1px solid #e7e5e4;border-radius:10px;padding:11px 12px;background:#fff;"><div style="font-size:10px;color:#78716c;text-transform:uppercase;letter-spacing:.04em;">Filtered amount total</div><strong id="financeHistoryMatchedTotal" style="display:block;font-size:17px;margin-top:5px;">Rp. 0</strong><div id="financeHistoryMatchedCount" style="font-size:10px;color:#78716c;margin-top:3px;">0 matching records</div></div>
+          <div style="border:1px solid #e7e5e4;border-radius:10px;padding:11px 12px;background:#fff;"><div style="font-size:10px;color:#78716c;text-transform:uppercase;letter-spacing:.04em;">Money in</div><strong id="financeHistoryMatchedIn" style="display:block;font-size:17px;margin-top:5px;color:#166534;">Rp. 0</strong></div>
+          <div style="border:1px solid #e7e5e4;border-radius:10px;padding:11px 12px;background:#fff;"><div style="font-size:10px;color:#78716c;text-transform:uppercase;letter-spacing:.04em;">Money out</div><strong id="financeHistoryMatchedOut" style="display:block;font-size:17px;margin-top:5px;color:#991b1b;">Rp. 0</strong></div>
+          <div style="border:1px solid #e7e5e4;border-radius:10px;padding:11px 12px;background:#fff;"><div style="font-size:10px;color:#78716c;text-transform:uppercase;letter-spacing:.04em;">Net movement</div><strong id="financeHistoryMatchedNet" style="display:block;font-size:17px;margin-top:5px;">Rp. 0</strong></div>
+        </div>
         <table><thead><tr><th>Date</th><th>Type</th><th>Item / Transaction</th><th>Qty</th><th>Paid by</th><th>Amount</th><th>Status / Reimbursement</th><th>Notes</th><th>Action</th></tr></thead><tbody id="financeTableBody"></tbody></table>
       </div>
     </section>
@@ -3099,7 +3105,10 @@ D: Blend and pour [after C]"></textarea></div>
       if(hs)hs.value=start; if(he)he.value=end;
     }
     function financeHistoryEffectiveDate(r) {
-      return (r && r.paymentStatus!=='pending' && r.paymentDate) ? r.paymentDate : (r?.date||'');
+      // Finance History is ordered and date-filtered by the transaction/record date.
+      // Payment date remains visible as separate metadata and must not override the
+      // transaction date when a user edits an expense from one month to another.
+      return r?.date || '';
     }
     function isFinanceIncomeRecord(r) {
       const t=financeTypes.find(x=>x.key===r.type);
@@ -3321,6 +3330,28 @@ D: Blend and pour [after C]"></textarea></div>
         if(sort==='name_desc') return String(b.name||'').localeCompare(String(a.name||''),undefined,{sensitivity:'base'})||bd.localeCompare(ad);
         return bd.localeCompare(ad)||String(b.id).localeCompare(String(a.id));
       });
+      // Summary is calculated from the fully filtered ledger (date range, search,
+      // record filter, and payment status), not from the unfiltered database.
+      const summaryAmount=ledger.reduce((n,r)=>n+Math.abs(Number(r.amount)||0),0);
+      let summaryIn=0, summaryOut=0;
+      ledger.forEach(r=>{
+        const amount=Math.max(0,Number(r.amount)||0);
+        if(r.type==='transfer') return; // transfers change account allocation, not total cash
+        if(r.type==='balance_adjustment') { if(Number(r.amount)>=0) summaryIn+=amount; else summaryOut+=amount; return; }
+        if(r.type==='sales') { summaryIn+=amount; return; }
+        if(isFinanceIncomeRecord(r)) { if(r.paymentStatus!=='pending') summaryIn+=amount; return; }
+        if(isFinanceExpenseRecord(r)) {
+          if(isSumaLoraPayer(r.paidBy)) { if(r.paymentStatus!=='pending') summaryOut+=amount; }
+          else summaryOut+=financeReimbursedAmount(r);
+        }
+      });
+      const setText=(id,value)=>{const el=document.getElementById(id);if(el)el.textContent=value;};
+      setText('financeHistoryMatchedTotal',rupiah(summaryAmount));
+      setText('financeHistoryMatchedCount',`${ledger.length} matching record${ledger.length===1?'':'s'}`);
+      setText('financeHistoryMatchedIn',rupiah(summaryIn));
+      setText('financeHistoryMatchedOut','−'+rupiah(summaryOut));
+      setText('financeHistoryMatchedNet',`${summaryIn-summaryOut<0?'−':''}${rupiah(Math.abs(summaryIn-summaryOut))}`);
+      const netEl=document.getElementById('financeHistoryMatchedNet');if(netEl)netEl.style.color=summaryIn-summaryOut<0?'#991b1b':'#166534';
       const ledgerBody=document.getElementById('financeTableBody');
       const rowHtml=r=>{
         const isPersonal=!r.synthetic&&isFinanceExpenseRecord(r)&&!isSumaLoraPayer(r.paidBy), isIncome=r.type==='sales'||isFinanceIncomeRecord(r), isTransfer=r.type==='transfer', isBalanceAdjustment=r.type==='balance_adjustment';
